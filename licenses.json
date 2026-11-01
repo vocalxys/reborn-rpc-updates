@@ -1,6 +1,20 @@
 {
-  "updatedAt": 1793516427650,
+  "updatedAt": 1793517192584,
   "licenses": [
+    {
+      "id": "lic-1793517192571-0-9caf",
+      "key": "REBORN-W2UN-7Q3R-M2AE",
+      "isLifetime": true,
+      "durationMs": 0,
+      "status": "unused",
+      "maxUsers": 1,
+      "boundUsers": [],
+      "boundHwid": null,
+      "note": "",
+      "createdAt": 1793517192571,
+      "activatedAt": null,
+      "expiresAt": null
+    },
     {
       "id": "lic-1793468075809-0-avjb",
       "key": "REBORN-MECA-UYMS-E78G",
@@ -30,5 +44,13 @@
       "lastLoginAt": 1793468523098
     }
   ],
-  "auditLogs": []
+  "auditLogs": [
+    {
+      "id": "aud-1793517192573-ngc",
+      "time": "16시 13분 12초",
+      "timestamp": 1793517192584,
+      "action": "라이센스 발급",
+      "detail": "1개 발급 (영구제 (무제한), 최대 1명)"
+    }
+  ]
 }
