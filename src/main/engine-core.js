@@ -864,6 +864,7 @@ class RPCEngineCore extends EventEmitter {
         details: resolvedDetails,
         state: resolvedState,
         timestampMode: rpcVar.timestampMode || 'elapsed',
+        freezeTimer: rpcVar.freezeTimer,
         countdownSeconds: Number(rpcVar.customEndMinutes || 45) * 60,
         customEndMinutes: Number(rpcVar.customEndMinutes ?? 45),
         offsetHours: Number(rpcVar.offsetHours ?? 0),
@@ -1048,7 +1049,7 @@ class RPCEngineCore extends EventEmitter {
     const state = this.store.getState();
     const settings = state.settings || {};
 
-    const macroIntervalMs = Math.max(5, Number(settings.macroIntervalSec || 10)) * 1000;
+    const macroIntervalMs = Math.max(5, Number(settings.macroIntervalSec || 5)) * 1000;
     this.macroTimer = setInterval(async () => {
       const vars = this.getCombinedVariables();
       this.emit('telemetry-tick', {
@@ -1060,7 +1061,6 @@ class RPCEngineCore extends EventEmitter {
 
       if (
         this.isRpcRunning &&
-        settings.liveMacroSync &&
         this.rpcClient.connected &&
         this.rpcClient.ready &&
         this.liveProfileId
@@ -1070,7 +1070,12 @@ class RPCEngineCore extends EventEmitter {
         );
         if (currentProfile) {
           const cfg = this.extractActivityConfig(currentProfile, this.liveKeyframeIndex);
-          if (cfg) {
+          const needsFreezeTick =
+            cfg &&
+            (cfg.timestampMode === 'fixed' ||
+              Boolean(cfg.freezeTimer) ||
+              (cfg.timestampMode === 'unlimited' && cfg.freezeTimer !== false));
+          if (cfg && (settings.liveMacroSync || needsFreezeTick)) {
             try {
               await this.rpcClient.setActivity(cfg, vars);
             } catch {
