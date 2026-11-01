@@ -1,10 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 const crypto = require('crypto');
 const os = require('os');
 const { execSync } = require('child_process');
 
 const ADMIN_PASSWORD = 'Mk2010047sxlvlrt!!';
+const CLOUD_LICENSES_RAW_URL = 'https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/licenses.json';
 
 function getSystemHwid() {
   try {
@@ -73,6 +75,154 @@ class LicenseManager {
     this.filePath = path.join(this.storageDir, 'reborn-licenses-v1.json');
     this.currentHwid = getSystemHwid();
     this.data = this.load();
+    this.cloudPushTimer = null;
+
+    // Pull latest licenses from cloud on startup and every 25s
+    this.pullCloudLicenses().catch(() => {});
+    setInterval(() => {
+      this.pullCloudLicenses().catch(() => {});
+    }, 25000);
+  }
+
+  getAdminGithubConfig() {
+    try {
+      const updPath = path.join(this.storageDir, 'reborn-update-state.json');
+      if (fs.existsSync(updPath)) {
+        const parsed = JSON.parse(fs.readFileSync(updPath, 'utf8'));
+        if (parsed.githubToken && parsed.githubOwner) {
+          return {
+            token: parsed.githubToken,
+            owner: parsed.githubOwner,
+            repo: parsed.githubRepo || 'reborn-rpc-updates',
+          };
+        }
+      }
+    } catch {
+      // Ignore
+    }
+    return null;
+  }
+
+  scheduleCloudPush() {
+    const gh = this.getAdminGithubConfig();
+    if (!gh) return;
+    if (this.cloudPushTimer) clearTimeout(this.cloudPushTimer);
+    this.cloudPushTimer = setTimeout(() => {
+      this.pushCloudLicenses(gh).catch(() => {});
+    }, 600);
+  }
+
+  async pushCloudLicenses(gh = this.getAdminGithubConfig()) {
+    if (!gh || !gh.token || !gh.owner) return;
+    const payloadStr = JSON.stringify(
+      {
+        updatedAt: Date.now(),
+        licenses: this.data.licenses || [],
+      },
+      null,
+      2
+    );
+
+    const reqGh = (method, apiPath, bodyObj = null) =>
+      new Promise((resolve, reject) => {
+        const bodyJson = bodyObj ? JSON.stringify(bodyObj) : null;
+        const headers = {
+          'User-Agent': 'Reborn-RPC-LicenseSync/5.2',
+          Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${gh.token}`,
+          'X-GitHub-Api-Version': '2022-11-28',
+        };
+        if (bodyJson) {
+          headers['Content-Type'] = 'application/json';
+          headers['Content-Length'] = Buffer.byteLength(bodyJson, 'utf8');
+        }
+        const req = https.request(
+          { hostname: 'api.github.com', port: 443, path: apiPath, method, headers },
+          (res) => {
+            let raw = '';
+            res.on('data', (c) => (raw += c));
+            res.on('end', () => {
+              try {
+                const parsed = raw ? JSON.parse(raw) : {};
+                if (res.statusCode >= 200 && res.statusCode < 300) resolve(parsed);
+                else reject(new Error(parsed.message || `HTTP ${res.statusCode}`));
+              } catch (e) {
+                reject(e);
+              }
+            });
+          }
+        );
+        req.on('error', reject);
+        if (bodyJson) req.write(bodyJson);
+        req.end();
+      });
+
+    let sha = null;
+    try {
+      const existing = await reqGh('GET', `/repos/${gh.owner}/${gh.repo}/contents/licenses.json`);
+      if (existing && existing.sha) sha = existing.sha;
+    } catch {
+      // Not created yet
+    }
+
+    const putBody = {
+      message: `Sync licenses (${(this.data.licenses || []).length} keys)`,
+      content: Buffer.from(payloadStr, 'utf8').toString('base64'),
+      branch: 'main',
+    };
+    if (sha) putBody.sha = sha;
+    await reqGh('PUT', `/repos/${gh.owner}/${gh.repo}/contents/licenses.json`, putBody);
+  }
+
+  async pullCloudLicenses() {
+    // If this PC is the Admin Master with GitHub Token, it is the source of truth
+    if (this.getAdminGithubConfig()) return;
+
+    return new Promise((resolve) => {
+      const url = `${CLOUD_LICENSES_RAW_URL}?t=${Date.now()}`;
+      const req = https.get(url, { timeout: 4000 }, (res) => {
+        if (res.statusCode < 200 || res.statusCode >= 300) return resolve(false);
+        let raw = '';
+        res.on('data', (c) => (raw += c));
+        res.on('end', () => {
+          try {
+            const parsed = JSON.parse(raw);
+            if (parsed && Array.isArray(parsed.licenses)) {
+              const localMap = new Map((this.data.licenses || []).map((l) => [l.key, l]));
+              const merged = parsed.licenses.map((cloudLic) => {
+                const loc = localMap.get(cloudLic.key);
+                if (!loc) return cloudLic;
+                return {
+                  ...cloudLic,
+                  activatedAt: loc.activatedAt || cloudLic.activatedAt,
+                  expiresAt: cloudLic.expiresAt || loc.expiresAt,
+                  boundUsers:
+                    Array.isArray(loc.boundUsers) && loc.boundUsers.length > 0
+                      ? loc.boundUsers
+                      : cloudLic.boundUsers || [],
+                  boundHwids:
+                    Array.isArray(loc.boundHwids) && loc.boundHwids.length > 0
+                      ? loc.boundHwids
+                      : cloudLic.boundHwids || [],
+                };
+              });
+              this.data.licenses = merged;
+              this.save(this.data, true);
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          } catch {
+            resolve(false);
+          }
+        });
+      });
+      req.on('error', () => resolve(false));
+      req.on('timeout', () => {
+        req.destroy();
+        resolve(false);
+      });
+    });
   }
 
   getDefaultData() {
@@ -120,13 +270,16 @@ class LicenseManager {
     }
   }
 
-  save(nextData = this.data) {
+  save(nextData = this.data, skipCloud = false) {
     this.data = nextData;
     try {
       if (!fs.existsSync(this.storageDir)) {
         fs.mkdirSync(this.storageDir, { recursive: true });
       }
       fs.writeFileSync(this.filePath, JSON.stringify(this.data, null, 2), 'utf8');
+      if (!skipCloud) {
+        this.scheduleCloudPush();
+      }
     } catch (err) {
       console.error('Failed to save license store:', err);
     }
