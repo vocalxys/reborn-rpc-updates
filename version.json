@@ -1,0 +1,13 @@
+{
+  "version": "5.2.0",
+  "notes": "Reborn RPC v5.2.0 공식 자동 업데이트 채널 개설",
+  "publishedAt": 1793501274340,
+  "files": {
+    "src/renderer/app.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/app.js",
+    "src/renderer/index.html": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/index.html",
+    "src/renderer/styles.css": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/styles.css",
+    "src/main/engine-core.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/main/engine-core.js",
+    "src/main/license-manager.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/main/license-manager.js",
+    "src/main/server.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/main/server.js"
+  }
+}
