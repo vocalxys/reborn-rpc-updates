@@ -1,7 +1,7 @@
 {
-  "version": "5.2.5",
-  "notes": "Reborn RPC v5.2.5 - SONIQ Vocal Studio Monochrome Silver-Glow & Warm Gold UI, Custom Vector Icons, Server Tag Removed, Overlap Fixed",
-  "publishedAt": 1793523556767,
+  "version": "5.2.6",
+  "notes": "Reborn RPC v5.2.6 - Removed non-working fake profile/badge/status/pronouns/bio/server-tag modals & tabs; streamlined for 100% real Discord Rich Presence IPC",
+  "publishedAt": 1793524220298,
   "files": {
     "src/renderer/app.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/app.js",
     "src/renderer/index.html": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/index.html",
