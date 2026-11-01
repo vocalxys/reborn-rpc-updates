@@ -96,24 +96,71 @@ const VECTOR_ICONS = {
   trophy: `<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`,
   star: `<svg viewBox="0 0 24 24" fill="#facc15" stroke="#fef08a" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
   rocket: `<svg viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>`,
+  elem_large_img: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`,
+  elem_small_img: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><rect x="12" y="12" width="6" height="6" rx="1.5" fill="currentColor"/></svg>`,
+  link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
 };
 
 const CUSTOM_ICON_KEYS = ['flame', 'spark', 'crown', 'bolt', 'sword', 'shield', 'terminal', 'music', 'moon', 'cake'];
 
-const BADGE_DEFINITIONS = [
-  { id: 'orb', label: 'Orb Emblem', svg: VECTOR_ICONS.orb },
-  { id: 'quest', label: 'Quest Blade', svg: VECTOR_ICONS.quest },
-  { id: 'dev', label: 'Active Dev', svg: VECTOR_ICONS.dev },
-  { id: 'nitro', label: 'Nitro Gem', svg: VECTOR_ICONS.nitro },
-  { id: 'boost', label: 'Server Boost', svg: VECTOR_ICONS.boost },
-  { id: 'gaming', label: 'Gaming Pad', svg: VECTOR_ICONS.gaming },
-  { id: 'gear', label: 'Core Gear', svg: VECTOR_ICONS.gear },
-  { id: 'flame', label: 'Reborn Flame', svg: VECTOR_ICONS.flame },
-  { id: 'crown', label: 'Royal Crown', svg: VECTOR_ICONS.crown },
-  { id: 'bolt', label: 'Lightning', svg: VECTOR_ICONS.bolt },
-  { id: 'shield', label: 'Guardian', svg: VECTOR_ICONS.shield },
-  { id: 'trophy', label: 'Champion', svg: VECTOR_ICONS.trophy },
+// Complete Catalog of Real Official Discord Badges (Nitro, Boost Lv.1~9, HypeSquad, Dev, Quest, Orbs, Staff, etc.)
+const OFFICIAL_DISCORD_BADGES = [
+  // Discord Nitro & Tenure Tiers
+  { id: 'premium', label: 'Discord Nitro', labelEn: 'Discord Nitro', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/2ba85e8026a8614b640c2837bcdfe21b.png' },
+  { id: 'nitro_bronze', label: 'Nitro 브론즈 (1개월)', labelEn: 'Nitro Bronze (1M)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/4f33c4a9c64ce221936bd256c356f91f.png' },
+  { id: 'nitro_silver', label: 'Nitro 실버 (3개월)', labelEn: 'Nitro Silver (3M)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/4514fab914bdbfb4ad2fa23df76121a6.png' },
+  { id: 'nitro_gold', label: 'Nitro 골드 (6개월)', labelEn: 'Nitro Gold (6M)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/2895086c18d5531d499862e41d1155a6.png' },
+  { id: 'nitro_platinum', label: 'Nitro 플래티넘 (1년)', labelEn: 'Nitro Platinum (1Y)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/0334688279c8359120922938dcb1d6f8.png' },
+  { id: 'nitro_diamond', label: 'Nitro 다이아몬드 (2년)', labelEn: 'Nitro Diamond (2Y)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/0d61871f72bb9a33a7ae568c1fb4f20a.png' },
+  { id: 'nitro_emerald', label: 'Nitro 에메랄드 (3년)', labelEn: 'Nitro Emerald (3Y)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/11e2d339068b55d3a506cff34d3780f3.png' },
+  { id: 'nitro_ruby', label: 'Nitro 루비 (5년)', labelEn: 'Nitro Ruby (5Y)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/cd5e2cfd9d7f27a8cdcd3e8a8d5dc9f4.png' },
+  { id: 'nitro_opal', label: 'Nitro 오팔 (6년+)', labelEn: 'Nitro Opal (6Y+)', category: 'nitro', iconUrl: 'https://cdn.discordapp.com/badge-icons/5b154df19c53dce2af92c7b61e6be5e2.png' },
+
+  // Discord Server Boost All 9 Tiers (1M ~ 24M)
+  { id: 'guild_booster_lvl1', label: '서버 부스트 1개월 (Lv.1)', labelEn: 'Server Boost 1M (Lv.1)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/51040c70d4f20a921ad6674ff86fc95c.png' },
+  { id: 'guild_booster_lvl2', label: '서버 부스트 2개월 (Lv.2)', labelEn: 'Server Boost 2M (Lv.2)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/0e4080d1d333bc7ad29ef6528b6f2fb7.png' },
+  { id: 'guild_booster_lvl3', label: '서버 부스트 3개월 (Lv.3)', labelEn: 'Server Boost 3M (Lv.3)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/72bed924410c304dbe3d00a6e593ff59.png' },
+  { id: 'guild_booster_lvl4', label: '서버 부스트 6개월 (Lv.4)', labelEn: 'Server Boost 6M (Lv.4)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/df199d2050d3ed4ebf84d64ae83989f8.png' },
+  { id: 'guild_booster_lvl5', label: '서버 부스트 9개월 (Lv.5)', labelEn: 'Server Boost 9M (Lv.5)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/996b3e870e8a22ce519b3a50e6bdd52f.png' },
+  { id: 'guild_booster_lvl6', label: '서버 부스트 12개월 (Lv.6)', labelEn: 'Server Boost 12M (Lv.6)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/991c9f39ee33d7537d9f408c3e53141e.png' },
+  { id: 'guild_booster_lvl7', label: '서버 부스트 15개월 (Lv.7)', labelEn: 'Server Boost 15M (Lv.7)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/cb3ae83c15e970e8f3d410bc62cb8b99.png' },
+  { id: 'guild_booster_lvl8', label: '서버 부스트 18개월 (Lv.8)', labelEn: 'Server Boost 18M (Lv.8)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/7142225d31238f6387d9f09efaa02759.png' },
+  { id: 'guild_booster_lvl9', label: '서버 부스트 24개월 (Lv.9)', labelEn: 'Server Boost 24M (Lv.9)', category: 'boost', iconUrl: 'https://cdn.discordapp.com/badge-icons/ec92202290b48d0879b7413d2dde3bab.png' },
+
+  // HypeSquad (Syncs with real Discord API when token is set!)
+  { id: 'hypesquad_house_1', label: 'HypeSquad Bravery (용맹)', labelEn: 'HypeSquad Bravery', category: 'hypesquad', houseId: 1, iconUrl: 'https://cdn.discordapp.com/badge-icons/8a88d63823d8a71cd5e390baa45efa02.png' },
+  { id: 'hypesquad_house_2', label: 'HypeSquad Brilliance (찬란)', labelEn: 'HypeSquad Brilliance', category: 'hypesquad', houseId: 2, iconUrl: 'https://cdn.discordapp.com/badge-icons/011940fd013da3f7fb926e4a1cd2e618.png' },
+  { id: 'hypesquad_house_3', label: 'HypeSquad Balance (균형)', labelEn: 'HypeSquad Balance', category: 'hypesquad', houseId: 3, iconUrl: 'https://cdn.discordapp.com/badge-icons/3aa41de486fa12454c3761e8e223442e.png' },
+  { id: 'hypesquad', label: 'HypeSquad Events', labelEn: 'HypeSquad Events', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/bf01d1073931f921909045f3a39fd264.png' },
+
+  // Developer, Early Supporter, Quest, Orbs, Staff, Partner, Bug Hunter
+  { id: 'active_developer', label: '활성 개발자 (Active Developer)', labelEn: 'Active Developer', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/6bdc42827a38498929a4920da12695d9.png' },
+  { id: 'verified_developer', label: '인증된 봇 개발자 (Verified Bot Dev)', labelEn: 'Early Verified Bot Developer', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/6df5892e0f35b051f8b61eace34f4967.png' },
+  { id: 'early_supporter', label: '얼리 서포터 (Early Supporter)', labelEn: 'Early Supporter', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/7060786766c9c840eb3019e725d2b358.png' },
+  { id: 'quest_completed', label: 'Discord 퀘스트 완료 (Quest)', labelEn: 'Completed a Quest', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/7d9ae358c8c5e118768335dbe68b4fb8.png' },
+  { id: 'orb', label: 'Discord 오브 (Orbs Apprentice)', labelEn: 'Orbs Apprentice', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/83d8a1eb09a8d64e59233eec5d4d5c2d.png' },
+  { id: 'bug_hunter_level_1', label: '버그 헌터 Lv.1 (Bug Hunter)', labelEn: 'Discord Bug Hunter Lv.1', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/2717692c7dca7289b35297368a940dd0.png' },
+  { id: 'bug_hunter_level_2', label: '골드 버그 헌터 Lv.2 (Gold Bug Hunter)', labelEn: 'Gold Bug Hunter Lv.2', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/848f79194d4be5ff5f81505cbd0ce1e6.png' },
+  { id: 'partner', label: '파트너 서버 오너 (Partner)', labelEn: 'Partnered Server Owner', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/3f9748e53446a137a052f3454e2de41e.png' },
+  { id: 'certified_moderator', label: '공인 모더레이터 (Moderator)', labelEn: 'Moderator Programs Alumni', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/fee1624003e2fee35cb398e125dc479b.png' },
+  { id: 'staff', label: 'Discord 스태프 (Staff)', labelEn: 'Discord Staff', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/5e74e9b61934fc1f67c65515d1f7e60d.png' },
+  { id: 'legacy_username', label: '구 사용자명 태그 (#0000)', labelEn: 'Originally known as #0000', category: 'special', iconUrl: 'https://cdn.discordapp.com/badge-icons/6de6d34650760ba5551a79732e98ed60.png' },
 ];
+
+// Built-in Directory of Real Verified Discord Servers (User's synced guilds appear above these!)
+const VERIFIED_DISCORD_SERVERS_WITH_TAGS = [
+  { tag: '븐라인', guildId: '1273194384514777159', guildName: '븐라인 (Official Clan)', badge: 'a17f9e535208bf539321b82ef4f7036d', badgeUrl: 'https://cdn.discordapp.com/clan-badges/1273194384514777159/a17f9e535208bf539321b82ef4f7036d.png?size=32' },
+  { tag: 'VALO', guildId: '679875946597056683', guildName: 'VALORANT Official Discord', badge: '', badgeUrl: 'https://cdn.discordapp.com/embed/avatars/0.png' },
+  { tag: 'LOL', guildId: '187652476080488449', guildName: 'League of Legends Official', badge: '', badgeUrl: 'https://cdn.discordapp.com/embed/avatars/1.png' },
+  { tag: 'RBLX', guildId: '150074202727251969', guildName: 'Roblox Community Server', badge: '', badgeUrl: 'https://cdn.discordapp.com/embed/avatars/2.png' },
+  { tag: 'MC', guildId: '302094807046684672', guildName: 'Minecraft Official Discord', badge: '', badgeUrl: 'https://cdn.discordapp.com/embed/avatars/3.png' },
+  { tag: 'APEX', guildId: '540486882962767872', guildName: 'Apex Legends Official', badge: '', badgeUrl: 'https://cdn.discordapp.com/embed/avatars/4.png' },
+  { tag: 'OW2', guildId: '94882524378968064', guildName: 'Overwatch 2 Official', badge: '', badgeUrl: 'https://cdn.discordapp.com/embed/avatars/5.png' },
+  { tag: 'LOFI', guildId: '707257021652664340', guildName: 'Lofi Girl Official', badge: '', badgeUrl: 'https://cdn.discordapp.com/embed/avatars/0.png' },
+  { tag: 'DEV', guildId: '613425648685547541', guildName: 'Discord Developers Official', badge: '', badgeUrl: 'https://cdn.discordapp.com/ badge-icons/6bdc42827a38498929a4920da12695d9.png'.replace(' ', '') },
+];
+
+const BADGE_DEFINITIONS = OFFICIAL_DISCORD_BADGES;
 
 const CUSTOMIZER_ELEMENTS = [
   { id: 'name', label: 'Name', icon: VECTOR_ICONS.elem_name },
@@ -182,6 +229,78 @@ const BUILTIN_MACROS = [
   { token: '{uptime}', desc: '스튜디오 가동 시간' },
   { token: '{os}', desc: '운영체제 이름' },
 ];
+
+// ============================================================================
+// Discord Image Link Normalization & Preview Helper
+// ============================================================================
+function normalizeDiscordImageUrl(rawInput) {
+  if (!rawInput || typeof rawInput !== 'string') return '';
+  let val = rawInput.trim();
+  if (!val) return '';
+
+  // Extract URL from Markdown [text](url) or <url> or HTML src="url"
+  const mdMatch = val.match(/\]\((https?:\/\/[^\s)]+)\)/i);
+  if (mdMatch) val = mdMatch[1];
+  const angleMatch = val.match(/^<(https?:\/\/[^>\s]+)>$/i);
+  if (angleMatch) val = angleMatch[1];
+  const srcMatch = val.match(/src=["'](https?:\/\/[^"']+)["']/i);
+  if (srcMatch) val = srcMatch[1];
+  val = val.replace(/^["']+|["']+$/g, '').trim();
+
+  if (/^https?:\/\//i.test(val)) {
+    try {
+      const u = new URL(val);
+      const host = u.hostname.toLowerCase();
+      if (
+        host === 'media.discordapp.net' ||
+        host === 'cdn.discordapp.com' ||
+        host.endsWith('.discordapp.com') ||
+        host.endsWith('.discordapp.net')
+      ) {
+        if (
+          host === 'media.discordapp.net' &&
+          (u.pathname.startsWith('/attachments/') || u.pathname.startsWith('/ephemeral-attachments/'))
+        ) {
+          u.hostname = 'cdn.discordapp.com';
+        }
+        // Keep Discord CDN auth tokens (ex, is, hm, size) while stripping bloat params (format, quality, width, height)
+        const keepParams = ['ex', 'is', 'hm', 'size'];
+        const nextParams = new URLSearchParams();
+        for (const key of keepParams) {
+          if (u.searchParams.has(key)) {
+            const v = u.searchParams.get(key);
+            if (v) nextParams.set(key, v);
+          }
+        }
+        const qs = nextParams.toString();
+        val = `${u.protocol}//${u.hostname}${u.pathname}${qs ? `?${qs}` : ''}`;
+      }
+    } catch {
+      // Keep original string
+    }
+  }
+  return val;
+}
+
+function resolveImagePreviewUrl(rawKeyOrUrl) {
+  if (!rawKeyOrUrl) return '';
+  let val = resolveDynamicTokens(String(rawKeyOrUrl).trim());
+  val = normalizeDiscordImageUrl(val);
+  if (val.startsWith('mp:attachments/')) {
+    return `https://cdn.discordapp.com/${val.slice(3)}`;
+  }
+  if (val.startsWith('mp:external/')) {
+    const httpsIdx = val.indexOf('/https/');
+    if (httpsIdx !== -1) {
+      return `https://${val.slice(httpsIdx + 7)}`;
+    }
+    const httpIdx = val.indexOf('/http/');
+    if (httpIdx !== -1) {
+      return `http://${val.slice(httpIdx + 6)}`;
+    }
+  }
+  return val;
+}
 
 // ============================================================================
 // HTTP + SSE Bridge
@@ -265,6 +384,8 @@ function createHttpBridge() {
     disconnect: () => post('/api/disconnect'),
     syncDiscord: (userToken) => post('/api/discord-sync', { userToken }),
     applyDiscordProfile: (fields) => post('/api/discord-apply-profile', fields),
+    lookupDiscordGuild: (query) => post('/api/discord-lookup-guild', { query }),
+    uploadImage: (dataUrl) => post('/api/upload-image', { dataUrl }),
     updateActivity: (payload, clientId, resetTimer = false, profileFields = {}) =>
       post('/api/update-activity', { payload, clientId, resetTimer, profileFields }),
     clearActivity: () => post('/api/clear-activity'),
@@ -392,7 +513,12 @@ const state = {
   },
   customGallery: [],
   vaultTargetSlot: 'large',
+  lang: localStorage.getItem('reborn_lang') || 'ko',
 };
+
+function t(ko, en) {
+  return state.lang === 'en' ? en : ko;
+}
 
 let autoSyncDebounceTimer = null;
 let activeModalCallbacks = { onSave: null, onDelete: null };
@@ -442,6 +568,7 @@ function closeAllCustomDropdowns(exceptEl = null) {
   if (!exceptEl) {
     document.querySelectorAll('.dd-elevated').forEach((el) => el.classList.remove('dd-elevated'));
     document.querySelectorAll('.rc-vars-popover:not(.hidden)').forEach((pop) => pop.classList.add('hidden'));
+    document.querySelectorAll('.btn-rc-vars-trigger.active').forEach((btn) => btn.classList.remove('active'));
   }
 }
 
@@ -451,8 +578,8 @@ function renderCustomDropdown(containerOrId, optionsOrConfig, selectedValue, onC
 
   let options = [];
   let value = '';
-  let placeholder = '선택...';
-  let emptyMessage = '선택 가능한 항목이 없습니다.';
+  let placeholder = t('선택...', 'Select...');
+  let emptyMessage = t('선택 가능한 항목이 없습니다.', 'No selectable items.');
   let upward = false;
   let onChange = null;
 
@@ -460,14 +587,14 @@ function renderCustomDropdown(containerOrId, optionsOrConfig, selectedValue, onC
     options = optionsOrConfig;
     value = selectedValue;
     onChange = onChangeFn;
-    placeholder = extraOpts.placeholder || '선택...';
-    emptyMessage = extraOpts.emptyMessage || '선택 가능한 항목이 없습니다.';
+    placeholder = extraOpts.placeholder || t('선택...', 'Select...');
+    emptyMessage = extraOpts.emptyMessage || t('선택 가능한 항목이 없습니다.', 'No selectable items.');
     upward = Boolean(extraOpts.upward);
   } else if (optionsOrConfig && typeof optionsOrConfig === 'object') {
     options = Array.isArray(optionsOrConfig.options) ? optionsOrConfig.options : [];
     value = optionsOrConfig.value;
-    placeholder = optionsOrConfig.placeholder || '선택...';
-    emptyMessage = optionsOrConfig.emptyMessage || '선택 가능한 항목이 없습니다.';
+    placeholder = optionsOrConfig.placeholder || t('선택...', 'Select...');
+    emptyMessage = optionsOrConfig.emptyMessage || t('선택 가능한 항목이 없습니다.', 'No selectable items.');
     upward = Boolean(optionsOrConfig.upward);
     onChange = optionsOrConfig.onChange;
   }
@@ -548,34 +675,55 @@ function getClanBadgeHtml(guildId, badgeHash, badgeUrl, size = 15) {
   return VECTOR_ICONS.shield;
 }
 
-function getOwnedServerTagOptions() {
-  const tags = Array.isArray(state.identity.availableServerTags)
+function getAllDiscordServerTagCatalog() {
+  const userTags = Array.isArray(state.identity.availableServerTags)
     ? state.identity.availableServerTags
     : [];
+  const merged = [];
+  const seenKeys = new Set();
+
+  const pushUnique = (item, isOwned = false) => {
+    if (!item || !item.tag) return;
+    const key = `${item.guildId || ''}:${item.tag}`;
+    if (seenKeys.has(key)) return;
+    seenKeys.add(key);
+    merged.push({ ...item, isOwned });
+  };
+
+  userTags.forEach((item) => pushUnique(item, true));
+  VERIFIED_DISCORD_SERVERS_WITH_TAGS.forEach((item) => pushUnique(item, false));
+  return merged;
+}
+
+function getOwnedServerTagOptions() {
+  const catalog = getAllDiscordServerTagCatalog();
   const opts = [
     {
       value: '',
-      label: '서버 태그 표시 안 함 (해제)',
+      label: t('서버 태그 표시 안 함 (해제)', 'No Server Tag (Off)'),
       icon: VECTOR_ICONS.close,
       guildId: '',
       badge: '',
       badgeUrl: '',
     },
   ];
-  tags.forEach((t) => {
-    if (t && t.tag && t.guildId) {
+  catalog.forEach((tItem) => {
+    if (tItem && tItem.tag) {
       const resolvedUrl =
-        t.badgeUrl ||
-        (t.guildId && t.badge
-          ? `https://cdn.discordapp.com/clan-badges/${t.guildId}/${t.badge}.png?size=32`
+        tItem.badgeUrl ||
+        (tItem.guildId && tItem.badge
+          ? `https://cdn.discordapp.com/clan-badges/${tItem.guildId}/${tItem.badge}.png?size=32`
           : '');
+      const subText = tItem.guildName && tItem.guildName !== tItem.tag
+        ? `${tItem.isOwned ? '내 서버 · ' : ''}${tItem.guildName}`
+        : `Guild · ${tItem.guildId}`;
       opts.push({
-        value: t.tag,
-        label: t.tag,
-        sub: t.guildName && t.guildName !== t.tag ? t.guildName : `Guild · ${t.guildId}`,
-        icon: getClanBadgeHtml(t.guildId, t.badge, resolvedUrl, 15),
-        guildId: t.guildId || '',
-        badge: t.badge || '',
+        value: tItem.tag,
+        label: tItem.tag,
+        sub: subText,
+        icon: getClanBadgeHtml(tItem.guildId, tItem.badge, resolvedUrl, 15),
+        guildId: tItem.guildId || '',
+        badge: tItem.badge || '',
         badgeUrl: resolvedUrl,
       });
     }
@@ -2348,10 +2496,29 @@ function renderCustomizerInspector(variant) {
       </p>
     `;
   } else if (elemId === 'large_image') {
+    const previewImgUrl = resolveImagePreviewUrl(variant.largeImageKey || '');
     bodyHtml = `
-      ${buildFloatingInputBox('Large Image URL or Asset Key', 'rcFieldMain', variant.largeImageKey || '', 'https://... 이미지/GIF 주소 입력')}
+      ${buildFloatingInputBox('Large Image URL (Discord 이미지 링크 복사/붙여넣기 가능)', 'rcFieldMain', variant.largeImageKey || '', 'https://cdn.discordapp.com/... 또는 이미지/GIF 주소 입력')}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 8px;">
+        <button type="button" class="btn-adm-act gold" id="btnRcPasteDiscordImg" style="height:30px;padding:0 12px;font-size:11.5px;">📋 클립보드 디스코드 이미지/링크 붙여넣기</button>
+        <label class="btn-adm-act" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;cursor:pointer;">
+          📁 내 PC 이미지/GIF 파일 업로드
+          <input type="file" id="inputRcLocalImgFile" accept="image/*" class="hidden" />
+        </label>
+      </div>
+      ${
+        previewImgUrl && /^https?:\/\//i.test(previewImgUrl)
+          ? `<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:8px;">
+              <img src="${escapeHtml(previewImgUrl)}" alt="Preview" style="width:44px;height:44px;border-radius:8px;object-fit:cover;background:#09090d;" />
+              <div style="font-size:11.5px;color:#cbd5e1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                <strong style="color:#4ade80;display:block;">Discord 이미지 링크 인식 완료</strong>
+                <span>${escapeHtml(previewImgUrl)}</span>
+              </div>
+            </div>`
+          : ''
+      }
       ${buildFloatingInputBox('Large Image Hover Tooltip', 'rcFieldSub', variant.largeImageText || '', '마우스 오버 시 표시할 텍스트')}
-      <p class="rc-help-paragraph">직접 이미지/GIF HTTPS URL을 입력하거나 내 보관함에서 선택한 이미지를 적용하세요.</p>
+      <p class="rc-help-paragraph">디스코드 채팅방의 사진/GIF를 우클릭해 <strong>[링크 복사]</strong> 또는 <strong>[이미지 복사]</strong> 후 붙여넣기(Ctrl+V) 하면 자동으로 인식되어 적용됩니다.</p>
       ${
         state.customGallery.length > 0
           ? `<div class="rc-media-mini-grid">
@@ -2359,7 +2526,7 @@ function renderCustomizerInspector(variant) {
                 .map(
                   (asset) => `
                 <div class="rc-media-card ${variant.largeImageKey === asset.url ? 'active' : ''}" data-rc-pick-img="${escapeHtml(asset.url)}" data-rc-pick-name="${escapeHtml(asset.name)}">
-                  <img src="${escapeHtml(asset.url)}" alt="${escapeHtml(asset.name)}" />
+                  <img src="${escapeHtml(resolveImagePreviewUrl(asset.url))}" alt="${escapeHtml(asset.name)}" />
                   <span>${escapeHtml(asset.name)}</span>
                 </div>
               `
@@ -2370,10 +2537,29 @@ function renderCustomizerInspector(variant) {
       }
     `;
   } else if (elemId === 'small_image') {
+    const previewImgUrl = resolveImagePreviewUrl(variant.smallImageKey || '');
     bodyHtml = `
-      ${buildFloatingInputBox('Small Badge Image URL or Asset Key', 'rcFieldMain', variant.smallImageKey || '', 'https://... 우측 하단 원형 배지 이미지 URL')}
+      ${buildFloatingInputBox('Small Badge Image URL (Discord 이미지 링크 복사/붙여넣기 가능)', 'rcFieldMain', variant.smallImageKey || '', 'https://cdn.discordapp.com/... 우측 하단 원형 배지 이미지 URL')}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 8px;">
+        <button type="button" class="btn-adm-act gold" id="btnRcPasteDiscordImg" style="height:30px;padding:0 12px;font-size:11.5px;">📋 클립보드 디스코드 이미지/링크 붙여넣기</button>
+        <label class="btn-adm-act" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;cursor:pointer;">
+          📁 내 PC 이미지/GIF 파일 업로드
+          <input type="file" id="inputRcLocalImgFile" accept="image/*" class="hidden" />
+        </label>
+      </div>
+      ${
+        previewImgUrl && /^https?:\/\//i.test(previewImgUrl)
+          ? `<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:8px;">
+              <img src="${escapeHtml(previewImgUrl)}" alt="Preview" style="width:36px;height:36px;border-radius:50%;object-fit:cover;background:#09090d;" />
+              <div style="font-size:11.5px;color:#cbd5e1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                <strong style="color:#4ade80;display:block;">Discord 소형 배지 이미지 인식 완료</strong>
+                <span>${escapeHtml(previewImgUrl)}</span>
+              </div>
+            </div>`
+          : ''
+      }
       ${buildFloatingInputBox('Small Image Hover Tooltip', 'rcFieldSub', variant.smallImageText || '', '작은 배지 마우스 오버 텍스트')}
-      <p class="rc-help-paragraph">우측 하단 원형 소형 배지 이미지 URL을 입력하거나 Clear를 눌러 숨길 수 있습니다.</p>
+      <p class="rc-help-paragraph">우측 하단 원형 소형 배지 이미지 URL이나 디스코드 이미지 링크를 붙여넣거나 Clear를 눌러 숨길 수 있습니다.</p>
       ${
         state.customGallery.length > 0
           ? `<div class="rc-media-mini-grid">
@@ -2381,7 +2567,7 @@ function renderCustomizerInspector(variant) {
                 .map(
                   (asset) => `
                 <div class="rc-media-card ${variant.smallImageKey === asset.url ? 'active' : ''}" data-rc-pick-img="${escapeHtml(asset.url)}" data-rc-pick-name="${escapeHtml(asset.name)}">
-                  <img src="${escapeHtml(asset.url)}" alt="${escapeHtml(asset.name)}" />
+                  <img src="${escapeHtml(resolveImagePreviewUrl(asset.url))}" alt="${escapeHtml(asset.name)}" />
                   <span>${escapeHtml(asset.name)}</span>
                 </div>
               `
@@ -2471,13 +2657,13 @@ function buildFloatingInputBox(label, inputId, value, placeholder) {
     <div class="rc-floating-box">
       <span class="rc-floating-label">${escapeHtml(label)}</span>
       <input type="text" class="rc-floating-input" id="${inputId}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" />
-      <button class="btn-rc-vars-trigger" data-rc-vars-btn="${inputId}" title="실시간 동적 변수 삽입 {}">{}</button>
+      <button type="button" class="btn-rc-vars-trigger" data-rc-vars-btn="${inputId}" title="클릭하여 동적 변수 목록 열기/닫기 {}">{}</button>
       <div class="rc-vars-popover hidden" id="rcVarsPopover-${inputId}">
         <div class="rc-vars-pop-title">Dynamic Variables</div>
         ${allMacros
           .map(
             (m) => `
-          <button class="rc-var-option" data-insert-rc-var="${escapeHtml(m.token)}" data-target-input="${inputId}">
+          <button type="button" class="rc-var-option" data-insert-rc-var="${escapeHtml(m.token)}" data-target-input="${inputId}">
             <span>${escapeHtml(m.desc)}</span>
             <code>${escapeHtml(m.token)}</code>
           </button>
@@ -2506,14 +2692,128 @@ function bindCustomizerInspectorEvents(variant, elemId) {
       if (elemId === 'name') variant.name = mainInput.value;
       if (elemId === 'details') variant.details = mainInput.value;
       if (elemId === 'state') variant.state = mainInput.value;
-      if (elemId === 'large_image') variant.largeImageKey = mainInput.value;
-      if (elemId === 'small_image') variant.smallImageKey = mainInput.value;
+      if (elemId === 'large_image') {
+        variant.largeImageKey = normalizeDiscordImageUrl(mainInput.value);
+      }
+      if (elemId === 'small_image') {
+        variant.smallImageKey = normalizeDiscordImageUrl(mainInput.value);
+      }
       if (elemId === 'button1') variant.button1Label = mainInput.value;
       if (elemId === 'button2') variant.button2Label = mainInput.value;
       if (elemId === 'client_id') variant.clientId = mainInput.value;
       commitChange();
     });
+
+    if (elemId === 'large_image' || elemId === 'small_image') {
+      mainInput.addEventListener('paste', async (e) => {
+        const items = e.clipboardData?.items;
+        if (items) {
+          for (const item of items) {
+            if (item.type && item.type.startsWith('image/')) {
+              e.preventDefault();
+              const file = item.getAsFile();
+              if (file) {
+                showToast(t('클립보드 이미지를 Discord 호환 URL로 변환 중...', 'Uploading clipboard image...'));
+                const reader = new FileReader();
+                reader.onload = async () => {
+                  const upRes = await api.uploadImage(String(reader.result));
+                  if (upRes?.ok && upRes.url) {
+                    if (elemId === 'large_image') variant.largeImageKey = upRes.url;
+                    else variant.smallImageKey = upRes.url;
+                    mainInput.value = upRes.url;
+                    commitChange();
+                    renderCustomizerInspector(variant);
+                    showToast(t('클립보드 이미지가 적용되었습니다!', 'Clipboard image applied!'));
+                  } else {
+                    showToast(upRes?.error || '이미지 업로드 실패');
+                  }
+                };
+                reader.readAsDataURL(file);
+              }
+              return;
+            }
+          }
+        }
+        setTimeout(() => {
+          const norm = normalizeDiscordImageUrl(mainInput.value);
+          if (norm && norm !== mainInput.value) {
+            mainInput.value = norm;
+          }
+          if (elemId === 'large_image') variant.largeImageKey = norm;
+          if (elemId === 'small_image') variant.smallImageKey = norm;
+          commitChange();
+          renderCustomizerInspector(variant);
+        }, 40);
+      });
+    }
   }
+
+  $('btnRcPasteDiscordImg')?.addEventListener('click', async () => {
+    try {
+      if (navigator.clipboard?.read) {
+        try {
+          const clipItems = await navigator.clipboard.read();
+          for (const clipItem of clipItems) {
+            const imgType = clipItem.types.find((tp) => tp.startsWith('image/'));
+            if (imgType) {
+              const blob = await clipItem.getType(imgType);
+              showToast(t('복사된 이미지를 Discord 호환 URL로 변환 중...', 'Converting copied image...'));
+              const reader = new FileReader();
+              reader.onload = async () => {
+                const upRes = await api.uploadImage(String(reader.result));
+                if (upRes?.ok && upRes.url) {
+                  if (elemId === 'large_image') variant.largeImageKey = upRes.url;
+                  else variant.smallImageKey = upRes.url;
+                  commitChange();
+                  renderCustomizerInspector(variant);
+                  showToast(t('클립보드 이미지가 즉시 적용되었습니다!', 'Clipboard image applied!'));
+                }
+              };
+              reader.readAsDataURL(blob);
+              return;
+            }
+          }
+        } catch (_) {}
+      }
+      const txt = await navigator.clipboard.readText();
+      const norm = normalizeDiscordImageUrl(txt);
+      if (!norm) {
+        showToast(t('클립보드에 복사된 이미지 링크가 없습니다.', 'No image link in clipboard.'));
+        return;
+      }
+      if (elemId === 'large_image') variant.largeImageKey = norm;
+      else if (elemId === 'small_image') variant.smallImageKey = norm;
+      commitChange();
+      renderCustomizerInspector(variant);
+      showToast(t('Discord 이미지 링크가 즉시 적용되었습니다!', 'Discord image link applied!'));
+    } catch (_) {
+      showToast(t('입력창에 Ctrl+V로 붙여넣어 주세요.', 'Please press Ctrl+V in the input box.'));
+    }
+  });
+
+  $('inputRcLocalImgFile')?.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    showToast(t('이미지 파일을 Discord 호환 URL로 업로드 중...', 'Uploading image file...'));
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const upRes = await api.uploadImage(String(reader.result));
+      if (upRes?.ok && upRes.url) {
+        if (elemId === 'large_image') variant.largeImageKey = upRes.url;
+        else if (elemId === 'small_image') variant.smallImageKey = upRes.url;
+        if (!state.customGallery.some((g) => g.url === upRes.url)) {
+          state.customGallery.unshift({ name: file.name.replace(/\.[^.]+$/, ''), url: upRes.url });
+        }
+        commitChange();
+        renderCustomizerInspector(variant);
+        renderMediaVault();
+        showToast(t('이미지 업로드 및 적용 완료!', 'Image uploaded & applied!'));
+      } else {
+        showToast(upRes?.error || '이미지 업로드 실패');
+      }
+    };
+    reader.readAsDataURL(file);
+  });
 
   if (subInput) {
     subInput.addEventListener('input', () => {
@@ -2657,7 +2957,9 @@ function bindCustomizerInspectorEvents(variant, elemId) {
           p.classList.add('hidden');
           p.closest('.rc-floating-box')?.classList.remove('dd-elevated');
         });
+        document.querySelectorAll('.btn-rc-vars-trigger').forEach((b) => b.classList.remove('active'));
         pop.classList.toggle('hidden', !willOpen);
+        btn.classList.toggle('active', willOpen);
         pop.closest('.rc-floating-box')?.classList.toggle('dd-elevated', willOpen);
       }
     });
@@ -2674,7 +2976,11 @@ function bindCustomizerInspectorEvents(variant, elemId) {
         inp.dispatchEvent(new Event('input'));
       }
       const pop = $(`rcVarsPopover-${targetId}`);
-      if (pop) pop.classList.add('hidden');
+      if (pop) {
+        pop.classList.add('hidden');
+        pop.closest('.rc-floating-box')?.classList.remove('dd-elevated');
+      }
+      document.querySelectorAll('.btn-rc-vars-trigger').forEach((b) => b.classList.remove('active'));
     });
   });
 
@@ -2747,8 +3053,9 @@ function renderLiveDiscordPreview() {
   // 1) Banner & Avatar
   const bannerEl = $('dcProfileBanner');
   if (bannerEl) {
-    if (state.identity.bannerUrl) {
-      bannerEl.style.background = `url("${state.identity.bannerUrl}") center/cover no-repeat`;
+    const resolvedBannerUrl = resolveImagePreviewUrl(state.identity.bannerUrl || '');
+    if (resolvedBannerUrl) {
+      bannerEl.style.background = `url("${resolvedBannerUrl}") center/cover no-repeat`;
     } else {
       const col = state.identity.bannerColor || '#0e0e12';
       bannerEl.style.background = `linear-gradient(135deg, ${col} 0%, #09090d 100%)`;
@@ -2765,10 +3072,11 @@ function renderLiveDiscordPreview() {
         : ''
     }`;
   }
-  if (state.identity.avatarUrl && state.identity.avatarUrl.trim()) {
+  const resolvedAvatarUrl = resolveImagePreviewUrl(state.identity.avatarUrl || '');
+  if (resolvedAvatarUrl) {
     defAvatar?.classList.add('hidden');
     if (customAvatar) {
-      customAvatar.src = state.identity.avatarUrl;
+      customAvatar.src = resolvedAvatarUrl;
       customAvatar.classList.remove('hidden');
     }
   } else {
@@ -2808,7 +3116,7 @@ function renderLiveDiscordPreview() {
     state.identity.displayName ||
     state.ipcUser?.global_name ||
     state.ipcUser?.username ||
-    'Discord 연동 대기';
+    t('Discord 연동 대기', 'Waiting for Discord');
   const userName = state.identity.username || state.ipcUser?.username || 'not_linked';
   if (dispNameEl) dispNameEl.textContent = resolveDynamicTokens(dispName);
   if (userNameEl) userNameEl.textContent = userName.startsWith('@') ? userName : `@${userName}`;
@@ -2821,8 +3129,9 @@ function renderLiveDiscordPreview() {
     const resolvedTag = resolveDynamicTokens(tagTextRaw || '').trim();
     if (resolvedTag) {
       tagPill.classList.remove('hidden');
-      const matchedOwned = (state.identity.availableServerTags || []).find(
-        (t) => t && t.tag === resolvedTag
+      const catalog = getAllDiscordServerTagCatalog();
+      const matchedOwned = catalog.find(
+        (tItem) => tItem && tItem.tag === resolvedTag
       );
       const guildId = matchedOwned?.guildId || tagVar?.guildId || state.identity.serverTagGuildId || '';
       const badgeHash = matchedOwned?.badge || state.identity.serverTagBadge || '';
@@ -2844,7 +3153,7 @@ function renderLiveDiscordPreview() {
     }
   }
 
-  // 6) Real Discord Account Badges (Zero Fake Vector Badges)
+  // 6) Official Discord Account Badges (Nitro, Boost Lv.1~9, HypeSquad, Dev, Quest, Orbs, etc.)
   const badgesBox = $('dcBadgesBox');
   if (badgesBox) {
     const realBadges = Array.isArray(state.identity.badges)
@@ -2855,7 +3164,7 @@ function renderLiveDiscordPreview() {
       badgesBox.innerHTML = realBadges
         .map(
           (b) =>
-            `<span class="dc-badge-svg" title="${escapeHtml(b.description || b.id)}"><img src="${escapeHtml(b.iconUrl)}" alt="${escapeHtml(b.id)}" style="width:16px;height:16px;object-fit:contain;display:block;" /></span>`
+            `<span class="dc-badge-svg" title="${escapeHtml(b.description || b.label || b.id)}"><img src="${escapeHtml(b.iconUrl)}" alt="${escapeHtml(b.id)}" style="width:16px;height:16px;object-fit:contain;display:block;" /></span>`
         )
         .join('');
     } else {
@@ -2874,7 +3183,7 @@ function renderLiveDiscordPreview() {
       pronEl.textContent = resolvedPron;
       pronEl.style.opacity = '1';
     } else {
-      pronEl.textContent = '대명사 (클릭하여 입력)';
+      pronEl.textContent = t('대명사 (클릭하여 입력)', 'Pronouns (Click to edit)');
       pronEl.style.opacity = '0.45';
     }
   }
@@ -2889,7 +3198,7 @@ function renderLiveDiscordPreview() {
       bioContent.textContent = resolvedBio;
       bioContent.style.opacity = '1';
     } else {
-      bioContent.textContent = '클릭하여 내 소개(Bio)를 입력하거나 Discord에서 불러오세요.';
+      bioContent.textContent = t('클릭하여 내 소개(Bio)를 입력하거나 Discord에서 불러오세요.', 'Click to edit your Bio or sync from Discord.');
       bioContent.style.opacity = '0.45';
     }
   }
@@ -2941,7 +3250,7 @@ function renderLiveDiscordPreview() {
     platIconEl.title = rpcVar.crunchyroll ? 'Crunchyroll' : platObj.label;
   }
 
-  // Media Images
+  // Media Images (Supports Discord CDN links, media.discordapp.net, mp:attachments, etc.)
   const mediaWrap = $('dcActMediaWrap');
   const largeImg = $('dcActLargeImg');
   const largeTip = $('dcActLargeTip');
@@ -2949,14 +3258,17 @@ function renderLiveDiscordPreview() {
   const smallImg = $('dcActSmallImg');
   const smallTip = $('dcActSmallTip');
 
-  if (rpcVar.largeImageKey && rpcVar.largeImageKey.trim()) {
+  const resolvedLargeUrl = resolveImagePreviewUrl(rpcVar.largeImageKey || '');
+  const resolvedSmallUrl = resolveImagePreviewUrl(rpcVar.smallImageKey || '');
+
+  if (resolvedLargeUrl) {
     mediaWrap?.classList.remove('hidden');
-    if (largeImg) largeImg.src = rpcVar.largeImageKey.trim();
+    if (largeImg) largeImg.src = resolvedLargeUrl;
     if (largeTip) largeTip.textContent = resolveDynamicTokens(rpcVar.largeImageText || rpcVar.name || '');
 
-    if (rpcVar.smallImageKey && rpcVar.smallImageKey.trim()) {
+    if (resolvedSmallUrl) {
       smallWrap?.classList.remove('hidden');
-      if (smallImg) smallImg.src = rpcVar.smallImageKey.trim();
+      if (smallImg) smallImg.src = resolvedSmallUrl;
       if (smallTip) smallTip.textContent = resolveDynamicTokens(rpcVar.smallImageText || '');
     } else {
       smallWrap?.classList.add('hidden');
@@ -2971,7 +3283,7 @@ function renderLiveDiscordPreview() {
   const stateEl = $('dcActState');
 
   if (appNameEl) {
-    appNameEl.textContent = resolvedName || '활동 이름 미설정 (클릭하여 입력)';
+    appNameEl.textContent = resolvedName || t('활동 이름 미설정 (클릭하여 입력)', 'Activity Name Not Set (Click to edit)');
     appNameEl.style.opacity = resolvedName ? '1' : '0.5';
   }
   if (detailsEl) {
@@ -3805,6 +4117,63 @@ function openVariantSettingsModal(kfIndex, vIndex) {
   }
 }
 
+async function toggleOfficialBadgeById(badgeId) {
+  if (!Array.isArray(state.identity.badges)) state.identity.badges = [];
+  const def = OFFICIAL_DISCORD_BADGES.find((b) => b.id === badgeId);
+  if (!def) return;
+
+  const existingIdx = state.identity.badges.findIndex((b) => b && b.id === badgeId);
+  let houseIdToSync = undefined;
+
+  if (existingIdx !== -1) {
+    state.identity.badges.splice(existingIdx, 1);
+    if (def.houseId) houseIdToSync = 0;
+  } else {
+    if (def.houseId) {
+      state.identity.badges = state.identity.badges.filter(
+        (b) => !['hypesquad_house_1', 'hypesquad_house_2', 'hypesquad_house_3'].includes(b?.id)
+      );
+      houseIdToSync = def.houseId;
+    }
+    state.identity.badges.push({
+      id: def.id,
+      description: state.lang === 'en' ? def.labelEn : def.label,
+      iconUrl: def.iconUrl,
+    });
+  }
+
+  persistStudioConfig();
+  renderBadgesSelector();
+  renderLiveDiscordPreview();
+
+  const applyPayload = {
+    userToken: state.discordAuth.userToken || '',
+    badges: state.identity.badges,
+  };
+  if (houseIdToSync !== undefined) {
+    applyPayload.hypesquadHouse = houseIdToSync;
+  }
+  await api.applyDiscordProfile(applyPayload);
+}
+
+function buildOfficialBadgesGridHtml(containerPrefix = 'main') {
+  const activeIds = new Set(
+    (Array.isArray(state.identity.badges) ? state.identity.badges : [])
+      .map((b) => b && b.id)
+      .filter(Boolean)
+  );
+  return OFFICIAL_DISCORD_BADGES.map((b) => {
+    const isOn = activeIds.has(b.id);
+    const labelText = state.lang === 'en' ? b.labelEn || b.label : b.label;
+    return `
+      <button type="button" class="badge-toggle-pill ${isOn ? 'active' : ''}" data-toggle-official-badge="${escapeHtml(b.id)}" data-badge-ctx="${containerPrefix}" style="cursor:pointer;gap:7px;">
+        <img src="${escapeHtml(b.iconUrl)}" alt="${escapeHtml(b.id)}" style="width:16px;height:16px;object-fit:contain;" />
+        <span>${escapeHtml(labelText)}</span>
+      </button>
+    `;
+  }).join('');
+}
+
 function openQuickIdentityModal(focusSection = 'identity') {
   if (focusSection === 'rich_presence') {
     let prof = getActiveProfile();
@@ -3824,62 +4193,53 @@ function openQuickIdentityModal(focusSection = 'identity') {
 
   let qmStatusVal = state.identity.status || 'online';
   let qmServerTagVal = state.identity.serverTagText || '';
-  const realBadges = Array.isArray(state.identity.badges)
-    ? state.identity.badges.filter((b) => b && typeof b === 'object' && b.iconUrl)
-    : [];
 
   openUniversalModal({
-    title: 'Discord 프로필 · 상태 · 실제 서버 태그 · 대명사 · 소개 실시간 편집',
-    desc: '실제 연동된 Discord 계정의 온라인 상태, 보유 서버 태그(Clan), 표시 이름, 대명사, 소개(Bio)를 실시간 제어합니다.',
+    title: t(
+      'Discord 프로필 · 상태 · 실제 서버 태그 · 공식 배지 · 소개 실시간 편집',
+      'Edit Discord Profile · Status · Server Tags · Official Badges · Bio'
+    ),
+    desc: t(
+      '실제 연동된 Discord 계정의 온라인 상태, 서버 태그(Clan), 니트로/부스트/하이프스쿼드 등 모든 공식 배지, 표시 이름, 대명사, 소개(Bio)를 실시간 제어합니다.',
+      'Control your Discord online status, real server tags (Clan), all official badges (Nitro, Boost Lv.1~9, HypeSquad, Dev), display name, pronouns, and bio.'
+    ),
     bodyHtml: `
       <div class="aux-grid-2">
         <div class="aux-field">
-          <label>표시 이름 (Display Name)</label>
-          <input type="text" class="aux-input" id="qmDisplayName" value="${escapeHtml(state.identity.displayName || '')}" placeholder="표시 이름" />
+          <label>${t('표시 이름 (Display Name)', 'Display Name')}</label>
+          <input type="text" class="aux-input" id="qmDisplayName" value="${escapeHtml(state.identity.displayName || '')}" placeholder="${t('표시 이름', 'Display Name')}" />
         </div>
         <div class="aux-field">
-          <label>온라인 상태 (Status · 실시간 변경)</label>
+          <label>${t('온라인 상태 (Status · 실시간 변경)', 'Online Status (Live Sync)')}</label>
           <div class="reborn-custom-dropdown" id="qmDropStatus"></div>
         </div>
         <div class="aux-field">
-          <label>대명사 (Pronouns)</label>
-          <input type="text" class="aux-input" id="qmPronouns" value="${escapeHtml(state.identity.pronouns || '')}" placeholder="대명사 입력" />
+          <label>${t('대명사 (Pronouns)', 'Pronouns')}</label>
+          <input type="text" class="aux-input" id="qmPronouns" value="${escapeHtml(state.identity.pronouns || '')}" placeholder="${t('대명사 입력', 'Enter pronouns')}" />
         </div>
         <div class="aux-field">
           <div style="display:flex;align-items:center;justify-content:space-between;">
-            <label style="margin:0;">실제 보유 서버 태그 (Server Tag)</label>
-            <button type="button" class="btn-adm-act gold" id="btnQmSyncRealTags" style="height:20px;padding:0 8px;font-size:10px;">Discord 동기화</button>
+            <label style="margin:0;">${t('실제 Discord 서버 태그 선택 (Server Tag)', 'Select Discord Server Tag')}</label>
+            <button type="button" class="btn-adm-act gold" id="btnQmSyncRealTags" style="height:20px;padding:0 8px;font-size:10px;">${t('Discord 동기화', 'Sync Discord')}</button>
           </div>
           <div class="reborn-custom-dropdown" id="qmDropServerTag" style="margin-top:4px;"></div>
         </div>
-        ${
-          realBadges.length > 0
-            ? `
         <div class="aux-field" style="grid-column: span 2;">
-          <label>내 Discord 계정 실제 보유 배지 (${realBadges.length}개 감지됨)</label>
-          <div class="badges-selector-row">
-            ${realBadges
-              .map(
-                (b) => `
-              <div class="badge-toggle-pill active" style="cursor:default;">
-                <img src="${escapeHtml(b.iconUrl)}" alt="" style="width:16px;height:16px;object-fit:contain;" />
-                <span>${escapeHtml(b.description || b.id)}</span>
-              </div>
-            `
-              )
-              .join('')}
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+            <label style="margin:0;">${t('공식 Discord 배지 · 니트로 · 서버 부스트 (클릭하여 장착/해제)', 'Official Discord Badges · Nitro · Server Boost (Click to toggle)')}</label>
+            <span style="font-size:11px;color:#fbbf24;">${t('클릭 시 즉시 반영', 'Instant toggle')}</span>
+          </div>
+          <div class="badges-selector-row" id="qmBadgesSelectorRow" style="max-height:155px;overflow-y:auto;padding:4px 2px;">
+            ${buildOfficialBadgesGridHtml('qm')}
           </div>
         </div>
-        `
-            : ''
-        }
         <div class="aux-field" style="grid-column: span 2;">
-          <label>커스텀 상태 메시지 (Custom Status · {} 변수 지원)</label>
-          <input type="text" class="aux-input" id="qmCustomStatus" value="${escapeHtml(state.identity.customStatusText || '')}" placeholder="상태 말풍선 텍스트 입력 (예: {spotify_track})" />
+          <label>${t('커스텀 상태 메시지 (Custom Status · {} 변수 지원)', 'Custom Status Message (Supports {} variables)')}</label>
+          <input type="text" class="aux-input" id="qmCustomStatus" value="${escapeHtml(state.identity.customStatusText || '')}" placeholder="${t('상태 말풍선 텍스트 입력 (예: {spotify_track})', 'Enter custom status (e.g. {spotify_track})')}" />
         </div>
         <div class="aux-field" style="grid-column: span 2;">
-          <label>내 소개 (Bio · {} 변수 지원)</label>
-          <textarea class="aux-input" id="qmBio" rows="3" placeholder="내 소개(Bio) 입력">${escapeHtml(state.identity.bio || '')}</textarea>
+          <label>${t('내 소개 (Bio · {} 변수 지원)', 'About Me / Bio (Supports {} variables)')}</label>
+          <textarea class="aux-input" id="qmBio" rows="3" placeholder="${t('내 소개(Bio) 입력', 'Enter your Bio')}">${escapeHtml(state.identity.bio || '')}</textarea>
         </div>
       </div>
     `,
@@ -3891,7 +4251,8 @@ function openQuickIdentityModal(focusSection = 'identity') {
       state.identity.customStatusText = ($('qmCustomStatus')?.value || '').trim();
       state.identity.bio = ($('qmBio')?.value || '').trim();
 
-      const selTagObj = (state.identity.availableServerTags || []).find(
+      const catalog = getAllDiscordServerTagCatalog();
+      const selTagObj = catalog.find(
         (x) => x && x.tag === state.identity.serverTagText
       );
       if (selTagObj) {
@@ -3934,11 +4295,25 @@ function openQuickIdentityModal(focusSection = 'identity') {
         serverTagGuildId: state.identity.serverTagGuildId,
         serverTagBadge: state.identity.serverTagBadge,
         serverTagBadgeUrl: state.identity.serverTagBadgeUrl,
+        badges: state.identity.badges,
       });
       if (state.isRpcRunning) await sendCurrentKeyframeToDiscord(true);
-      showToast('프로필, 상태, 실제 서버 태그, 대명사, 소개가 실시간 반영되었습니다!');
+      showToast(t('프로필, 상태, 서버 태그, 배지, 대명사, 소개가 실시간 반영되었습니다!', 'Profile, status, server tag, badges, pronouns & bio updated!'));
     },
   });
+
+  const bindQmBadges = () => {
+    const qmRow = $('qmBadgesSelectorRow');
+    if (!qmRow) return;
+    qmRow.querySelectorAll('[data-toggle-official-badge]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        await toggleOfficialBadgeById(btn.dataset.toggleOfficialBadge);
+        qmRow.innerHTML = buildOfficialBadgesGridHtml('qm');
+        bindQmBadges();
+      });
+    });
+  };
+  bindQmBadges();
 
   $('btnQmSyncRealTags')?.addEventListener('click', async () => {
     await triggerDiscordSyncNow();
@@ -3993,20 +4368,23 @@ function renderOwnedServerTagsManager() {
   if (!Array.isArray(state.identity.availableServerTags)) {
     state.identity.availableServerTags = [];
   }
-  const tags = state.identity.availableServerTags.filter((x) => x && x.tag && x.guildId);
-  if (tags.length === 0) {
-    listEl.innerHTML = `<span style="font-size:12px;color:#a1a1aa;">현재 감지된 실제 보유 서버 태그가 없습니다. 우측 상단 <strong>[Discord에서 내 실제 서버 태그 동기화]</strong> 버튼을 누르면 실제 적용/보유 중인 서버 태그(Clan)와 배지 아이콘이 자동으로 불러와집니다.</span>`;
+  const catalog = getAllDiscordServerTagCatalog();
+  if (catalog.length === 0) {
+    listEl.innerHTML = `<span style="font-size:12px;color:#a1a1aa;">${t('현재 감지된 서버가 없습니다. 우측 상단 [Discord에서 내 실제 서버 태그 동기화] 버튼을 누르거나 아래에 서버 초대 링크를 입력해 추가하세요.', 'No servers found. Click Sync or enter a Discord server invite link below.')}</span>`;
     return;
   }
-  listEl.innerHTML = tags
+  listEl.innerHTML = catalog
     .map((item) => {
       const isSelected = state.identity.serverTagText === item.tag;
+      const subLabel = item.guildName && item.guildName !== item.tag
+        ? `${item.isOwned ? '내 서버 · ' : ''}${item.guildName}`
+        : `Guild ID: ${item.guildId}`;
       return `
-        <div class="badge-toggle-pill ${isSelected ? 'active' : ''}" data-select-owned-tag="${escapeHtml(item.tag)}" style="gap:8px;padding:6px 12px;">
+        <div class="badge-toggle-pill ${isSelected ? 'active' : ''}" data-select-owned-tag="${escapeHtml(item.tag)}" style="gap:8px;padding:6px 12px;cursor:pointer;">
           ${getClanBadgeHtml(item.guildId, item.badge, item.badgeUrl, 16)}
           <strong style="color:#ffffff;">${escapeHtml(item.tag)}</strong>
-          <span style="font-size:11px;color:#a1a1aa;">${escapeHtml(item.guildName && item.guildName !== item.tag ? item.guildName : `Guild ID: ${item.guildId}`)}</span>
-          ${isSelected ? `<span style="font-size:10px;color:#4ade80;font-weight:700;margin-left:2px;">● 적용 중</span>` : ''}
+          <span style="font-size:11px;color:#a1a1aa;">${escapeHtml(subLabel)}</span>
+          ${isSelected ? `<span style="font-size:10px;color:#4ade80;font-weight:700;margin-left:2px;">● ${t('적용 중', 'Active')}</span>` : ''}
         </div>
       `;
     })
@@ -4015,7 +4393,7 @@ function renderOwnedServerTagsManager() {
   listEl.querySelectorAll('[data-select-owned-tag]').forEach((pill) => {
     pill.addEventListener('click', async () => {
       const tagVal = pill.dataset.selectOwnedTag || '';
-      const selTagObj = (state.identity.availableServerTags || []).find((x) => x && x.tag === tagVal);
+      const selTagObj = catalog.find((x) => x && x.tag === tagVal);
       state.identity.serverTagText = tagVal;
       state.identity.serverTagGuildId = selTagObj?.guildId || '';
       state.identity.serverTagBadge = selTagObj?.badge || '';
@@ -4038,7 +4416,7 @@ function renderOwnedServerTagsManager() {
         serverTagBadge: state.identity.serverTagBadge,
         serverTagBadgeUrl: state.identity.serverTagBadgeUrl,
       });
-      showToast(`실제 서버 태그 [${tagVal}] 장착 및 실시간 반영 완료!`);
+      showToast(t(`서버 태그 [${tagVal}] 장착 및 실시간 반영 완료!`, `Server Tag [${tagVal}] equipped!`));
     });
   });
 }
@@ -4053,6 +4431,7 @@ function syncIdentityInputsFromState() {
     idAvatarUrl: state.identity.avatarUrl || '',
     idBannerUrl: state.identity.bannerUrl || '',
     idBannerColor: state.identity.bannerColor || '#0e0e12',
+    idCustomTagTextInput: state.identity.serverTagText || '',
   };
   for (const [id, val] of Object.entries(map)) {
     const el = $(id);
@@ -4118,25 +4497,12 @@ function syncIdentityInputsFromState() {
 function renderBadgesSelector() {
   const row = $('badgesSelectorRow');
   if (!row) return;
-  const realBadges = Array.isArray(state.identity.badges)
-    ? state.identity.badges.filter((b) => b && typeof b === 'object' && b.iconUrl)
-    : [];
-
-  if (realBadges.length === 0) {
-    row.innerHTML = `<span style="font-size:12px;color:#71717a;">가짜 배지는 모두 제거되었으며, 실제 Discord 계정에 보유 중인 공식 배지가 있을 때만 자동으로 표시됩니다.</span>`;
-    return;
-  }
-
-  row.innerHTML = realBadges
-    .map(
-      (b) => `
-      <div class="badge-toggle-pill active" style="cursor:default;gap:7px;">
-        <img src="${escapeHtml(b.iconUrl)}" alt="${escapeHtml(b.id)}" style="width:16px;height:16px;object-fit:contain;" />
-        <span>${escapeHtml(b.description || b.id)}</span>
-      </div>
-    `
-    )
-    .join('');
+  row.innerHTML = buildOfficialBadgesGridHtml('identity');
+  row.querySelectorAll('[data-toggle-official-badge]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      await toggleOfficialBadgeById(btn.dataset.toggleOfficialBadge);
+    });
+  });
 }
 
 function renderCustomVariablesList() {
@@ -5298,18 +5664,22 @@ function bindGlobalEvents() {
   });
 
   $('btnCheckAutoUpdateTop')?.addEventListener('click', async () => {
-    const labelEl = $('topAutoUpdateLabel');
+    const labelEl = $('topAutoUpdateText') || $('topAutoUpdateLabel');
     if (labelEl) labelEl.textContent = 'Checking...';
-    showToast('자동 업데이트 서버에서 최신 버전을 확인 중입니다...');
+    showToast(t('자동 업데이트 서버에서 최신 버전을 확인 중입니다...', 'Checking for latest updates...'));
     const res = await api.checkUpdater();
     if (res && res.ok) {
-      if (labelEl) labelEl.textContent = `v${res.currentVersion || '5.2.0'} · Auto Update`;
-      showToast(res.message || `Reborn RPC v${res.currentVersion || '5.2.0'} 최신 버전이 적용되어 있습니다.`);
+      if (labelEl) labelEl.textContent = `v${res.currentVersion || '5.2.3'} · Auto Update`;
+      showToast(res.message || t(`Reborn RPC v${res.currentVersion || '5.2.3'} 최신 버전이 적용되어 있습니다.`, `Reborn RPC v${res.currentVersion || '5.2.3'} is up to date.`));
     } else {
-      if (labelEl) labelEl.textContent = 'v5.2 · Auto Update';
-      showToast('자동 업데이트 엔진이 정상 작동 중입니다.');
+      if (labelEl) labelEl.textContent = 'v5.2.3 · Auto Update';
+      showToast(t('자동 업데이트 엔진이 정상 작동 중입니다.', 'Auto-update engine is active.'));
     }
   });
+
+  // Language Switcher (KO / EN)
+  $('btnLangSwitchTop')?.addEventListener('click', () => toggleAppLanguage());
+  $('btnAuthLangSwitch')?.addEventListener('click', () => toggleAppLanguage());
 
   // Profile Management
   $('btnAddNewProfile')?.addEventListener('click', () => createNewProfile());
@@ -5331,7 +5701,7 @@ function bindGlobalEvents() {
     markDirty();
     persistStudioConfig();
     renderAll();
-    showToast('현재 키프레임 요소를 모두 비웠습니다.');
+    showToast(t('현재 키프레임 요소를 모두 비웠습니다.', 'Cleared all variants in the current keyframe.'));
   });
 
   // Top Bar Buttons
@@ -5351,7 +5721,7 @@ function bindGlobalEvents() {
     markDirty();
     persistStudioConfig();
     renderAll();
-    showToast(`Keyframe #${prof.keyframes.length} 추가됨`);
+    showToast(`Keyframe #${prof.keyframes.length} ${t('추가됨', 'added')}`);
   };
   $('btnAddKeyframeTop')?.addEventListener('click', addKeyframeHandler);
   $('btnAddKeyframeBottom')?.addEventListener('click', addKeyframeHandler);
@@ -5360,7 +5730,7 @@ function bindGlobalEvents() {
     state.isDirty = false;
     persistStudioConfig();
     updateProfileStatusPill();
-    showToast('프로필 및 프리셋이 로컬 디스크에 안전하게 저장되었습니다.');
+    showToast(t('프로필 및 프리셋이 로컬 디스크에 안전하게 저장되었습니다.', 'Profile and presets saved to disk.'));
   });
 
   // Start / Stop RPC Toggle Button (Send / Sent)
@@ -5399,11 +5769,11 @@ function bindGlobalEvents() {
 
   // Custom Glassmorphic Dropdown for Preview Speed
   const speedOpts = [
-    { value: '3', label: '3초 주기' },
-    { value: '5', label: '5초 주기' },
-    { value: '10', label: '10초 주기' },
-    { value: '15', label: '15초 주기' },
-    { value: '30', label: '30초 주기' },
+    { value: '3', label: t('3초 주기', '3s Interval') },
+    { value: '5', label: t('5초 주기', '5s Interval') },
+    { value: '10', label: t('10초 주기', '10s Interval') },
+    { value: '15', label: t('15초 주기', '15s Interval') },
+    { value: '30', label: t('30초 주기', '30s Interval') },
   ];
   renderCustomDropdown(
     $('customDropPreviewSpeed'),
@@ -5424,7 +5794,7 @@ function bindGlobalEvents() {
     persistStudioConfig();
     closeRpcCustomizer();
     if (state.isRpcRunning) sendCurrentKeyframeToDiscord(true);
-    showToast('Rich Presence 설정이 저장되었습니다.');
+    showToast(t('Rich Presence 설정이 저장되었습니다.', 'Rich Presence settings saved.'));
   });
 
   $('rcPresetNameInput')?.addEventListener('input', (e) => {
@@ -5438,7 +5808,7 @@ function bindGlobalEvents() {
 
   $('btnRcNewPreset')?.addEventListener('click', () => {
     const v = getCustomizerTargetVariant();
-    createNewRpcPresetFromVariant(v, state.customizer.kfIndex, state.customizer.variantIndex);
+    createNewRpcPresetForVariant(v, state.customizer.kfIndex, state.customizer.variantIndex);
   });
 
   $('btnRcDeletePreset')?.addEventListener('click', () => {
@@ -5480,7 +5850,7 @@ function bindGlobalEvents() {
   // Discord Link View Controls
   $('btnDlConnectIpc')?.addEventListener('click', async () => {
     const cid = sanitizeClientId($('dlClientIdInput')?.value);
-    showToast('로컬 Discord IPC 재연결 중...');
+    showToast(t('로컬 Discord IPC 재연결 중...', 'Reconnecting local Discord IPC...'));
     await api.connect(cid);
     await triggerDiscordSyncNow();
   });
@@ -5496,10 +5866,13 @@ function bindGlobalEvents() {
     await triggerDiscordSyncNow();
   });
 
-  // Identity View Controls + Owned Server Tag Management
+  // Identity View Controls + Owned Server Tag Management + Server Lookup + Badge Presets
   const bindIdInput = (id, key) => {
     $(id)?.addEventListener('input', (e) => {
-      state.identity[key] = e.target.value;
+      const rawVal = e.target.value;
+      state.identity[key] = key === 'avatarUrl' || key === 'bannerUrl'
+        ? normalizeDiscordImageUrl(rawVal)
+        : rawVal;
       persistStudioConfig();
       renderLiveDiscordPreview();
       scheduleAutoLiveSync();
@@ -5514,13 +5887,198 @@ function bindGlobalEvents() {
   bindIdInput('idBannerUrl', 'bannerUrl');
   bindIdInput('idBannerColor', 'bannerColor');
 
+  // Paste Discord Image Link for Avatar & Banner
+  $('btnPasteAvatarUrl')?.addEventListener('click', async () => {
+    try {
+      const txt = await navigator.clipboard.readText();
+      const norm = normalizeDiscordImageUrl(txt);
+      if (!norm) {
+        showToast(t('클립보드에 복사된 이미지 링크가 없습니다.', 'No image URL in clipboard.'));
+        return;
+      }
+      state.identity.avatarUrl = norm;
+      if ($('idAvatarUrl')) $('idAvatarUrl').value = norm;
+      persistStudioConfig();
+      renderLiveDiscordPreview();
+      showToast(t('프로필 아바타 이미지 링크가 적용되었습니다!', 'Avatar URL applied!'));
+    } catch (_) {
+      showToast(t('입력창에 Ctrl+V로 붙여넣어 주세요.', 'Please press Ctrl+V in the input box.'));
+    }
+  });
+
+  $('btnPasteBannerUrl')?.addEventListener('click', async () => {
+    try {
+      const txt = await navigator.clipboard.readText();
+      const norm = normalizeDiscordImageUrl(txt);
+      if (!norm) {
+        showToast(t('클립보드에 복사된 배너 링크가 없습니다.', 'No banner URL in clipboard.'));
+        return;
+      }
+      state.identity.bannerUrl = norm;
+      if ($('idBannerUrl')) $('idBannerUrl').value = norm;
+      persistStudioConfig();
+      renderLiveDiscordPreview();
+      showToast(t('배너 이미지 링크가 적용되었습니다!', 'Banner URL applied!'));
+    } catch (_) {
+      showToast(t('입력창에 Ctrl+V로 붙여넣어 주세요.', 'Please press Ctrl+V in the input box.'));
+    }
+  });
+
+  // Lookup any real Discord Server by Invite Link or Guild ID + Custom Tag Text
+  $('btnLookupDiscordGuild')?.addEventListener('click', async () => {
+    const query = ($('idLookupGuildInput')?.value || '').trim();
+    const customTag = ($('idCustomTagTextInput')?.value || '').trim();
+
+    if (!query && customTag) {
+      state.identity.serverTagText = customTag;
+      const kf = getActiveKeyframe();
+      const tagVar = kf?.variants?.find((x) => x.type === 'server_tag');
+      if (tagVar) tagVar.text = customTag;
+      persistStudioConfig();
+      syncIdentityInputsFromState();
+      renderAll();
+      await api.applyDiscordProfile({
+        userToken: state.discordAuth.userToken || '',
+        serverTagText: customTag,
+        serverTagGuildId: state.identity.serverTagGuildId || '',
+        serverTagBadgeUrl: state.identity.serverTagBadgeUrl || '',
+      });
+      showToast(t(`서버 태그 텍스트 [${customTag}] 적용 완료!`, `Server tag [${customTag}] applied!`));
+      return;
+    }
+
+    if (!query) {
+      showToast(t('Discord 서버 초대 링크(discord.gg/...) 또는 서버 ID를 입력해 주세요.', 'Enter a Discord invite link or Server ID.'));
+      return;
+    }
+
+    showToast(t('Discord 공식 서버에서 서버 정보 및 태그를 조회 중...', 'Looking up Discord server...'));
+    const res = await api.lookupDiscordGuild(query);
+    if (res && res.ok && res.server) {
+      const srv = res.server;
+      const finalTag = customTag || srv.tag || srv.guildName.slice(0, 6);
+      const entry = {
+        tag: finalTag,
+        guildId: srv.guildId,
+        guildName: srv.guildName,
+        badge: srv.badge || '',
+        badgeUrl: srv.badgeUrl || '',
+      };
+      if (!Array.isArray(state.identity.availableServerTags)) {
+        state.identity.availableServerTags = [];
+      }
+      const existIdx = state.identity.availableServerTags.findIndex(
+        (x) => x && (x.guildId === entry.guildId || x.tag === entry.tag)
+      );
+      if (existIdx !== -1) state.identity.availableServerTags[existIdx] = entry;
+      else state.identity.availableServerTags.unshift(entry);
+
+      state.identity.serverTagText = entry.tag;
+      state.identity.serverTagGuildId = entry.guildId;
+      state.identity.serverTagBadge = entry.badge;
+      state.identity.serverTagBadgeUrl = entry.badgeUrl;
+
+      const kf = getActiveKeyframe();
+      const tagVar = kf?.variants?.find((x) => x.type === 'server_tag');
+      if (tagVar) {
+        tagVar.text = entry.tag;
+        tagVar.guildId = entry.guildId;
+        tagVar.badgeUrl = entry.badgeUrl;
+      }
+
+      if ($('idLookupGuildInput')) $('idLookupGuildInput').value = '';
+      persistStudioConfig();
+      syncIdentityInputsFromState();
+      renderAll();
+      await api.applyDiscordProfile({
+        userToken: state.discordAuth.userToken || '',
+        serverTagText: entry.tag,
+        serverTagGuildId: entry.guildId,
+        serverTagBadge: entry.badge,
+        serverTagBadgeUrl: entry.badgeUrl,
+      });
+      showToast(t(`실제 Discord 서버 [${srv.guildName}] 태그(${entry.tag}) 추가 및 장착 완료!`, `Added & equipped server tag [${entry.tag}] from ${srv.guildName}!`));
+    } else {
+      showToast(res?.error || t('해당 Discord 서버를 찾을 수 없습니다.', 'Could not find that Discord server.'));
+    }
+  });
+
+  // Badge Preset Buttons in Identity View
+  $('btnBadgesPresetNitroBoost')?.addEventListener('click', async () => {
+    const pickedIds = ['premium', 'nitro_opal', 'guild_booster_lvl9', 'hypesquad_house_1', 'active_developer', 'verified_developer', 'early_supporter', 'quest_completed', 'orb'];
+    state.identity.badges = OFFICIAL_DISCORD_BADGES.filter((b) => pickedIds.includes(b.id)).map((b) => ({
+      id: b.id,
+      description: state.lang === 'en' ? b.labelEn : b.label,
+      iconUrl: b.iconUrl,
+    }));
+    persistStudioConfig();
+    renderBadgesSelector();
+    renderLiveDiscordPreview();
+    await api.applyDiscordProfile({
+      userToken: state.discordAuth.userToken || '',
+      badges: state.identity.badges,
+    });
+    showToast(t('Nitro + 24개월 부스트 Lv.9 + 핵심 배지 세트가 장착되었습니다!', 'Nitro + Boost Lv.9 + Core badges equipped!'));
+  });
+
+  $('btnBadgesPresetAll')?.addEventListener('click', async () => {
+    const pickedIds = [
+      'staff',
+      'partner',
+      'certified_moderator',
+      'hypesquad',
+      'hypesquad_house_1',
+      'bug_hunter_level_2',
+      'active_developer',
+      'verified_developer',
+      'early_supporter',
+      'premium',
+      'nitro_opal',
+      'guild_booster_lvl9',
+      'quest_completed',
+      'orb',
+      'legacy_username',
+    ];
+    state.identity.badges = OFFICIAL_DISCORD_BADGES.filter((b) => pickedIds.includes(b.id)).map((b) => ({
+      id: b.id,
+      description: state.lang === 'en' ? b.labelEn : b.label,
+      iconUrl: b.iconUrl,
+    }));
+    persistStudioConfig();
+    renderBadgesSelector();
+    renderLiveDiscordPreview();
+    await api.applyDiscordProfile({
+      userToken: state.discordAuth.userToken || '',
+      badges: state.identity.badges,
+    });
+    showToast(t('디스코드 공식 컬렉션 배지가 모두 장착되었습니다!', 'All official Discord badges equipped!'));
+  });
+
+  $('btnBadgesPresetSyncReal')?.addEventListener('click', async () => {
+    await triggerDiscordSyncNow();
+    showToast(t('내 Discord 계정의 실제 보유 배지로 동기화했습니다.', 'Synced real badges from your Discord account.'));
+  });
+
+  $('btnBadgesPresetClear')?.addEventListener('click', async () => {
+    state.identity.badges = [];
+    persistStudioConfig();
+    renderBadgesSelector();
+    renderLiveDiscordPreview();
+    await api.applyDiscordProfile({
+      userToken: state.discordAuth.userToken || '',
+      badges: [],
+    });
+    showToast(t('모든 배지를 해제했습니다.', 'Cleared all badges.'));
+  });
+
   $('btnSyncOwnedTagsFromDiscord')?.addEventListener('click', async () => {
     await triggerDiscordSyncNow();
-    showToast('Discord 계정에서 실제 보유 서버 태그 및 프로필을 동기화했습니다.');
+    showToast(t('Discord 계정에서 실제 보유 서버 태그 및 가입 서버 목록을 동기화했습니다.', 'Synced real server tags & joined servers from Discord.'));
   });
 
   $('btnApplyIdentityToDiscord')?.addEventListener('click', async () => {
-    const selTagObj = (state.identity.availableServerTags || []).find((x) => x.tag === state.identity.serverTagText);
+    const catalog = getAllDiscordServerTagCatalog();
+    const selTagObj = catalog.find((x) => x.tag === state.identity.serverTagText);
     await api.applyDiscordProfile({
       userToken: state.discordAuth.userToken || '',
       displayName: state.identity.displayName,
@@ -5532,10 +6090,31 @@ function bindGlobalEvents() {
       serverTagGuildId: selTagObj?.guildId || state.identity.serverTagGuildId || '',
       serverTagBadge: selTagObj?.badge || state.identity.serverTagBadge || '',
       serverTagBadgeUrl: selTagObj?.badgeUrl || state.identity.serverTagBadgeUrl || '',
+      badges: state.identity.badges,
     });
     if (state.isRpcRunning) await sendCurrentKeyframeToDiscord(true);
-    showToast('Discord 프로필 · 상태 · 대명사 · 소개 · 서버 태그가 즉시 반영되었습니다!');
+    showToast(t('Discord 프로필 · 상태 · 대명사 · 소개 · 서버 태그 · 배지가 즉시 반영되었습니다!', 'Discord profile, status, pronouns, bio, server tag & badges applied!'));
   });
+
+  // Automation Checkboxes Binding
+  const bindSettingCheckbox = (chkId, settingKey) => {
+    const chk = $(chkId);
+    if (!chk) return;
+    chk.addEventListener('change', () => {
+      state.settings[settingKey] = Boolean(chk.checked);
+      persistStudioConfig();
+      showToast(
+        chk.checked
+          ? t('자동화 옵션이 활성화되었습니다.', 'Automation option enabled.')
+          : t('자동화 옵션이 비활성화되었습니다.', 'Automation option disabled.')
+      );
+    });
+  };
+  bindSettingCheckbox('chkAutoMacro', 'liveMacroSync');
+  bindSettingCheckbox('chkKeyframeLoop', 'keyframeLiveLoop');
+  bindSettingCheckbox('chkProcessWatcher', 'processWatcher');
+  bindSettingCheckbox('chkAutoReconnect', 'autoReconnect');
+  bindSettingCheckbox('chkSyncPreviewToDiscord', 'syncPreviewToDiscord');
 
   // Right Column Preview Click-to-Edit & Perspective
   document.querySelectorAll('.persp-chip').forEach((chip) => {
@@ -5584,7 +6163,7 @@ function bindGlobalEvents() {
     a.href = URL.createObjectURL(blob);
     a.download = `reborn-rpc-backup-${Date.now()}.json`;
     a.click();
-    showToast('JSON 백업 파일이 다운로드되었습니다.');
+    showToast(t('JSON 백업 파일이 다운로드되었습니다.', 'JSON backup file downloaded.'));
   });
   $('inputImportJsonFile')?.addEventListener('change', (e) => {
     const file = e.target.files?.[0];
@@ -5600,9 +6179,9 @@ function bindGlobalEvents() {
         persistStudioConfig();
         renderAll();
         $('profileSettingsModal')?.classList.add('hidden');
-        showToast('백업 데이터를 성공적으로 불러왔습니다.');
+        showToast(t('백업 데이터를 성공적으로 불러왔습니다.', 'Backup data restored successfully.'));
       } catch (_err) {
-        showToast('올바른 JSON 백업 파일이 아닙니다.');
+        showToast(t('올바른 JSON 백업 파일이 아닙니다.', 'Invalid JSON backup file.'));
       }
     };
     reader.readAsText(file);
@@ -5615,7 +6194,7 @@ function bindGlobalEvents() {
     state.activeKeyframeIndex = 0;
     renderAll();
     $('profileSettingsModal')?.classList.add('hidden');
-    showToast('모든 프로필과 프리셋이 깨끗한 초기 상태로 리셋되었습니다.');
+    showToast(t('모든 프로필과 프리셋이 깨끗한 초기 상태로 리셋되었습니다.', 'All profiles and presets have been reset.'));
   });
 
   // Telemetry & Custom Macros
@@ -5623,7 +6202,7 @@ function bindGlobalEvents() {
     card.addEventListener('click', () => {
       const token = card.dataset.copyMacro;
       navigator.clipboard?.writeText(token);
-      showToast(`${token} 변수가 클립보드에 복사되었습니다.`);
+      showToast(`${token} ${t('변수가 클립보드에 복사되었습니다.', 'copied to clipboard.')}`);
     });
   });
 
@@ -5631,7 +6210,7 @@ function bindGlobalEvents() {
     const k = ($('customVarKeyInput')?.value || '').trim().replace(/[^a-zA-Z0-9_]/g, '');
     const v = ($('customVarValInput')?.value || '').trim();
     if (!k) {
-      showToast('변수 이름을 입력해 주세요.');
+      showToast(t('변수 이름을 입력해 주세요.', 'Please enter a variable name.'));
       return;
     }
     const exist = state.customVariables.find((x) => x.key === k);
@@ -5642,12 +6221,12 @@ function bindGlobalEvents() {
     persistStudioConfig();
     renderCustomVariablesList();
     renderLiveDiscordPreview();
-    showToast(`{${k}} 커스텀 변수가 추가되었습니다.`);
+    showToast(`{${k}} ${t('커스텀 변수가 추가되었습니다.', 'custom variable added.')}`);
   });
 
   // Process Scan
   $('btnScanProcesses')?.addEventListener('click', async () => {
-    showToast('실행 중인 윈도우 프로세스를 스캔 중입니다...');
+    showToast(t('실행 중인 윈도우 프로세스를 스캔 중입니다...', 'Scanning running Windows processes...'));
     const res = await api.scanProcesses();
     const list = $('scannedProcessesList');
     const hdr = $('scannedProcessesHeader');
@@ -5661,13 +6240,13 @@ function bindGlobalEvents() {
         btn.addEventListener('click', () => {
           const prof = getActiveProfile();
           if (!prof) {
-            showToast('먼저 프로필을 생성해 주세요.');
+            showToast(t('먼저 프로필을 생성해 주세요.', 'Please create a profile first.'));
             return;
           }
           prof.processTrigger = btn.dataset.pickExe;
           persistStudioConfig();
           renderProcessTriggersTable();
-          showToast(`"${prof.name}" 프로필에 ${prof.processTrigger} 트리거가 지정되었습니다.`);
+          showToast(`"${prof.name}" → ${prof.processTrigger} ${t('트리거가 지정되었습니다.', 'trigger assigned.')}`);
         });
       });
     }
@@ -5684,9 +6263,10 @@ function bindGlobalEvents() {
 
   $('btnAddCustomGallery')?.addEventListener('click', () => {
     const name = ($('customGalleryNameInput')?.value || '').trim() || `Custom Media ${state.customGallery.length + 1}`;
-    const url = ($('customGalleryUrlInput')?.value || '').trim();
-    if (!url || !/^https?:\/\//i.test(url)) {
-      showToast('올바른 https:// 이미지 또는 GIF URL을 입력하세요.');
+    const rawUrl = ($('customGalleryUrlInput')?.value || '').trim();
+    const url = normalizeDiscordImageUrl(rawUrl);
+    if (!url || (!/^https?:\/\//i.test(url) && !url.startsWith('mp:'))) {
+      showToast(t('올바른 https:// 이미지, GIF 또는 Discord 이미지 링크를 입력하세요.', 'Please enter a valid https:// or Discord image URL.'));
       return;
     }
     state.customGallery.unshift({ name, url });
@@ -5694,14 +6274,14 @@ function bindGlobalEvents() {
     if ($('customGalleryUrlInput')) $('customGalleryUrlInput').value = '';
     persistStudioConfig();
     renderMediaVault();
-    showToast(`"${name}" 이미지가 보관함에 추가되었습니다.`);
+    showToast(`"${name}" ${t('이미지가 보관함에 추가되었습니다.', 'added to Media Vault.')}`);
   });
 
   $('btnVaultFetchAssets')?.addEventListener('click', async () => {
     const cid = sanitizeClientId($('vaultClientIdInput')?.value);
     const grid = $('vaultAppAssetsGrid');
     if (!grid) return;
-    grid.innerHTML = `<div class="vault-empty">Discord Developer Portal에서 에셋을 조회 중입니다...</div>`;
+    grid.innerHTML = `<div class="vault-empty">${t('Discord Developer Portal에서 에셋을 조회 중입니다...', 'Fetching assets from Discord Developer Portal...')}</div>`;
     const res = await api.fetchDiscordApp(cid);
     if (res?.ok && Array.isArray(res.assets) && res.assets.length > 0) {
       grid.innerHTML = res.assets
@@ -5720,14 +6300,14 @@ function bindGlobalEvents() {
         });
       });
     } else {
-      grid.innerHTML = `<div class="vault-empty">등록된 앱 전용 에셋이 없거나 조회할 수 없습니다. 직접 이미지 URL을 입력해 사용할 수 있습니다.</div>`;
+      grid.innerHTML = `<div class="vault-empty">${t('등록된 앱 전용 에셋이 없거나 조회할 수 없습니다. 직접 이미지 URL을 입력해 사용할 수 있습니다.', 'No Developer Portal assets found. You can paste any Discord or HTTPS image URL directly.')}</div>`;
     }
   });
 
   // Console View Controls
   $('btnReconnectIpcNow')?.addEventListener('click', async () => {
     await api.connect(VALID_DEFAULT_CLIENT_ID);
-    showToast('Discord IPC 재연결 요청을 보냈습니다.');
+    showToast(t('Discord IPC 재연결 요청을 보냈습니다.', 'Sent Discord IPC reconnect request.'));
   });
   $('btnClearConsoleLogs')?.addEventListener('click', () => {
     if ($('ipcLogViewer')) $('ipcLogViewer').innerHTML = '';
@@ -5735,14 +6315,117 @@ function bindGlobalEvents() {
   $('btnCopyRawJson')?.addEventListener('click', () => {
     const txt = $('rawJsonViewer')?.textContent || '';
     navigator.clipboard?.writeText(txt);
-    showToast('Raw JSON 페이로드가 복사되었습니다.');
+    showToast(t('Raw JSON 페이로드가 복사되었습니다.', 'Raw JSON payload copied.'));
   });
+}
+
+// ============================================================================
+// 12. Korean (한국어) & English (영어) Language Switcher (i18n)
+// ============================================================================
+function toggleAppLanguage() {
+  state.lang = state.lang === 'en' ? 'ko' : 'en';
+  localStorage.setItem('reborn_lang', state.lang);
+  applyLanguageUI();
+  syncIdentityInputsFromState();
+  renderAll();
+  showToast(
+    state.lang === 'en'
+      ? 'Language switched to English (US).'
+      : '언어가 한국어(KO)로 전환되었습니다.'
+  );
+}
+
+function applyLanguageUI() {
+  const isEn = state.lang === 'en';
+  if ($('topLangSwitchText')) $('topLangSwitchText').textContent = isEn ? 'EN / 한국어' : '한국어 / EN';
+  if ($('authLangSwitchText')) $('authLangSwitchText').textContent = isEn ? 'EN / 한국어' : '한국어 / EN';
+
+  // Left Rail Tooltips
+  const railTitles = {
+    studio: isEn ? 'Keyframe Studio (Main)' : '키프레임 스튜디오 (메인)',
+    'discord-link': isEn ? 'Discord Real-Time Sync' : 'Discord 계정 실시간 연동 & 동기화',
+    identity: isEn ? 'Profile · Server Tags · Badges · Bio' : '프로필 · 상태 · 대명사 · 소개 · 서버 태그',
+    vault: isEn ? 'Media & GIF Vault' : '미디어 / GIF 에셋 보관함',
+    telemetry: isEn ? 'Live System Macros ({cpu}, {ram})' : '실시간 시스템 변수 ({cpu}, {ram}, {time})',
+    triggers: isEn ? 'Game / App Auto Triggers (.exe)' : '게임/앱 프로세스 자동 감지 (.exe)',
+    console: isEn ? 'IPC Pipe & Raw JSON Console' : 'IPC 파이프 & Raw JSON 콘솔',
+  };
+  document.querySelectorAll('.rail-btn[data-view]').forEach((btn) => {
+    const v = btn.dataset.view;
+    if (railTitles[v]) btn.title = railTitles[v];
+  });
+
+  // Top Stage Buttons & Perspective
+  if ($('btnAddNewProfile')) $('btnAddNewProfile').innerHTML = `<span>+</span> ${isEn ? 'Add new' : 'Add new'}`;
+  if ($('profileSearchInput')) $('profileSearchInput').placeholder = isEn ? 'Search profiles...' : 'Search profiles...';
+  if ($('btnSyncFromDiscordTop')) {
+    const sp = $('btnSyncFromDiscordTop').querySelector('span');
+    if (sp) sp.textContent = isEn ? 'Sync Discord' : 'Discord 동기화';
+  }
+  if ($('btnAddKeyframeTop')) {
+    const sp = $('btnAddKeyframeTop').querySelector('span');
+    if (sp) sp.textContent = isEn ? 'Add Keyframe' : 'Add Keyframe';
+  }
+  if ($('btnOpenQuickIdentityModal')) {
+    $('btnOpenQuickIdentityModal').textContent = isEn ? 'Edit Profile / Status / Bio' : '프로필/상태/소개 편집';
+  }
+  if ($('btnClearDiscordRpc')) {
+    $('btnClearDiscordRpc').textContent = isEn ? 'Stop RPC' : 'RPC 끄기';
+  }
+
+  document.querySelectorAll('.persp-chip').forEach((chip) => {
+    if (chip.dataset.persp === 'other') {
+      chip.textContent = isEn ? 'Others View (Buttons Active)' : '타인 시점 (버튼 활성)';
+    } else if (chip.dataset.persp === 'self') {
+      chip.textContent = isEn ? 'My View' : '본인 시점';
+    }
+  });
+
+  // Auth Gate Translations
+  const authTabs = document.querySelectorAll('.auth-tab-btn');
+  authTabs.forEach((b) => {
+    if (b.dataset.authTab === 'login') b.textContent = isEn ? 'Sign In' : '로그인 (Sign In)';
+    if (b.dataset.authTab === 'register') b.textContent = isEn ? 'Register with License' : '라이센스 회원가입 (Register)';
+  });
+  if ($('btnSubmitLogin')) {
+    const sp = $('btnSubmitLogin').querySelector('span');
+    if (sp) sp.textContent = isEn ? 'Sign In & Launch Studio' : '로그인 및 스튜디오 시작';
+  }
+  if ($('btnSubmitRegister')) {
+    const sp = $('btnSubmitRegister').querySelector('span');
+    if (sp) sp.textContent = isEn ? 'Activate License & Register' : '라이센스 등록 및 회원가입 완료';
+  }
+  if ($('btnAuthOpenAdmin')) {
+    const sp = $('btnAuthOpenAdmin').querySelector('span');
+    if (sp) sp.textContent = isEn ? 'Admin License Panel' : '관리자 라이센스 패널';
+  }
+
+  // View Headers
+  const viewTitleMap = {
+    '#view-discord-link .aux-title': isEn ? 'Discord Real-Time Account Link & Profile Control' : 'Discord 실시간 계정 연동 & 프로필 제어',
+    '#view-identity .aux-title': isEn ? 'Discord Profile · Status · Server Tags · Official Badges · Bio' : 'Discord 프로필 · 상태 · 대명사 · 내 소개(Bio) · 서버 태그',
+    '#view-vault .aux-title': isEn ? 'Media & GIF Asset Vault' : '미디어 & GIF 에셋 보관함 (Media Vault)',
+    '#view-telemetry .aux-title': isEn ? 'Live System Telemetry & Dynamic Variables ({})' : '실시간 시스템 텔레메트리 & 동적 변수 ({})',
+    '#view-triggers .aux-title': isEn ? 'Process Auto-Detection & Automation (.exe)' : '게임 / 프로그램 프로세스 자동 감지 (.exe) & 자동화',
+    '#view-console .aux-title': isEn ? 'IPC Pipe Diagnostics & Raw Activity JSON' : 'IPC 파이프 진단 & Raw Activity JSON',
+  };
+  for (const [sel, txt] of Object.entries(viewTitleMap)) {
+    const el = document.querySelector(sel);
+    if (el) el.textContent = txt;
+  }
+
+  if ($('btnApplyIdentityToDiscord')) {
+    $('btnApplyIdentityToDiscord').textContent = isEn
+      ? 'Apply Profile & Status to Discord Now'
+      : 'Discord에 프로필/상태 즉시 적용';
+  }
 }
 
 async function bootRebornStudio() {
   initSoniqVisualEngine();
   initCustomContextMenu();
   bindGlobalEvents();
+  applyLanguageUI();
 
   const initRes = await api.getInitData();
   if (initRes && initRes.ok) {
@@ -5755,6 +6438,12 @@ async function bootRebornStudio() {
     if (Array.isArray(cfg.customVariables)) state.customVariables = cfg.customVariables;
     if (cfg.settings) state.settings = { ...state.settings, ...cfg.settings };
     if (Array.isArray(cfg.customGallery)) state.customGallery = cfg.customGallery;
+
+    if ($('chkAutoMacro')) $('chkAutoMacro').checked = state.settings.liveMacroSync !== false;
+    if ($('chkKeyframeLoop')) $('chkKeyframeLoop').checked = state.settings.keyframeLiveLoop !== false;
+    if ($('chkProcessWatcher')) $('chkProcessWatcher').checked = Boolean(state.settings.processWatcher);
+    if ($('chkAutoReconnect')) $('chkAutoReconnect').checked = state.settings.autoReconnect !== false;
+    if ($('chkSyncPreviewToDiscord')) $('chkSyncPreviewToDiscord').checked = state.settings.syncPreviewToDiscord !== false;
 
     state.isRpcRunning = Boolean(initRes.isRpcRunning);
     state.isLiveSent = Boolean(initRes.isRpcRunning);
