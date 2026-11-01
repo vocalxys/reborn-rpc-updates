@@ -1155,8 +1155,8 @@ function renderProfilesList() {
       <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(prof.name)}</span>
       <div class="profile-item-meta">
         ${kfCount > 1 ? `<span class="kf-count-tag">${kfCount} KF</span>` : ''}
-        <button class="profile-del-mini" title="프로필 설정" data-cfg-prof="${escapeHtml(prof.id)}">⚙</button>
-        <button class="profile-del-mini" title="프로필 삭제" data-del-prof="${escapeHtml(prof.id)}">✕</button>
+        <button class="profile-del-mini" title="프로필 설정" data-cfg-prof="${escapeHtml(prof.id)}">${VECTOR_ICONS.settings}</button>
+        <button class="profile-del-mini" title="프로필 삭제" data-del-prof="${escapeHtml(prof.id)}">${VECTOR_ICONS.close}</button>
       </div>
     `;
 
@@ -1255,7 +1255,7 @@ function renderKeyframesStack() {
         <h3>Reborn RPC 스튜디오에 오신 것을 환영합니다</h3>
         <p>
           초기 프리셋 없이 깨끗한 상태에서 시작합니다.<br/>
-          새 프로필을 생성하거나 Discord 계정과 동기화하여 상태, 대명사, 소개, 서버 태그, Rich Presence를 자유롭게 커스텀하세요.
+          새 프로필을 생성하거나 Discord 계정과 동기화하여 상태, 대명사, 소개, 공식 배지, Rich Presence를 자유롭게 커스텀하세요.
         </p>
         <div class="reborn-empty-actions">
           <button type="button" class="btn-gold-sm glass-shimmer" id="btnHeroCreateFirstProfile" style="height:40px;padding:0 20px;font-size:13px;">
@@ -1320,7 +1320,6 @@ function renderKeyframesStack() {
           ${renderVariantMenuOption('pronouns', 'Pronouns', existingTypes, kfIndex)}
           ${renderVariantMenuOption('bio', 'Bio', existingTypes, kfIndex)}
           ${renderVariantMenuOption('rich_presence', 'Rich Presence', existingTypes, kfIndex)}
-          ${renderVariantMenuOption('server_tag', 'Server Tag', existingTypes, kfIndex)}
         </div>
       </div>
 
@@ -2500,9 +2499,13 @@ function renderCustomizerInspector(variant) {
     bodyHtml = `
       ${buildFloatingInputBox('Large Image URL (Discord 이미지 링크 복사/붙여넣기 가능)', 'rcFieldMain', variant.largeImageKey || '', 'https://cdn.discordapp.com/... 또는 이미지/GIF 주소 입력')}
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 8px;">
-        <button type="button" class="btn-adm-act gold" id="btnRcPasteDiscordImg" style="height:30px;padding:0 12px;font-size:11.5px;">📋 클립보드 디스코드 이미지/링크 붙여넣기</button>
-        <label class="btn-adm-act" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;cursor:pointer;">
-          📁 내 PC 이미지/GIF 파일 업로드
+        <button type="button" class="btn-adm-act gold" id="btnRcPasteDiscordImg" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;gap:6px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>클립보드 디스코드 이미지/링크 붙여넣기</span>
+        </button>
+        <label class="btn-adm-act" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span>내 PC 이미지/GIF 파일 업로드</span>
           <input type="file" id="inputRcLocalImgFile" accept="image/*" class="hidden" />
         </label>
       </div>
@@ -2541,9 +2544,13 @@ function renderCustomizerInspector(variant) {
     bodyHtml = `
       ${buildFloatingInputBox('Small Badge Image URL (Discord 이미지 링크 복사/붙여넣기 가능)', 'rcFieldMain', variant.smallImageKey || '', 'https://cdn.discordapp.com/... 우측 하단 원형 배지 이미지 URL')}
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 8px;">
-        <button type="button" class="btn-adm-act gold" id="btnRcPasteDiscordImg" style="height:30px;padding:0 12px;font-size:11.5px;">📋 클립보드 디스코드 이미지/링크 붙여넣기</button>
-        <label class="btn-adm-act" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;cursor:pointer;">
-          📁 내 PC 이미지/GIF 파일 업로드
+        <button type="button" class="btn-adm-act gold" id="btnRcPasteDiscordImg" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;gap:6px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>클립보드 디스코드 이미지/링크 붙여넣기</span>
+        </button>
+        <label class="btn-adm-act" style="height:30px;padding:0 12px;font-size:11.5px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span>내 PC 이미지/GIF 파일 업로드</span>
           <input type="file" id="inputRcLocalImgFile" accept="image/*" class="hidden" />
         </label>
       </div>
@@ -4196,12 +4203,12 @@ function openQuickIdentityModal(focusSection = 'identity') {
 
   openUniversalModal({
     title: t(
-      'Discord 프로필 · 상태 · 실제 서버 태그 · 공식 배지 · 소개 실시간 편집',
-      'Edit Discord Profile · Status · Server Tags · Official Badges · Bio'
+      'Discord 프로필 · 상태 · 공식 배지 · 소개 실시간 편집',
+      'Edit Discord Profile · Status · Official Badges · Bio'
     ),
     desc: t(
-      '실제 연동된 Discord 계정의 온라인 상태, 서버 태그(Clan), 니트로/부스트/하이프스쿼드 등 모든 공식 배지, 표시 이름, 대명사, 소개(Bio)를 실시간 제어합니다.',
-      'Control your Discord online status, real server tags (Clan), all official badges (Nitro, Boost Lv.1~9, HypeSquad, Dev), display name, pronouns, and bio.'
+      '실제 연동된 Discord 계정의 온라인 상태, 니트로/부스트/하이프스쿼드 등 모든 공식 배지, 표시 이름, 대명사, 소개(Bio)를 실시간 제어합니다.',
+      'Control your Discord online status, all official badges (Nitro, Boost Lv.1~9, HypeSquad, Dev), display name, pronouns, and bio.'
     ),
     bodyHtml: `
       <div class="aux-grid-2">
@@ -4213,16 +4220,9 @@ function openQuickIdentityModal(focusSection = 'identity') {
           <label>${t('온라인 상태 (Status · 실시간 변경)', 'Online Status (Live Sync)')}</label>
           <div class="reborn-custom-dropdown" id="qmDropStatus"></div>
         </div>
-        <div class="aux-field">
+        <div class="aux-field" style="grid-column: span 2;">
           <label>${t('대명사 (Pronouns)', 'Pronouns')}</label>
           <input type="text" class="aux-input" id="qmPronouns" value="${escapeHtml(state.identity.pronouns || '')}" placeholder="${t('대명사 입력', 'Enter pronouns')}" />
-        </div>
-        <div class="aux-field">
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <label style="margin:0;">${t('실제 Discord 서버 태그 선택 (Server Tag)', 'Select Discord Server Tag')}</label>
-            <button type="button" class="btn-adm-act gold" id="btnQmSyncRealTags" style="height:20px;padding:0 8px;font-size:10px;">${t('Discord 동기화', 'Sync Discord')}</button>
-          </div>
-          <div class="reborn-custom-dropdown" id="qmDropServerTag" style="margin-top:4px;"></div>
         </div>
         <div class="aux-field" style="grid-column: span 2;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
@@ -4518,7 +4518,7 @@ function renderCustomVariablesList() {
       <div class="badge-toggle-pill active" style="gap:8px;">
         <code>{${escapeHtml(cv.key)}}</code>
         <span>= ${escapeHtml(cv.value)}</span>
-        <span data-del-cvar="${idx}" style="cursor:pointer;color:#f87171;margin-left:4px;">✕</span>
+        <span data-del-cvar="${idx}" style="cursor:pointer;color:#f87171;margin-left:4px;display:inline-flex;align-items:center;width:12px;height:12px;">${VECTOR_ICONS.close}</span>
       </div>
     `
     )
@@ -5404,27 +5404,117 @@ function renderAdminTables() {
   }
 }
 
+function switchCategorySubSection(group, targetId) {
+  if (!group) return;
+  const navBtns = document.querySelectorAll(`.cat-nav-item[data-subnav-group="${group}"]`);
+  navBtns.forEach((b) => {
+    b.classList.toggle('active', b.dataset.subnavTarget === targetId);
+  });
+
+  const subSecs = document.querySelectorAll(`[data-subsec-group="${group}"]`);
+  subSecs.forEach((sec) => {
+    if (targetId === 'all' || sec.dataset.subsecId === targetId) {
+      sec.classList.remove('hidden');
+      sec.classList.add('subsec-fade-in');
+    } else {
+      sec.classList.add('hidden');
+      sec.classList.remove('subsec-fade-in');
+    }
+  });
+}
+
+function switchStudioCategory(viewId, subTarget = null) {
+  if (!viewId) return;
+
+  // 1. Update far-left rail active button
+  document.querySelectorAll('.rail-btn[data-view]').forEach((b) => {
+    b.classList.toggle('active', b.dataset.view === viewId);
+  });
+
+  // 2. Switch center studio view
+  document.querySelectorAll('.studio-view').forEach((sec) => sec.classList.add('hidden'));
+  $(`view-${viewId}`)?.classList.remove('hidden');
+
+  // 3. Switch left sidebar category menu pane!
+  const allPanes = document.querySelectorAll('.sidebar-cat-pane[data-sidebar-for]');
+  allPanes.forEach((pane) => {
+    pane.classList.toggle('hidden', pane.dataset.sidebarFor !== viewId);
+  });
+
+  // 4. Update sidebar brand subtitle & contextual top-bar controls
+  const isEn = state.lang === 'en';
+  const catSubTitles = {
+    keyframes: isEn ? 'Keyframe & RPC Studio' : '키프레임 & RPC 스튜디오',
+    'discord-link': isEn ? 'Discord Live Link' : 'Discord 실시간 연동 센터',
+    identity: isEn ? 'Profile · Status · Badges' : '프로필 · 상태 · 공식 배지',
+    telemetry: isEn ? 'Live Telemetry & Macros' : '실시간 동적 변수 & 매크로',
+    triggers: isEn ? 'Smart Process Triggers' : '스마트 자동화 & 게임 감지',
+    vault: isEn ? 'Media & GIF Vault' : '커스텀 미디어 & 에셋 보관함',
+    console: isEn ? 'Raw JSON & IPC Console' : '실시간 IPC 패킷 & 로그 콘솔',
+  };
+  if ($('sidebarCategorySubTitle') && catSubTitles[viewId]) {
+    $('sidebarCategorySubTitle').textContent = catSubTitles[viewId];
+  }
+
+  // Only show Keyframe-specific buttons in top bar when in keyframes studio
+  const isKfView = viewId === 'keyframes';
+  $('btnAddKeyframeTop')?.classList.toggle('hidden', !isKfView);
+  $('btnResetOrClearStage')?.classList.toggle('hidden', !isKfView);
+
+  if (subTarget) {
+    switchCategorySubSection(viewId, subTarget);
+  }
+
+  if (viewId === 'identity') syncIdentityInputsFromState();
+  if (viewId === 'triggers') renderProcessTriggersTable();
+  if (viewId === 'vault') renderMediaVault();
+  if (viewId === 'console') updateRawJsonViewer();
+}
+
 function bindGlobalEvents() {
-  // Left Rail View Switching
+  // Left Rail View Switching + Category-Specific Sidebar Menu Switching
   document.querySelectorAll('.rail-btn[data-view]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const viewId = btn.dataset.view;
-      document.querySelectorAll('.rail-btn[data-view]').forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.studio-view').forEach((sec) => sec.classList.add('hidden'));
-      $(`view-${viewId}`)?.classList.remove('hidden');
-      if (viewId === 'identity') syncIdentityInputsFromState();
-      if (viewId === 'triggers') renderProcessTriggersTable();
-      if (viewId === 'vault') renderMediaVault();
-      if (viewId === 'console') updateRawJsonViewer();
+      switchStudioCategory(btn.dataset.view);
     });
   });
 
+  // Category Sidebar Sub-Menu Navigation
+  document.querySelectorAll('.cat-nav-item[data-subnav-group]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const group = btn.dataset.subnavGroup;
+      const target = btn.dataset.subnavTarget || 'all';
+      switchCategorySubSection(group, target);
+    });
+  });
+
+  // Category Sidebar Cross-View Shortcut Buttons
+  document.querySelectorAll('.cat-nav-item[data-switch-view]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetView = btn.dataset.switchView;
+      if (targetView) switchStudioCategory(targetView);
+    });
+  });
+
+  // Category Sidebar Footer Quick Action Buttons
+  $('btnSidebarSyncDiscordNow')?.addEventListener('click', () => {
+    $('btnSyncDiscordNowView')?.click();
+  });
+  $('btnSidebarApplyIdentity')?.addEventListener('click', () => {
+    $('btnApplyIdentityToDiscord')?.click();
+  });
+  $('btnSidebarScanProc')?.addEventListener('click', () => {
+    $('btnScanProcesses')?.click();
+  });
+  $('btnSidebarCopyJson')?.addEventListener('click', () => {
+    $('btnCopyRawJson')?.click();
+  });
+
   $('btnRailDiscordLink')?.addEventListener('click', () => {
-    document.querySelector('.rail-btn[data-view="discord-link"]')?.click();
+    switchStudioCategory('discord-link');
   });
   $('topIpcPill')?.addEventListener('click', () => {
-    document.querySelector('.rail-btn[data-view="discord-link"]')?.click();
+    switchStudioCategory('discord-link');
   });
 
   // Admin Panel Openers
@@ -5665,14 +5755,14 @@ function bindGlobalEvents() {
 
   $('btnCheckAutoUpdateTop')?.addEventListener('click', async () => {
     const labelEl = $('topAutoUpdateText') || $('topAutoUpdateLabel');
-    if (labelEl) labelEl.textContent = 'Checking...';
+    if (labelEl) labelEl.textContent = '...';
     showToast(t('자동 업데이트 서버에서 최신 버전을 확인 중입니다...', 'Checking for latest updates...'));
     const res = await api.checkUpdater();
     if (res && res.ok) {
-      if (labelEl) labelEl.textContent = `v${res.currentVersion || '5.2.3'} · Auto Update`;
-      showToast(res.message || t(`Reborn RPC v${res.currentVersion || '5.2.3'} 최신 버전이 적용되어 있습니다.`, `Reborn RPC v${res.currentVersion || '5.2.3'} is up to date.`));
+      if (labelEl) labelEl.textContent = `v${res.currentVersion || '5.2.4'}`;
+      showToast(res.message || t(`Reborn RPC v${res.currentVersion || '5.2.4'} 최신 버전이 적용되어 있습니다.`, `Reborn RPC v${res.currentVersion || '5.2.4'} is up to date.`));
     } else {
-      if (labelEl) labelEl.textContent = 'v5.2.3 · Auto Update';
+      if (labelEl) labelEl.textContent = 'v5.2.4';
       showToast(t('자동 업데이트 엔진이 정상 작동 중입니다.', 'Auto-update engine is active.'));
     }
   });
@@ -6337,14 +6427,14 @@ function toggleAppLanguage() {
 
 function applyLanguageUI() {
   const isEn = state.lang === 'en';
-  if ($('topLangSwitchText')) $('topLangSwitchText').textContent = isEn ? 'EN / 한국어' : '한국어 / EN';
+  if ($('topLangSwitchText')) $('topLangSwitchText').textContent = isEn ? 'EN' : 'KR';
   if ($('authLangSwitchText')) $('authLangSwitchText').textContent = isEn ? 'EN / 한국어' : '한국어 / EN';
 
   // Left Rail Tooltips
   const railTitles = {
-    studio: isEn ? 'Keyframe Studio (Main)' : '키프레임 스튜디오 (메인)',
+    keyframes: isEn ? 'Keyframe Studio (Main)' : '키프레임 스튜디오 (메인)',
     'discord-link': isEn ? 'Discord Real-Time Sync' : 'Discord 계정 실시간 연동 & 동기화',
-    identity: isEn ? 'Profile · Server Tags · Badges · Bio' : '프로필 · 상태 · 대명사 · 소개 · 서버 태그',
+    identity: isEn ? 'Profile · Official Badges · Bio' : '프로필 · 상태 · 대명사 · 소개 · 공식 배지',
     vault: isEn ? 'Media & GIF Vault' : '미디어 / GIF 에셋 보관함',
     telemetry: isEn ? 'Live System Macros ({cpu}, {ram})' : '실시간 시스템 변수 ({cpu}, {ram}, {time})',
     triggers: isEn ? 'Game / App Auto Triggers (.exe)' : '게임/앱 프로세스 자동 감지 (.exe)',
@@ -6356,26 +6446,26 @@ function applyLanguageUI() {
   });
 
   // Top Stage Buttons & Perspective
-  if ($('btnAddNewProfile')) $('btnAddNewProfile').innerHTML = `<span>+</span> ${isEn ? 'Add new' : 'Add new'}`;
-  if ($('profileSearchInput')) $('profileSearchInput').placeholder = isEn ? 'Search profiles...' : 'Search profiles...';
+  if ($('btnAddNewProfile')) $('btnAddNewProfile').innerHTML = `<span>+</span> ${isEn ? 'Add new' : '새 프로필'}`;
+  if ($('profileSearchInput')) $('profileSearchInput').placeholder = isEn ? 'Search profiles...' : '프로필 검색...';
   if ($('btnSyncFromDiscordTop')) {
     const sp = $('btnSyncFromDiscordTop').querySelector('span');
-    if (sp) sp.textContent = isEn ? 'Sync Discord' : 'Discord 동기화';
+    if (sp) sp.textContent = isEn ? 'Sync' : '동기화';
   }
   if ($('btnAddKeyframeTop')) {
     const sp = $('btnAddKeyframeTop').querySelector('span');
-    if (sp) sp.textContent = isEn ? 'Add Keyframe' : 'Add Keyframe';
+    if (sp) sp.textContent = isEn ? '+ Keyframe' : '+ 키프레임';
   }
   if ($('btnOpenQuickIdentityModal')) {
-    $('btnOpenQuickIdentityModal').textContent = isEn ? 'Edit Profile / Status / Bio' : '프로필/상태/소개 편집';
+    $('btnOpenQuickIdentityModal').textContent = isEn ? 'Edit Profile / Bio' : '프로필/소개 편집';
   }
   if ($('btnClearDiscordRpc')) {
-    $('btnClearDiscordRpc').textContent = isEn ? 'Stop RPC' : 'RPC 끄기';
+    $('btnClearDiscordRpc').textContent = isEn ? 'Stop RPC' : '활동 끄기';
   }
 
   document.querySelectorAll('.persp-chip').forEach((chip) => {
     if (chip.dataset.persp === 'other') {
-      chip.textContent = isEn ? 'Others View (Buttons Active)' : '타인 시점 (버튼 활성)';
+      chip.textContent = isEn ? 'Others View' : '타인 시점';
     } else if (chip.dataset.persp === 'self') {
       chip.textContent = isEn ? 'My View' : '본인 시점';
     }
@@ -6403,7 +6493,7 @@ function applyLanguageUI() {
   // View Headers
   const viewTitleMap = {
     '#view-discord-link .aux-title': isEn ? 'Discord Real-Time Account Link & Profile Control' : 'Discord 실시간 계정 연동 & 프로필 제어',
-    '#view-identity .aux-title': isEn ? 'Discord Profile · Status · Server Tags · Official Badges · Bio' : 'Discord 프로필 · 상태 · 대명사 · 내 소개(Bio) · 서버 태그',
+    '#view-identity .aux-title': isEn ? 'Discord Profile · Status · Official Badges · Bio' : 'Discord 프로필 · 상태 · 대명사 · 내 소개(Bio) · 공식 배지',
     '#view-vault .aux-title': isEn ? 'Media & GIF Asset Vault' : '미디어 & GIF 에셋 보관함 (Media Vault)',
     '#view-telemetry .aux-title': isEn ? 'Live System Telemetry & Dynamic Variables ({})' : '실시간 시스템 텔레메트리 & 동적 변수 ({})',
     '#view-triggers .aux-title': isEn ? 'Process Auto-Detection & Automation (.exe)' : '게임 / 프로그램 프로세스 자동 감지 (.exe) & 자동화',
