@@ -169,6 +169,7 @@ class RPCEngineCore extends EventEmitter {
     this.isRpcRunning = false;
     this.liveProfileId = null;
     this.liveKeyframeIndex = 0;
+    this.lastLiveActivityConfig = null;
     this.keyframeTimer = null;
     this.macroTimer = null;
     this.processTimer = null;
@@ -515,35 +516,43 @@ class RPCEngineCore extends EventEmitter {
           // Optional profile endpoint
         }
 
-        // Discover ALL real Server Tags across the user's joined Discord servers
+        // Discover ALL real Server Tags & Joined Discord Servers across the user's account
         try {
           const guildsRes = await discordApiRequest('GET', '/users/@me/guilds?with_counts=true', tokenToUse);
           if (Array.isArray(guildsRes)) {
             const candidateGuilds = [];
+            const joinedGuilds = [];
             for (const g of guildsRes) {
+              const guildIconUrl = g.icon
+                ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${String(g.icon).startsWith('a_') ? 'gif' : 'png'}?size=64`
+                : '';
               const directTag = g.clan?.tag || g.profile?.tag || g.tag || null;
               const directBadge = g.clan?.badge || g.profile?.badge_hash || g.profile?.badge || '';
+              joinedGuilds.push({
+                id: g.id,
+                name: g.name || 'Discord Server',
+                icon: g.icon || '',
+                iconUrl: guildIconUrl,
+                features: Array.isArray(g.features) ? g.features : [],
+                memberCount: g.approximate_member_count || 0,
+                tag: directTag || '',
+                badge: directBadge || '',
+              });
               if (directTag) {
                 availableServerTags = this.mergeOwnedServerTag(availableServerTags, {
                   tag: directTag,
                   guildId: g.id,
                   guildName: g.name || directTag,
                   badge: directBadge,
-                  badgeUrl: buildClanBadgeUrl(g.id, directBadge),
+                  badgeUrl: buildClanBadgeUrl(g.id, directBadge) || guildIconUrl,
                 });
-              } else if (
-                Array.isArray(g.features) &&
-                (g.features.includes('CLAN') ||
-                  g.features.includes('GUILD_TAGS') ||
-                  g.features.includes('ENABLED_MODERATION_EXPERIENCE_FOR_NON_COMMUNITY') ||
-                  g.features.includes('COMMUNITY'))
-              ) {
-                candidateGuilds.push(g);
+              } else {
+                candidateGuilds.push({ ...g, guildIconUrl });
               }
             }
 
-            // Probe up to 16 candidate guilds in parallel for their guild profile tag
-            const toProbe = candidateGuilds.slice(0, 16);
+            // Probe up to 35 guilds in parallel for their guild profile / Clan tag
+            const toProbe = candidateGuilds.slice(0, 35);
             await Promise.all(
               toProbe.map(async (g) => {
                 try {
@@ -555,14 +564,39 @@ class RPCEngineCore extends EventEmitter {
                       guildId: g.id,
                       guildName: g.name || gp.name || gp.tag,
                       badge: bHash,
-                      badgeUrl: buildClanBadgeUrl(g.id, bHash),
+                      badgeUrl: buildClanBadgeUrl(g.id, bHash) || g.guildIconUrl,
                     });
+                    const jg = joinedGuilds.find((x) => x.id === g.id);
+                    if (jg) {
+                      jg.tag = gp.tag;
+                      jg.badge = bHash;
+                    }
                   }
                 } catch {
-                  // Guild does not have a public/member profile tag
+                  // Guild does not have a clan profile tag
                 }
               })
             );
+
+            // Also add all joined Discord servers into availableServerTags so user can pick from their real server list
+            for (const jg of joinedGuilds) {
+              const shortTag =
+                jg.tag ||
+                String(jg.name || '')
+                  .replace(/[^\p{L}\p{N}]/gu, '')
+                  .slice(0, 4)
+                  .toUpperCase() ||
+                'TAG';
+              availableServerTags = this.mergeOwnedServerTag(availableServerTags, {
+                tag: shortTag,
+                guildId: jg.id,
+                guildName: jg.name,
+                badge: jg.badge || '',
+                badgeUrl: (jg.badge ? buildClanBadgeUrl(jg.id, jg.badge) : '') || jg.iconUrl || '',
+                isClanTag: Boolean(jg.tag),
+              });
+            }
+            currentIdentity.joinedGuilds = joinedGuilds;
           }
         } catch {
           // Optional guild discovery
@@ -621,6 +655,161 @@ class RPCEngineCore extends EventEmitter {
     };
   }
 
+  async lookupDiscordServerByInviteOrId(rawInput) {
+    const clean = String(rawInput || '').trim();
+    if (!clean) {
+      throw new Error('Discord 서버 초대 링크(discord.gg/...) 또는 서버 ID를 입력해 주세요.');
+    }
+
+    const state = this.store.getState();
+    const token = String(state.discordAuth?.userToken || '').trim();
+    const currentIdentity = { ...(state.identity || {}) };
+    let availableServerTags = Array.isArray(currentIdentity.availableServerTags)
+      ? [...currentIdentity.availableServerTags]
+      : [];
+
+    // Check if it's an invite link or code (e.g. https://discord.gg/xxxx or xxxx)
+    const inviteMatch =
+      clean.match(/(?:discord\.gg|discord(?:app)?\.com\/invite)\/([a-zA-Z0-9_-]+)/i) ||
+      (!/^\d{15,22}$/.test(clean) ? [null, clean.replace(/^\/+/, '')] : null);
+
+    let guildData = null;
+
+    if (inviteMatch && inviteMatch[1]) {
+      const code = inviteMatch[1];
+      const invRes = await httpsJsonRequest(
+        'discord.com',
+        `/api/v9/invites/${encodeURIComponent(code)}?with_counts=true&with_expiration=true`,
+        'GET',
+        token ? { Authorization: token } : {},
+        null,
+        6500
+      );
+      if (invRes && invRes.guild) {
+        const g = invRes.guild;
+        const prof = invRes.profile || g.profile || g.clan || {};
+        const tag =
+          prof.tag ||
+          g.tag ||
+          String(g.name || '')
+            .replace(/[^\p{L}\p{N}]/gu, '')
+            .slice(0, 4)
+            .toUpperCase() ||
+          'TAG';
+        const badgeHash = prof.badge_hash || prof.badge || '';
+        const iconUrl = g.icon
+          ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${String(g.icon).startsWith('a_') ? 'gif' : 'png'}?size=64`
+          : '';
+        guildData = {
+          tag,
+          guildId: String(g.id),
+          guildName: g.name || tag,
+          badge: badgeHash,
+          badgeUrl: buildClanBadgeUrl(g.id, badgeHash) || iconUrl,
+        };
+      }
+    } else if (/^\d{15,22}$/.test(clean)) {
+      const guildId = clean;
+      if (token) {
+        try {
+          const gp = await discordApiRequest('GET', `/guilds/${guildId}/profile`, token);
+          if (gp) {
+            const bHash = gp.badge_hash || gp.badge || '';
+            const iconUrl = gp.icon_hash
+              ? `https://cdn.discordapp.com/icons/${guildId}/${gp.icon_hash}.png?size=64`
+              : '';
+            const tag =
+              gp.tag ||
+              String(gp.name || '')
+                .replace(/[^\p{L}\p{N}]/gu, '')
+                .slice(0, 4)
+                .toUpperCase() ||
+              'TAG';
+            guildData = {
+              tag,
+              guildId,
+              guildName: gp.name || tag,
+              badge: bHash,
+              badgeUrl: buildClanBadgeUrl(guildId, bHash) || iconUrl,
+            };
+          }
+        } catch {
+          // Fallback to widget or guild endpoint
+        }
+        if (!guildData) {
+          try {
+            const g = await discordApiRequest('GET', `/guilds/${guildId}`, token);
+            if (g && g.id) {
+              const iconUrl = g.icon
+                ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png?size=64`
+                : '';
+              const tag =
+                String(g.name || '')
+                  .replace(/[^\p{L}\p{N}]/gu, '')
+                  .slice(0, 4)
+                  .toUpperCase() || 'TAG';
+              guildData = {
+                tag,
+                guildId: String(g.id),
+                guildName: g.name || tag,
+                badge: '',
+                badgeUrl: iconUrl,
+              };
+            }
+          } catch {
+            // Ignore
+          }
+        }
+      }
+      if (!guildData) {
+        try {
+          const w = await httpsJsonRequest('discord.com', `/api/v9/guilds/${guildId}/widget.json`, 'GET', {}, null, 5000);
+          if (w && w.id) {
+            const tag =
+              String(w.name || '')
+                .replace(/[^\p{L}\p{N}]/gu, '')
+                .slice(0, 4)
+                .toUpperCase() || 'TAG';
+            guildData = {
+              tag,
+              guildId: String(w.id),
+              guildName: w.name || tag,
+              badge: '',
+              badgeUrl: '',
+            };
+          }
+        } catch {
+          // Widget disabled; register guildId so user can still select it
+          guildData = {
+            tag: `G${guildId.slice(-3)}`,
+            guildId,
+            guildName: `Discord Server (${guildId})`,
+            badge: '',
+            badgeUrl: '',
+          };
+        }
+      }
+    }
+
+    if (!guildData) {
+      throw new Error('해당 Discord 서버 정보를 찾을 수 없습니다. 유효한 초대 링크(discord.gg/...) 또는 서버 ID를 확인해 주세요.');
+    }
+
+    availableServerTags = this.mergeOwnedServerTag(availableServerTags, guildData);
+    currentIdentity.availableServerTags = availableServerTags;
+    currentIdentity.serverTagText = guildData.tag;
+    currentIdentity.serverTagGuildId = guildData.guildId;
+    currentIdentity.serverTagBadge = guildData.badge || '';
+    currentIdentity.serverTagBadgeUrl = guildData.badgeUrl || '';
+
+    const updated = this.store.updateState({ identity: currentIdentity });
+    return {
+      ok: true,
+      guild: guildData,
+      identity: updated.identity,
+    };
+  }
+
   async applyDiscordProfileFields(fields = {}) {
     const state = this.store.getState();
     const token = String(
@@ -661,6 +850,9 @@ class RPCEngineCore extends EventEmitter {
     if (resolvedStatus !== undefined) nextIdentity.status = resolvedStatus;
     if (resolvedCustomStatus !== undefined) nextIdentity.customStatusText = resolvedCustomStatus;
     if (resolvedCustomEmoji !== undefined) nextIdentity.customStatusEmoji = resolvedCustomEmoji;
+    if (Array.isArray(fields.badges)) {
+      nextIdentity.badges = fields.badges.filter((b) => b && typeof b === 'object' && b.id && b.iconUrl);
+    }
 
     let targetTagObj = null;
     let shouldPatchClan = false;
@@ -685,11 +877,18 @@ class RPCEngineCore extends EventEmitter {
           ) || null;
 
         if (targetTagObj) {
-          nextIdentity.serverTagText = targetTagObj.tag;
+          nextIdentity.serverTagText = reqTag || targetTagObj.tag;
           nextIdentity.serverTagGuildId = targetTagObj.guildId;
-          nextIdentity.serverTagBadge = targetTagObj.badge || '';
+          nextIdentity.serverTagBadge = fields.serverTagBadge || targetTagObj.badge || '';
           nextIdentity.serverTagBadgeUrl =
-            targetTagObj.badgeUrl || buildClanBadgeUrl(targetTagObj.guildId, targetTagObj.badge);
+            fields.serverTagBadgeUrl ||
+            targetTagObj.badgeUrl ||
+            buildClanBadgeUrl(targetTagObj.guildId, targetTagObj.badge);
+        } else {
+          nextIdentity.serverTagText = reqTag;
+          if (reqGuildId) nextIdentity.serverTagGuildId = reqGuildId;
+          if (fields.serverTagBadge !== undefined) nextIdentity.serverTagBadge = fields.serverTagBadge;
+          if (fields.serverTagBadgeUrl !== undefined) nextIdentity.serverTagBadgeUrl = fields.serverTagBadgeUrl;
         }
       }
     }
@@ -701,6 +900,7 @@ class RPCEngineCore extends EventEmitter {
       userPatched: false,
       settingsPatched: false,
       clanPatched: false,
+      hypesquadPatched: false,
       needToken: !token,
       errors: [],
     };
@@ -775,6 +975,22 @@ class RPCEngineCore extends EventEmitter {
           appliedRest.clanPatched = true;
         } catch (err) {
           appliedRest.errors.push(`서버 태그 변경 실패: ${err.message}`);
+        }
+      }
+
+      // 5) Patch HypeSquad House Badge on Discord (POST /hypesquad/online) if toggled
+      if (fields.hypesquadHouse !== undefined) {
+        try {
+          const houseNum = Number(fields.hypesquadHouse);
+          if ([1, 2, 3].includes(houseNum)) {
+            await discordApiRequest('POST', '/hypesquad/online', token, { house_id: houseNum });
+            appliedRest.hypesquadPatched = true;
+          } else if (houseNum === 0) {
+            await discordApiRequest('DELETE', '/hypesquad/online', token);
+            appliedRest.hypesquadPatched = true;
+          }
+        } catch (err) {
+          appliedRest.errors.push(`HypeSquad 배지 변경 실패: ${err.message}`);
         }
       }
     }
@@ -1062,20 +1278,30 @@ class RPCEngineCore extends EventEmitter {
       if (
         this.isRpcRunning &&
         this.rpcClient.connected &&
-        this.rpcClient.ready &&
-        this.liveProfileId
+        this.rpcClient.ready
       ) {
-        const currentProfile = (this.store.getState().profiles || []).find(
-          (p) => p.id === this.liveProfileId
-        );
-        if (currentProfile) {
-          const cfg = this.extractActivityConfig(currentProfile, this.liveKeyframeIndex);
+        let cfg = null;
+        if (this.liveProfileId) {
+          const currentProfile = (this.store.getState().profiles || []).find(
+            (p) => p.id === this.liveProfileId
+          );
+          if (currentProfile) {
+            cfg = this.extractActivityConfig(currentProfile, this.liveKeyframeIndex);
+          }
+        }
+        if (!cfg && this.lastLiveActivityConfig) {
+          cfg = {
+            ...this.lastLiveActivityConfig,
+            _sessionStartMs: this.sessionStartMs,
+            _appStartMs: this.sysMonitor.appStartTime,
+          };
+        }
+        if (cfg) {
           const needsFreezeTick =
-            cfg &&
-            (cfg.timestampMode === 'fixed' ||
-              Boolean(cfg.freezeTimer) ||
-              (cfg.timestampMode === 'unlimited' && cfg.freezeTimer !== false));
-          if (cfg && (settings.liveMacroSync || needsFreezeTick)) {
+            cfg.timestampMode === 'fixed' ||
+            Boolean(cfg.freezeTimer) ||
+            (cfg.timestampMode === 'unlimited' && cfg.freezeTimer !== false);
+          if (settings.liveMacroSync !== false || needsFreezeTick) {
             try {
               await this.rpcClient.setActivity(cfg, vars);
             } catch {
