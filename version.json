@@ -1,7 +1,7 @@
 {
-  "version": "5.2.0",
-  "notes": "Reborn RPC v5.2.0 공식 클라우드 라이센스 & 자동 업데이트 연동",
-  "publishedAt": 1793501712594,
+  "version": "5.2.1",
+  "notes": "Reborn RPC v5.2.1 실시간 클라우드 라이센스 & HWID 즉시 동기화 패치",
+  "publishedAt": 1793516415955,
   "files": {
     "src/renderer/app.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/app.js",
     "src/renderer/index.html": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/index.html",
