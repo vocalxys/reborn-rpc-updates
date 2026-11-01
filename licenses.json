@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1793501712613,
+  "updatedAt": 1793516427650,
   "licenses": [
     {
       "id": "lic-1793468075809-0-avjb",
@@ -17,5 +17,18 @@
       "activatedAt": 1793468091487,
       "expiresAt": null
     }
-  ]
+  ],
+  "users": [
+    {
+      "id": "usr-1793468091487-yva8",
+      "username": "sxlvlrt",
+      "passwordHash": "7b39fd7cd3bec0a395e422e95783d5a628dcb1d4d2217d2797cfd846ad383932",
+      "licenseKey": "REBORN-MECA-UYMS-E78G",
+      "boundHwid": "HWID-012B-0A26-D5B2-DC42",
+      "suspended": false,
+      "createdAt": 1793468091487,
+      "lastLoginAt": 1793468523098
+    }
+  ],
+  "auditLogs": []
 }
