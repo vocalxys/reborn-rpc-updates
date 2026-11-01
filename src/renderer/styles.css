@@ -6181,12 +6181,16 @@ button,
   border-color: rgba(251, 146, 60, 0.55) !important;
 }
 
-/* Fix Screenshot 4: Dynamic Variables {} Popover Width, Spacing & Scrolling */
+/* Fix Screenshot 4: Dynamic Variables {} Popover Width, Spacing & Scrolling (Only Open on Click!) */
 .rc-floating-box {
   position: relative !important;
 }
 
-.rc-vars-popover {
+.rc-vars-popover.hidden {
+  display: none !important;
+}
+
+.rc-vars-popover:not(.hidden) {
   position: absolute !important;
   top: calc(100% + 6px) !important;
   right: 0 !important;
@@ -6205,6 +6209,12 @@ button,
     0 24px 60px rgba(0, 0, 0, 0.96),
     0 0 24px rgba(56, 189, 248, 0.18) !important;
   z-index: 9999 !important;
+}
+
+.btn-rc-vars-trigger.active {
+  background: rgba(56, 189, 248, 0.22) !important;
+  border-color: rgba(56, 189, 248, 0.75) !important;
+  color: #38bdf8 !important;
 }
 
 .rc-var-option {
@@ -6283,6 +6293,10 @@ button,
   .admin-stats-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
+}
+
+.hidden {
+  display: none !important;
 }
 
 
