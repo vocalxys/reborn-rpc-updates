@@ -8,8 +8,14 @@ const { AutoUpdater } = require('./auto-updater');
 
 const PORT = 4789;
 const rendererDir = path.join(__dirname, '../renderer');
-const engine = new RPCEngineCore(path.join(process.cwd(), 'data'));
-const autoUpdater = new AutoUpdater(path.join(process.cwd(), 'data'));
+const localDataDir = path.join(process.cwd(), 'data');
+const resolvedDataDir =
+  process.env.REBORN_DATA_DIR ||
+  (fs.existsSync(path.join(localDataDir, 'reborn-rpc-v5.json'))
+    ? localDataDir
+    : path.join(require('os').homedir(), 'AppData', 'Roaming', 'RebornRPC', 'data'));
+const engine = new RPCEngineCore(resolvedDataDir);
+const autoUpdater = new AutoUpdater(resolvedDataDir);
 
 const sseClients = new Set();
 
@@ -150,10 +156,11 @@ const server = http.createServer(async (req, res) => {
       const body = await readJsonBody(req);
       engine.licenseManager.verifyAdmin(body.adminPassword);
       const pubRes = await autoUpdater.publishUpdate(body);
-      engine.licenseManager.addAuditLog(
+      engine.licenseManager.appendAuditLog(
         'PUBLISH_UPDATE',
         `새 버전 v${pubRes.currentVersion} 자동 업데이트 배포 완료${pubRes.githubResult ? ` (GitHub: ${pubRes.githubResult.owner}/${pubRes.githubResult.repo})` : ' (자체 업데이트 서버)'}`
       );
+      await engine.licenseManager.saveAndSyncCloud();
       sendJson(res, 200, pubRes);
       return;
     }
@@ -169,14 +176,14 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/auth/register' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const session = engine.licenseManager.registerUser(body);
+      const session = await engine.licenseManager.registerUser(body);
       sendJson(res, 200, { ok: true, ...session });
       return;
     }
 
     if (pathname === '/api/auth/login' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const session = engine.licenseManager.loginUser(body);
+      const session = await engine.licenseManager.loginUser(body);
       sendJson(res, 200, { ok: true, ...session });
       return;
     }
@@ -190,7 +197,7 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/admin/overview' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const overview = engine.licenseManager.getAdminOverview(body.adminPassword);
+      const overview = await engine.licenseManager.getAdminOverview(body.adminPassword);
       overview.engineStatus = {
         connected: engine.rpcClient.connected,
         isRpcRunning: engine.isRpcRunning,
@@ -206,49 +213,49 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/admin/create-licenses' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const result = engine.licenseManager.createLicenses(body.adminPassword, body);
+      const result = await engine.licenseManager.createLicenses(body.adminPassword, body);
       sendJson(res, 200, result);
       return;
     }
 
     if (pathname === '/api/admin/bulk-extend' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const result = engine.licenseManager.bulkExtendLicenses(body.adminPassword, body);
+      const result = await engine.licenseManager.bulkExtendLicenses(body.adminPassword, body);
       sendJson(res, 200, result);
       return;
     }
 
     if (pathname === '/api/admin/clear-audit-logs' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const result = engine.licenseManager.clearAuditLogs(body.adminPassword);
+      const result = await engine.licenseManager.clearAuditLogs(body.adminPassword);
       sendJson(res, 200, result);
       return;
     }
 
     if (pathname === '/api/admin/modify-license' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const result = engine.licenseManager.extendOrModifyLicense(body.adminPassword, body);
+      const result = await engine.licenseManager.extendOrModifyLicense(body.adminPassword, body);
       sendJson(res, 200, result);
       return;
     }
 
     if (pathname === '/api/admin/reset-license' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const result = engine.licenseManager.resetLicense(body.adminPassword, body);
+      const result = await engine.licenseManager.resetLicense(body.adminPassword, body);
       sendJson(res, 200, result);
       return;
     }
 
     if (pathname === '/api/admin/delete-license' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const result = engine.licenseManager.deleteLicense(body.adminPassword, body);
+      const result = await engine.licenseManager.deleteLicense(body.adminPassword, body);
       sendJson(res, 200, result);
       return;
     }
 
     if (pathname === '/api/admin/manage-user' && req.method === 'POST') {
       const body = await readJsonBody(req);
-      const result = engine.licenseManager.manageUser(body.adminPassword, body);
+      const result = await engine.licenseManager.manageUser(body.adminPassword, body);
       sendJson(res, 200, result);
       return;
     }
@@ -471,14 +478,18 @@ function launchDesktopAppWindow(url) {
   }
 }
 
+global.__rebornRpcServer = server;
+
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
     const url = `http://127.0.0.1:${PORT}`;
-    console.log(`Reborn RPC already running at ${url}, opening window...`);
+    console.log(`Reborn RPC already running at ${url}`);
     if (process.argv.includes('--launch')) {
       launchDesktopAppWindow(url);
     }
-    process.exit(0);
+    if (!process.versions || !process.versions.electron) {
+      process.exit(0);
+    }
   } else {
     console.error(err);
   }
