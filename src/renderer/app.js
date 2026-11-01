@@ -2218,12 +2218,19 @@ function renderCustomizerInspector(variant) {
     `;
   } else if (elemId === 'timer') {
     const mode = variant.timestampMode || 'elapsed';
+    const isFreezeChecked =
+      mode === 'fixed'
+        ? true
+        : mode === 'unlimited'
+        ? variant.freezeTimer !== false
+        : Boolean(variant.freezeTimer);
     bodyHtml = `
       <div class="v-field">
         <label style="font-size:12.5px;color:#cbd5e1;">Timer Mode (타임 모드 선택)</label>
         <div class="status-mini-pills" style="margin-top:6px;">
           ${[
             { id: 'elapsed', label: '실시간 경과 (0:01+)' },
+            { id: 'fixed', label: '시간 고정 (초 안 흐르게 고정)' },
             { id: 'custom_offset', label: '타임 직접 조정 (시/분/초)' },
             { id: 'unlimited', label: '시간 무제한 (9999h+)' },
             { id: 'progress_bar', label: '재생 진행 바 (Progress)' },
@@ -2243,28 +2250,46 @@ function renderCustomizerInspector(variant) {
       </div>
 
       ${
-        mode === 'custom_offset'
+        mode !== 'none'
+          ? `
+        <label class="aux-switch-item reborn-check-label" style="margin:6px 0;padding:10px 14px;">
+          <div>
+            <strong style="color:#fbbf24;">시간 고정 모드 (초가 흐르지 않게 고정 · Freeze Time)</strong>
+            <p>체크하면 시간이 1초씩 늘어나지 않고 설정한 숫자로 정확히 고정됩니다.</p>
+          </div>
+          <input type="checkbox" id="rcFreezeTimerChk" ${isFreezeChecked ? 'checked' : ''} />
+          <span class="reborn-check-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </label>
+      `
+          : ''
+      }
+
+      ${
+        mode === 'custom_offset' || mode === 'fixed'
           ? `
         <div class="timer-offset-grid">
           <div class="rc-floating-box" style="padding-right:12px;">
-            <span class="rc-floating-label">경과 시간 (Hours)</span>
+            <span class="rc-floating-label">${mode === 'fixed' ? '고정 시간 (Hours)' : '경과 시간 (Hours)'}</span>
             <input type="number" class="rc-floating-input" id="rcOffsetHours" value="${Number(variant.offsetHours || 0)}" min="0" max="99999" />
           </div>
           <div class="rc-floating-box" style="padding-right:12px;">
-            <span class="rc-floating-label">경과 분 (Minutes)</span>
+            <span class="rc-floating-label">${mode === 'fixed' ? '고정 분 (Minutes)' : '경과 분 (Minutes)'}</span>
             <input type="number" class="rc-floating-input" id="rcOffsetMinutes" value="${Number(variant.offsetMinutes || 0)}" min="0" max="59" />
           </div>
           <div class="rc-floating-box" style="padding-right:12px;">
-            <span class="rc-floating-label">경과 초 (Seconds)</span>
+            <span class="rc-floating-label">${mode === 'fixed' ? '고정 초 (Seconds)' : '경과 초 (Seconds)'}</span>
             <input type="number" class="rc-floating-input" id="rcOffsetSeconds" value="${Number(variant.offsetSeconds || 0)}" min="0" max="59" />
           </div>
         </div>
         <div class="timer-quick-presets">
-          <button type="button" class="rc-app-chip" data-quick-offset="1:0:0">+1시간</button>
-          <button type="button" class="rc-app-chip" data-quick-offset="10:0:0">10시간</button>
-          <button type="button" class="rc-app-chip" data-quick-offset="24:0:0">24시간 (1일)</button>
-          <button type="button" class="rc-app-chip" data-quick-offset="100:0:0">100시간</button>
-          <button type="button" class="rc-app-chip" data-quick-offset="720:0:0">720시간 (30일)</button>
+          <button type="button" class="rc-app-chip" data-quick-offset="0:0:0">0:00 고정</button>
+          <button type="button" class="rc-app-chip" data-quick-offset="1:0:0">1:00:00</button>
+          <button type="button" class="rc-app-chip" data-quick-offset="10:0:0">10:00:00</button>
+          <button type="button" class="rc-app-chip" data-quick-offset="24:0:0">24:00:00 (1일)</button>
+          <button type="button" class="rc-app-chip" data-quick-offset="100:0:0">100:00:00</button>
+          <button type="button" class="rc-app-chip" data-quick-offset="999:0:0">999:00:00</button>
         </div>
       `
           : ''
@@ -2525,9 +2550,19 @@ function bindCustomizerInspectorEvents(variant, elemId) {
   document.querySelectorAll('[data-rc-timer-mode]').forEach((btn) => {
     btn.addEventListener('click', () => {
       variant.timestampMode = btn.dataset.rcTimerMode;
+      if (variant.timestampMode === 'fixed') {
+        variant.freezeTimer = true;
+      } else if (variant.timestampMode === 'unlimited' && variant.freezeTimer === undefined) {
+        variant.freezeTimer = true;
+      }
       commitChange();
       renderCustomizerInspector(variant);
     });
+  });
+
+  $('rcFreezeTimerChk')?.addEventListener('change', (e) => {
+    variant.freezeTimer = Boolean(e.target.checked);
+    commitChange();
   });
 
   $('rcOffsetHours')?.addEventListener('input', (e) => {
@@ -2956,6 +2991,12 @@ function renderLiveDiscordPreview() {
   const progEnd = $('dcProgEndText');
   const progFill = $('dcProgFill');
   const tsMode = rpcVar.timestampMode || 'elapsed';
+  const isFrozen =
+    tsMode === 'fixed'
+      ? true
+      : tsMode === 'unlimited'
+      ? rpcVar.freezeTimer !== false
+      : Boolean(rpcVar.freezeTimer);
 
   if (tsMode === 'none') {
     timerWrap?.classList.add('hidden');
@@ -2965,8 +3006,8 @@ function renderLiveDiscordPreview() {
     timerWrap?.classList.add('hidden');
     progRow?.classList.remove('hidden');
     const unlimHrs = Math.max(100, Number(rpcVar.unlimitedHours || 17525));
-    const mins = Math.floor((state.elapsedSec % 3600) / 60);
-    const secs = state.elapsedSec % 60;
+    const mins = isFrozen ? 0 : Math.floor((state.elapsedSec % 3600) / 60);
+    const secs = isFrozen ? 0 : state.elapsedSec % 60;
     const formattedUnlim = `${unlimHrs}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     if (progStart) progStart.textContent = formattedUnlim;
     if (progEnd) progEnd.textContent = `${unlimHrs}:00:00`;
@@ -2978,7 +3019,7 @@ function renderLiveDiscordPreview() {
       Number(rpcVar.offsetHours || 0) * 3600 +
       Number(rpcVar.offsetMinutes || 0) * 60 +
       Number(rpcVar.offsetSeconds || 0);
-    const curSec = baseOffsetSec + state.elapsedSec;
+    const curSec = isFrozen ? baseOffsetSec : baseOffsetSec + state.elapsedSec;
     const totalSec = Math.max(60, Number(rpcVar.customEndMinutes || 4) * 60 + baseOffsetSec);
     const pct = Math.min(100, Math.max(5, Math.round((curSec / totalSec) * 100)));
     if (progStart) progStart.textContent = formatTimer(curSec);
@@ -2988,22 +3029,22 @@ function renderLiveDiscordPreview() {
     progRow?.classList.add('hidden');
     if (timerWrap && timerText) {
       timerWrap.classList.remove('hidden');
-      if (tsMode === 'custom_offset') {
+      if (tsMode === 'custom_offset' || tsMode === 'fixed') {
         const baseSec =
           Number(rpcVar.offsetHours || 0) * 3600 +
           Number(rpcVar.offsetMinutes || 0) * 60 +
           Number(rpcVar.offsetSeconds || 0);
-        timerText.textContent = formatTimer(baseSec + state.elapsedSec);
+        timerText.textContent = formatTimer(isFrozen ? baseSec : baseSec + state.elapsedSec);
       } else if (tsMode === 'remaining') {
         const totalSec = Math.max(60, Number(rpcVar.customEndMinutes || 45) * 60);
-        const rem = Math.max(0, totalSec - state.elapsedSec);
+        const rem = isFrozen ? totalSec : Math.max(0, totalSec - state.elapsedSec);
         timerText.textContent = `${formatTimer(rem)} left`;
       } else if (tsMode === 'local_day') {
         const now = new Date();
         const mid = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
         timerText.textContent = formatTimer(Math.floor((Date.now() - mid) / 1000));
       } else {
-        timerText.textContent = formatTimer(state.elapsedSec);
+        timerText.textContent = formatTimer(isFrozen ? 0 : state.elapsedSec);
       }
     }
   }
@@ -3142,6 +3183,7 @@ function extractKeyframePayloadAndProfileFields(kf) {
     details: resolveDynamicTokens(rpcVar.details || ''),
     state: resolveDynamicTokens(rpcVar.state || ''),
     timestampMode: rpcVar.timestampMode || 'elapsed',
+    freezeTimer: rpcVar.freezeTimer,
     customEndMinutes: Number(rpcVar.customEndMinutes ?? 45),
     offsetHours: Number(rpcVar.offsetHours ?? 0),
     offsetMinutes: Number(rpcVar.offsetMinutes ?? 0),
