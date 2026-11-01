@@ -461,15 +461,56 @@ class DiscordIPCClient extends EventEmitter {
       activity.timestamps = timestamps;
     }
 
-    // Assets
+    // Assets (Supports Discord CDN/Media copied links, attachments, emojis, avatars, external URLs & asset keys)
+    const normalizeRpcImageAsset = (rawInput) => {
+      if (!rawInput || typeof rawInput !== 'string') return '';
+      let val = replaceVars(rawInput).trim();
+      if (!val) return '';
+
+      // Extract URL if pasted as Markdown [label](url) or <url> or HTML src="url"
+      const mdMatch = val.match(/\]\((https?:\/\/[^\s)]+)\)/i);
+      if (mdMatch) val = mdMatch[1];
+      const angleMatch = val.match(/^<(https?:\/\/[^>\s]+)>$/i);
+      if (angleMatch) val = angleMatch[1];
+      const srcMatch = val.match(/src=["'](https?:\/\/[^"']+)["']/i);
+      if (srcMatch) val = srcMatch[1];
+      val = val.replace(/^["']+|["']+$/g, '').trim();
+
+      if (/^https?:\/\//i.test(val)) {
+        try {
+          const u = new URL(val);
+          const host = u.hostname.toLowerCase();
+          if (host === 'media.discordapp.net' || host === 'cdn.discordapp.com' || host.endsWith('.discordapp.com') || host.endsWith('.discordapp.net')) {
+            if (host === 'media.discordapp.net' && (u.pathname.startsWith('/attachments/') || u.pathname.startsWith('/ephemeral-attachments/'))) {
+              u.hostname = 'cdn.discordapp.com';
+            }
+            // Strip redundant resize/webp params that bloat URL beyond 256 chars while preserving ex/is/hm signatures
+            const keepParams = ['ex', 'is', 'hm', 'size'];
+            const nextParams = new URLSearchParams();
+            for (const key of keepParams) {
+              if (u.searchParams.has(key)) {
+                const v = u.searchParams.get(key);
+                if (v) nextParams.set(key, v);
+              }
+            }
+            const qs = nextParams.toString();
+            val = `${u.protocol}//${u.hostname}${u.pathname}${qs ? `?${qs}` : ''}`;
+          }
+        } catch {
+          // Keep original string if URL parse fails
+        }
+      }
+      return val.slice(0, 256);
+    };
+
     const assets = {};
-    const largeImage = (config.largeImageKey || '').trim();
+    const largeImage = normalizeRpcImageAsset(config.largeImageKey);
     const largeText = replaceVars(config.largeImageText).trim();
-    const smallImage = (config.smallImageKey || '').trim();
+    const smallImage = normalizeRpcImageAsset(config.smallImageKey);
     const smallText = replaceVars(config.smallImageText).trim();
 
     if (largeImage.length > 0) {
-      assets.large_image = largeImage.slice(0, 256);
+      assets.large_image = largeImage;
     }
     if (largeText.length >= 2) {
       assets.large_text = largeText.slice(0, 128);
@@ -478,7 +519,7 @@ class DiscordIPCClient extends EventEmitter {
     }
 
     if (smallImage.length > 0) {
-      assets.small_image = smallImage.slice(0, 256);
+      assets.small_image = smallImage;
     }
     if (smallText.length >= 2) {
       assets.small_text = smallText.slice(0, 128);
@@ -507,14 +548,14 @@ class DiscordIPCClient extends EventEmitter {
     const buttons = [];
     if (config.button1Enabled !== false) {
       const label1 = replaceVars(config.button1Label).trim();
-      const url1 = (config.button1Url || '').trim();
+      const url1 = replaceVars(config.button1Url || '').trim();
       if (label1 && /^https?:\/\/.+/i.test(url1)) {
         buttons.push({ label: label1.slice(0, 32), url: url1 });
       }
     }
     if (config.button2Enabled !== false) {
       const label2 = replaceVars(config.button2Label).trim();
-      const url2 = (config.button2Url || '').trim();
+      const url2 = replaceVars(config.button2Url || '').trim();
       if (label2 && /^https?:\/\/.+/i.test(url2)) {
         buttons.push({ label: label2.slice(0, 32), url: url2 });
       }
