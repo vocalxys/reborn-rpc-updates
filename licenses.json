@@ -1,18 +1,20 @@
 {
-  "updatedAt": 1793519598415,
+  "updatedAt": 1793520008607,
   "licenses": [
     {
       "id": "lic-1793519598403-0-8i14",
       "key": "REBORN-7AHE-MUPX-D2CP",
       "isLifetime": true,
       "durationMs": 0,
-      "status": "unused",
+      "status": "active",
       "maxUsers": 1,
-      "boundUsers": [],
-      "boundHwid": null,
+      "boundUsers": [
+        "paewol"
+      ],
+      "boundHwid": "HWID-E821-3A27-3D75-EC16",
       "note": "",
       "createdAt": 1793519598403,
-      "activatedAt": null,
+      "activatedAt": 1793520008585,
       "expiresAt": null
     },
     {
@@ -68,9 +70,26 @@
       "suspended": false,
       "createdAt": 1793517476733,
       "lastLoginAt": 1793517476733
+    },
+    {
+      "id": "usr-1793520008585-nhjl",
+      "username": "paewol",
+      "passwordHash": "bf6be41da1e69f8f09c40c48fa55a440fd15869841b4ff680a3fbb7cfe36fba1",
+      "licenseKey": "REBORN-7AHE-MUPX-D2CP",
+      "boundHwid": "HWID-E821-3A27-3D75-EC16",
+      "suspended": false,
+      "createdAt": 1793520008585,
+      "lastLoginAt": 1793520008585
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1793520008586-oaq",
+      "time": "17시 0분 8초",
+      "timestamp": 1793520008605,
+      "action": "신규 회원가입",
+      "detail": "@paewol (REBORN-7AHE-MUPX-D2CP · HWID-E821-3A27-3D75-EC16)"
+    },
     {
       "id": "aud-1793519598404-cui",
       "time": "16시 53분 18초",
