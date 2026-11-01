@@ -141,7 +141,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (pathname === '/api/update/raw' && req.method === 'GET') {
-      const relFile = parsedUrl.query?.file || '';
+      const relFile = urlObj.searchParams.get('file') || '';
       const rawText = autoUpdater.getRawFileContent(relFile);
       res.writeHead(200, {
         'Content-Type': 'text/plain; charset=utf-8',
@@ -274,6 +274,65 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (pathname === '/api/discord-lookup-guild' && req.method === 'POST') {
+      const body = await readJsonBody(req);
+      const lookupRes = await engine.lookupDiscordServerByInviteOrId(body.query || body.input || '');
+      sendJson(res, 200, lookupRes);
+      return;
+    }
+
+    if (pathname === '/api/upload-image' && req.method === 'POST') {
+      const body = await readJsonBody(req);
+      const dataUrl = String(body.dataUrl || '');
+      const m = dataUrl.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
+      if (!m) {
+        throw new Error('유효한 이미지 데이터가 아닙니다.');
+      }
+      const mime = m[1];
+      const ext = mime.includes('gif') ? 'gif' : mime.includes('webp') ? 'webp' : mime.includes('jpeg') || mime.includes('jpg') ? 'jpg' : 'png';
+      const buf = Buffer.from(m[2], 'base64');
+      const boundary = '----RebornRpcUpload' + Date.now();
+      const head1 = Buffer.from(
+        `--${boundary}\r\nContent-Disposition: form-data; name="reqtype"\r\n\r\nfileupload\r\n` +
+          `--${boundary}\r\nContent-Disposition: form-data; name="fileToUpload"; filename="reborn.${ext}"\r\nContent-Type: ${mime}\r\n\r\n`,
+        'utf8'
+      );
+      const tail = Buffer.from(`\r\n--${boundary}--\r\n`, 'utf8');
+      const payloadBuf = Buffer.concat([head1, buf, tail]);
+
+      const uploadedUrl = await new Promise((resolve, reject) => {
+        const https = require('https');
+        const upReq = https.request(
+          {
+            hostname: 'catbox.moe',
+            port: 443,
+            path: '/user/api.php',
+            method: 'POST',
+            headers: {
+              'Content-Type': `multipart/form-data; boundary=${boundary}`,
+              'Content-Length': payloadBuf.length,
+              'User-Agent': 'RebornRPC/5.2',
+            },
+          },
+          (upRes) => {
+            let out = '';
+            upRes.on('data', (c) => (out += c));
+            upRes.on('end', () => {
+              const trimmed = out.trim();
+              if (/^https?:\/\//i.test(trimmed)) resolve(trimmed);
+              else reject(new Error('이미지 호스팅 업로드 실패'));
+            });
+          }
+        );
+        upReq.on('error', reject);
+        upReq.write(payloadBuf);
+        upReq.end();
+      });
+
+      sendJson(res, 200, { ok: true, url: uploadedUrl });
+      return;
+    }
+
     if (pathname === '/api/update-activity' && req.method === 'POST') {
       const body = await readJsonBody(req);
       const p = body.payload || {};
@@ -318,6 +377,7 @@ const server = http.createServer(async (req, res) => {
         details: p.details || '',
         state: p.state || '',
         timestampMode: tsMode,
+        freezeTimer: Boolean(p.freezeTimer) || tsMode === 'fixed',
         countdownSeconds: Number(p.customEndMinutes || 45) * 60,
         offsetHours: Number(p.offsetHours || 0),
         offsetMinutes: Number(p.offsetMinutes || 0),
@@ -343,6 +403,7 @@ const server = http.createServer(async (req, res) => {
 
       const vars = engine.getCombinedVariables();
       engine.isRpcRunning = true;
+      engine.lastLiveActivityConfig = activityConfig;
       const result = await engine.rpcClient.setActivity(activityConfig, vars);
 
       sendJson(res, 200, {
