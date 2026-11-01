@@ -1,0 +1,21 @@
+{
+  "updatedAt": 1793501712613,
+  "licenses": [
+    {
+      "id": "lic-1793468075809-0-avjb",
+      "key": "REBORN-MECA-UYMS-E78G",
+      "isLifetime": true,
+      "durationMs": 0,
+      "status": "active",
+      "maxUsers": 1,
+      "boundUsers": [
+        "sxlvlrt"
+      ],
+      "boundHwid": "HWID-012B-0A26-D5B2-DC42",
+      "note": "",
+      "createdAt": 1793468075809,
+      "activatedAt": 1793468091487,
+      "expiresAt": null
+    }
+  ]
+}
