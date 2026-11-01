@@ -59,6 +59,9 @@ body {
   display: none !important;
 }
 
+
+
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -4823,114 +4826,119 @@ button,
    5. AUTH GATE OVERLAY & LICENSE ADMIN CENTER MODAL
    ============================================================================ */
 
-/* --- 1. Generous Spacing & Symmetry Across All 4 Columns --- */
+/* --- 1. Compact, Balanced & Sleek 4-Column Studio Proportions --- */
 .app-shell {
-  padding: 10px !important;
-  gap: 10px !important;
+  grid-template-columns: 50px 220px 1fr 324px !important;
+  padding: 6px !important;
+  gap: 6px !important;
 }
 
 .icon-rail {
-  border-radius: 16px !important;
+  border-radius: 13px !important;
   border: 1px solid rgba(255, 255, 255, 0.09) !important;
-  padding: 16px 0 !important;
-  gap: 14px !important;
+  padding: 10px 0 !important;
+  gap: 8px !important;
 }
 
 .rail-menu {
-  gap: 10px !important;
+  gap: 7px !important;
 }
 
 .profiles-column {
-  width: 266px !important;
-  min-width: 266px !important;
-  border-radius: 16px !important;
+  width: 220px !important;
+  min-width: 220px !important;
+  border-radius: 13px !important;
   border: 1px solid rgba(255, 255, 255, 0.09) !important;
-  padding: 18px 16px !important;
-  gap: 14px !important;
+  padding: 11px 10px !important;
+  gap: 9px !important;
 }
 
 .profiles-top-header {
   display: flex;
   flex-direction: column;
-  gap: 14px !important;
+  gap: 8px !important;
+  padding: 2px 2px 4px !important;
 }
 
 .profiles-list-scroll {
   display: flex;
   flex-direction: column;
-  gap: 8px !important;
-  padding: 4px 2px !important;
+  gap: 6px !important;
+  padding: 2px 2px !important;
 }
 
 .profile-item-btn {
-  padding: 11px 14px !important;
-  border-radius: 12px !important;
-  margin-bottom: 2px !important;
+  padding: 8px 11px !important;
+  border-radius: 10px !important;
+  margin-bottom: 1px !important;
+  font-size: 12px !important;
 }
 
 .center-studio-stage {
-  border-radius: 16px !important;
+  border-radius: 13px !important;
   border: 1px solid rgba(255, 255, 255, 0.09) !important;
   overflow: hidden;
 }
 
 .stage-top-bar {
-  min-height: 68px !important;
-  height: auto !important;
-  padding: 12px 20px !important;
-  gap: 16px !important;
-  flex-wrap: wrap !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  padding: 0 12px !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
 }
 
 .stage-top-left,
 .stage-top-right {
-  gap: 10px !important;
-  flex-wrap: wrap !important;
+  gap: 6px !important;
+  flex-wrap: nowrap !important;
+  min-width: 0;
 }
 
 .keyframes-stack {
-  gap: 26px !important;
-  padding: 8px 6px !important;
+  gap: 14px !important;
+  padding: 4px 4px !important;
 }
 
 .keyframe-card {
-  padding: 22px 24px !important;
-  border-radius: 18px !important;
-  gap: 16px !important;
+  padding: 14px 16px !important;
+  border-radius: 14px !important;
+  gap: 10px !important;
 }
 
 .kf-variants-list {
   display: flex;
   flex-direction: column;
-  gap: 14px !important;
+  gap: 9px !important;
 }
 
 .variant-block {
-  padding: 16px 18px !important;
-  border-radius: 14px !important;
+  padding: 11px 13px !important;
+  border-radius: 11px !important;
   margin-bottom: 0 !important;
 }
 
 .right-preview-column {
-  width: 356px !important;
-  min-width: 356px !important;
-  border-radius: 16px !important;
+  width: 324px !important;
+  min-width: 324px !important;
+  border-radius: 13px !important;
   border: 1px solid rgba(255, 255, 255, 0.09) !important;
-  padding: 18px 18px !important;
-  gap: 14px !important;
+  padding: 12px 12px !important;
+  gap: 10px !important;
 }
 
 .aux-card {
-  padding: 26px 28px !important;
-  gap: 18px !important;
+  padding: 16px 18px !important;
+  gap: 12px !important;
+  border-radius: 14px !important;
 }
 
 .aux-grid-2 {
-  gap: 16px !important;
+  gap: 10px !important;
 }
 
 .aux-field {
-  gap: 7px !important;
+  gap: 4px !important;
 }
 
 /* --- 2. High-Quality Custom Glassmorphic Dropdown System --- */
@@ -5286,6 +5294,9 @@ button,
 .auth-gate-overlay.hidden {
   display: none !important;
 }
+
+
+
 
 .auth-gate-card {
   width: 100%;
@@ -6190,6 +6201,9 @@ button,
   display: none !important;
 }
 
+
+
+
 .rc-vars-popover:not(.hidden) {
   position: absolute !important;
   top: calc(100% + 6px) !important;
@@ -6283,6 +6297,9 @@ button,
   display: none !important;
 }
 
+
+
+
 .admin-stats-grid {
   display: grid !important;
   grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
@@ -6298,6 +6315,719 @@ button,
 .hidden {
   display: none !important;
 }
+
+/* ============================================================================
+   21. SONIQ VOCAL STUDIO MONOCHROME SILVER-GLOW + WARM GOLD PALETTE,
+       BESPOKE VECTOR ICONS, ZERO-OVERLAP TOP BAR & CARD CHECK INDICATORS (v5.2.5)
+   ============================================================================ */
+
+@keyframes silverBorderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes silverAuraPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 18px rgba(255, 255, 255, 0.12),
+      0 8px 24px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 26px rgba(255, 255, 255, 0.22),
+      0 10px 28px rgba(0, 0, 0, 0.75),
+      inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  }
+}
+
+@keyframes subsecFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subsec-fade-in {
+  animation: subsecFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Deep Obsidian Matte Background (Matching Screenshot 2) --- */
+html,
+body {
+  background-color: #070709 !important;
+}
+
+.icon-rail,
+.profiles-column,
+.center-studio-stage,
+.right-preview-column {
+  background: rgba(11, 12, 15, 0.94) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* --- Sidebar Brand Card (Silver Specular Border, No Rainbow) --- */
+.reborn-sidebar-brand {
+  padding: 8px 10px !important;
+  border-radius: 11px !important;
+  margin-bottom: 2px !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.09) 0%, rgba(17, 18, 23, 0.96) 65%) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  transition: transform 0.22s var(--ease-spring), border-color 0.22s ease, box-shadow 0.22s ease !important;
+}
+
+.reborn-sidebar-brand:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65), 0 0 16px rgba(255, 255, 255, 0.08) !important;
+}
+
+.reborn-brand-title {
+  font-size: 13.5px !important;
+  color: #ffffff !important;
+}
+
+.reborn-brand-sub {
+  font-size: 10px !important;
+  color: #a1a1aa !important;
+  font-weight: 600 !important;
+}
+
+/* --- Category-Specific Sidebar Panes & Screenshot 2 Card Navigation --- */
+.sidebar-cat-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 8px;
+  animation: subsecFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cat-sidebar-header {
+  padding: 2px 4px 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cat-sidebar-header .profiles-heading {
+  font-size: 13.5px !important;
+  color: #ffffff !important;
+}
+
+.cat-sidebar-header .profiles-subheading {
+  font-size: 10.5px !important;
+  color: #71717a !important;
+}
+
+.cat-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 2px 1px;
+}
+
+.cat-nav-item {
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #111216;
+  color: #d4d4d8;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Rounded-Square Bespoke Vector Icon Box (Screenshot 2 Style) */
+.cat-nav-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #191a20;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e4e4e7;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.22s var(--ease-spring);
+}
+
+.cat-nav-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cat-nav-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  gap: 2px;
+}
+
+.cat-nav-title-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.cat-nav-text strong {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Screenshot 2 Pill Tags ("추천", "PRO", "LIVE") */
+.cat-mini-tag {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 5.5px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #09090b;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+
+.cat-mini-tag.pro {
+  background: rgba(255, 255, 255, 0.13);
+  color: #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.cat-nav-text > span {
+  font-size: 10px;
+  color: #71717a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Screenshot 2 Right-Side Radio / Check Circle */
+.cat-nav-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  background: transparent;
+  color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cat-nav-check svg {
+  width: 10px;
+  height: 10px;
+  transform: scale(0.5);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cat-nav-item:hover {
+  transform: translateY(-1.5px);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: #16181e;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+}
+
+.cat-nav-item:hover .cat-nav-icon {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: #20222a;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Active State: Pure Silver-White Glow Border + White Check Circle (Screenshot 2 Exact Match) */
+.cat-nav-item.active {
+  border: 1.5px solid rgba(255, 255, 255, 0.88);
+  background: radial-gradient(
+    130% 130% at 0% 0%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(22, 23, 29, 0.96) 55%,
+    rgba(15, 16, 20, 0.98) 100%
+  );
+  animation: silverAuraPulse 3.2s ease-in-out infinite;
+  color: #ffffff;
+}
+
+.cat-nav-item.active .cat-nav-icon {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.12);
+}
+
+.cat-nav-item.active .cat-nav-text > span {
+  color: #a1a1aa;
+}
+
+.cat-nav-item.active .cat-nav-check {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #09090b;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.cat-nav-item.active .cat-nav-check svg {
+  transform: scale(1);
+}
+
+.cat-sidebar-footer {
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* --- Sidebar Bottom Account & Version Strip (Zero Top-Bar Overlap) --- */
+.sidebar-account-strip {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-account-strip .license-user-top-pill {
+  width: 100% !important;
+  height: 30px !important;
+  padding: 0 9px !important;
+  border-radius: 9px !important;
+  background: #131419 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #e4e4e7 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 10.5px !important;
+}
+
+.lic-left-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#topLicenseUserText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-meta-mini-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.btn-sidebar-meta {
+  height: 26px;
+  border-radius: 8px;
+  background: #121318;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #a1a1aa;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-sidebar-meta svg {
+  width: 12px;
+  height: 12px;
+  color: #d4d4d8;
+}
+
+.btn-sidebar-meta:hover {
+  background: #1a1c23;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* --- Non-Overlapping Top Bar & Controls --- */
+.stage-top-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  overflow: hidden !important;
+  background: #0d0e12 !important;
+}
+
+.stage-top-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.stage-top-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+}
+
+.btn-stage-icon {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+.selected-profile-info {
+  flex-shrink: 0 !important;
+}
+
+.selected-label {
+  font-size: 9.5px !important;
+  line-height: 1 !important;
+  color: #71717a !important;
+}
+
+.selected-profile-name-input {
+  font-size: 12.5px !important;
+  width: 96px !important;
+  padding: 0 4px !important;
+}
+
+.profile-status-pill {
+  font-size: 9.5px !important;
+  padding: 1.5px 7px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Screenshot 2 Top Status Pill ("● 2-Pass AI Separation Engine") */
+.ipc-engine-pill {
+  height: 28px !important;
+  padding: 0 11px !important;
+  font-size: 11px !important;
+  margin-left: 2px !important;
+  border-radius: 999px !important;
+  background: #14151a !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f4f4f5 !important;
+  white-space: nowrap !important;
+  min-width: 0 !important;
+  max-width: 240px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+#topIpcText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-top-logout {
+  padding: 1px 6px !important;
+  font-size: 9.5px !important;
+  flex-shrink: 0 !important;
+}
+
+.btn-add-kf-top {
+  height: 30px !important;
+  padding: 0 10px !important;
+  border-radius: 8px !important;
+  font-size: 11px !important;
+  background: #14151a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #e4e4e7 !important;
+  white-space: nowrap !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-add-kf-top:hover {
+  transform: translateY(-1.5px) !important;
+  background: #1c1e26 !important;
+  border-color: rgba(255, 255, 255, 0.38) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+}
+
+.btn-save-disk {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+  background: #14151a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.btn-save-disk svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* Screenshot 2 Warm Cream-to-Amber Gold Primary CTA Button */
+.btn-make-it-live {
+  min-width: 118px !important;
+  height: 31px !important;
+  padding: 0 12px !important;
+  border-radius: 9px !important;
+  gap: 7px !important;
+  background: linear-gradient(90deg, #fffdf7 0%, #fef08a 42%, #f5be3b 100%) !important;
+  color: #09090b !important;
+  box-shadow: 0 0 24px rgba(245, 190, 59, 0.32), inset 0 1px 0 #ffffff !important;
+}
+
+.live-btn-title {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+
+.live-btn-sub {
+  font-size: 9px !important;
+}
+
+/* --- Profile Item Mini SVG Buttons --- */
+.profile-del-mini {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.profile-del-mini svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* --- Compact Inputs, Cards, Titles & Badges --- */
+.aux-title {
+  font-size: 14px !important;
+  color: #ffffff !important;
+}
+
+.aux-desc {
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+  color: #8e929f !important;
+}
+
+.aux-subtitle {
+  font-size: 11.5px !important;
+  color: #e4e4e7 !important;
+}
+
+.aux-field label {
+  font-size: 11px !important;
+  color: #a1a1aa !important;
+}
+
+.aux-input {
+  min-height: 32px !important;
+  padding: 5px 10px !important;
+  font-size: 11.5px !important;
+  border-radius: 8px !important;
+  background: #0c0d11 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.aux-input:focus {
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08) !important;
+}
+
+textarea.aux-input {
+  min-height: 54px !important;
+  padding: 7px 10px !important;
+}
+
+.reborn-dd-trigger {
+  min-height: 32px !important;
+  padding: 5px 10px !important;
+  font-size: 11.5px !important;
+  border-radius: 8px !important;
+  background: #111216 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.reborn-dd-trigger:hover,
+.reborn-custom-dropdown.open .reborn-dd-trigger {
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.1) !important;
+}
+
+.btn-gold-sm {
+  height: 30px !important;
+  padding: 0 12px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+  white-space: nowrap !important;
+  background: linear-gradient(90deg, #fffdf7 0%, #fef08a 42%, #f5be3b 100%) !important;
+  color: #09090b !important;
+  border: none !important;
+  box-shadow: 0 0 18px rgba(245, 190, 59, 0.26), inset 0 1px 0 #ffffff !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-gold-sm:hover {
+  transform: translateY(-1.5px) !important;
+  box-shadow: 0 0 26px rgba(245, 190, 59, 0.45), inset 0 1px 0 #ffffff !important;
+  color: #09090b !important;
+}
+
+.btn-add-profile,
+.btn-profile-gear {
+  height: 31px !important;
+  border-radius: 8px !important;
+  font-size: 11.5px !important;
+  background: #14151a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.btn-add-profile:hover {
+  transform: translateY(-1.5px) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: #1b1d24 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* --- Left Rail, Profiles, Cards & Badges (Screenshot 2 Silver-White Glow + Gold Accent) --- */
+.rail-btn {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  position: relative;
+  color: #71717a !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.rail-btn:hover {
+  transform: translateY(-1.5px) !important;
+  color: #ffffff !important;
+  background: #181920 !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+}
+
+.rail-btn.active {
+  color: #ffffff !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.88) !important;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.18) 0%, rgba(22, 23, 29, 0.96) 70%) !important;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+.profile-item-btn {
+  background: #111216 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #d4d4d8 !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.profile-item-btn:hover {
+  transform: translateY(-1.5px) !important;
+  background: #17181f !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+.profile-item-btn.active {
+  border: 1.5px solid rgba(255, 255, 255, 0.88) !important;
+  background: radial-gradient(
+    130% 130% at 0% 0%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(22, 23, 29, 0.96) 55%,
+    rgba(15, 16, 20, 0.98) 100%
+  ) !important;
+  color: #ffffff !important;
+  animation: silverAuraPulse 3.2s ease-in-out infinite !important;
+}
+
+.keyframe-card,
+.aux-card,
+.dc-live-profile {
+  background: #111216 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease, box-shadow 0.22s ease !important;
+}
+
+.keyframe-card.active-preview {
+  border: 1.5px solid rgba(255, 255, 255, 0.82) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.75), 0 0 22px rgba(255, 255, 255, 0.12) !important;
+}
+
+.variant-block,
+.tel-stat-card,
+.vault-media-item {
+  background: #15161c !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.variant-block:hover,
+.tel-stat-card:hover,
+.vault-media-item:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.1) 0%, #171820 70%) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 255, 255, 0.08) !important;
+}
+
+.badge-toggle-pill {
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  border-radius: 9px !important;
+  background: #14151b !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #a1a1aa !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.badge-toggle-pill:hover {
+  transform: translateY(-1.5px) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+  background: #1a1c24 !important;
+}
+
+.badge-toggle-pill.active {
+  border: 1.5px solid rgba(255, 255, 255, 0.88) !important;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.15) 0%, #181920 70%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.14) !important;
+}
+
+
 
 
 
