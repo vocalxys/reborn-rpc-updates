@@ -1255,29 +1255,32 @@ function renderKeyframesStack() {
         <h3>Reborn RPC 스튜디오에 오신 것을 환영합니다</h3>
         <p>
           초기 프리셋 없이 깨끗한 상태에서 시작합니다.<br/>
-          새 프로필을 생성하거나 Discord 계정과 동기화하여 상태, 대명사, 소개, 공식 배지, Rich Presence를 자유롭게 커스텀하세요.
+          새 프로필을 생성하고 실제 Discord와 연동되는 Rich Presence 및 키프레임 시퀀스를 자유롭게 설정하세요.
         </p>
         <div class="reborn-empty-actions">
           <button type="button" class="btn-gold-sm glass-shimmer" id="btnHeroCreateFirstProfile" style="height:40px;padding:0 20px;font-size:13px;">
             + 새 커스텀 프로필 만들기
           </button>
-          <button type="button" class="btn-preview-sub" id="btnHeroSyncDiscord" style="height:40px;padding:0 18px;font-size:13px;">
-            Discord 계정 연동 & 내 프로필 불러오기
-          </button>
         </div>
       </div>
     `;
     $('btnHeroCreateFirstProfile')?.addEventListener('click', () => createNewProfile());
-    $('btnHeroSyncDiscord')?.addEventListener('click', () => {
-      document.querySelector('.rail-btn[data-view="discord-link"]')?.click();
-      triggerDiscordSyncNow();
-    });
     return;
   }
 
   if (bottomWrap) bottomWrap.classList.remove('hidden');
 
   prof.keyframes.forEach((kf, kfIndex) => {
+    // Strip non-RPC fake profile variants so only real Discord Rich Presence remains
+    if (Array.isArray(kf.variants)) {
+      kf.variants = kf.variants.filter((v) => v && v.type === 'rich_presence');
+    } else {
+      kf.variants = [];
+    }
+    if (kf.variants.length === 0) {
+      kf.variants.push(createDefaultVariant('rich_presence'));
+    }
+
     const isPreviewActive = kfIndex === state.activeKeyframeIndex;
     const card = document.createElement('div');
     card.className = `keyframe-card spotlight-card ${isPreviewActive ? 'active-preview' : ''}`;
@@ -1309,18 +1312,10 @@ function renderKeyframesStack() {
       <div class="kf-variants-list" id="kfVariantsList-${kfIndex}"></div>
 
       <div class="add-variant-anchor">
-        <button class="btn-add-profile-variant glass-shimmer" data-toggle-variant-menu="${kfIndex}">
-          <span style="display:inline-flex;width:13px;height:13px;">${VECTOR_ICONS.plus}</span>
-          <span>Add Profile Variant</span>
+        <button class="btn-add-profile-variant glass-shimmer" data-add-variant="rich_presence" data-kf-idx="${kfIndex}">
+          <span style="display:inline-flex;width:13px;height:13px;">${VECTOR_ICONS.edit}</span>
+          <span>Rich Presence 상세 편집</span>
         </button>
-
-        <div class="variant-dropdown-menu ${openDropdownKfIndex === kfIndex ? '' : 'hidden'}" id="variantMenu-${kfIndex}">
-          ${renderVariantMenuOption('custom_status', 'Custom Status', existingTypes, kfIndex)}
-          ${renderVariantMenuOption('status', 'Status', existingTypes, kfIndex)}
-          ${renderVariantMenuOption('pronouns', 'Pronouns', existingTypes, kfIndex)}
-          ${renderVariantMenuOption('bio', 'Bio', existingTypes, kfIndex)}
-          ${renderVariantMenuOption('rich_presence', 'Rich Presence', existingTypes, kfIndex)}
-        </div>
       </div>
 
       <div class="kf-spark-watermark">
@@ -4181,182 +4176,19 @@ function buildOfficialBadgesGridHtml(containerPrefix = 'main') {
   }).join('');
 }
 
-function openQuickIdentityModal(focusSection = 'identity') {
-  if (focusSection === 'rich_presence') {
-    let prof = getActiveProfile();
-    if (!prof) prof = createNewProfile();
-    const kf = getActiveKeyframe();
-    if (kf) {
-      let rIdx = (kf.variants || []).findIndex((v) => v.type === 'rich_presence');
-      if (rIdx === -1) {
-        kf.variants.push(createDefaultVariant('rich_presence'));
-        rIdx = kf.variants.length - 1;
-      }
-      renderAll();
-      openRpcCustomizer(state.activeKeyframeIndex, rIdx);
+function openQuickIdentityModal() {
+  let prof = getActiveProfile();
+  if (!prof) prof = createNewProfile();
+  const kf = getActiveKeyframe();
+  if (kf) {
+    let rIdx = (kf.variants || []).findIndex((v) => v.type === 'rich_presence');
+    if (rIdx === -1) {
+      kf.variants.push(createDefaultVariant('rich_presence'));
+      rIdx = kf.variants.length - 1;
     }
-    return;
+    renderAll();
+    openRpcCustomizer(state.activeKeyframeIndex, rIdx);
   }
-
-  let qmStatusVal = state.identity.status || 'online';
-  let qmServerTagVal = state.identity.serverTagText || '';
-
-  openUniversalModal({
-    title: t(
-      'Discord 프로필 · 상태 · 공식 배지 · 소개 실시간 편집',
-      'Edit Discord Profile · Status · Official Badges · Bio'
-    ),
-    desc: t(
-      '실제 연동된 Discord 계정의 온라인 상태, 니트로/부스트/하이프스쿼드 등 모든 공식 배지, 표시 이름, 대명사, 소개(Bio)를 실시간 제어합니다.',
-      'Control your Discord online status, all official badges (Nitro, Boost Lv.1~9, HypeSquad, Dev), display name, pronouns, and bio.'
-    ),
-    bodyHtml: `
-      <div class="aux-grid-2">
-        <div class="aux-field">
-          <label>${t('표시 이름 (Display Name)', 'Display Name')}</label>
-          <input type="text" class="aux-input" id="qmDisplayName" value="${escapeHtml(state.identity.displayName || '')}" placeholder="${t('표시 이름', 'Display Name')}" />
-        </div>
-        <div class="aux-field">
-          <label>${t('온라인 상태 (Status · 실시간 변경)', 'Online Status (Live Sync)')}</label>
-          <div class="reborn-custom-dropdown" id="qmDropStatus"></div>
-        </div>
-        <div class="aux-field" style="grid-column: span 2;">
-          <label>${t('대명사 (Pronouns)', 'Pronouns')}</label>
-          <input type="text" class="aux-input" id="qmPronouns" value="${escapeHtml(state.identity.pronouns || '')}" placeholder="${t('대명사 입력', 'Enter pronouns')}" />
-        </div>
-        <div class="aux-field" style="grid-column: span 2;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-            <label style="margin:0;">${t('공식 Discord 배지 · 니트로 · 서버 부스트 (클릭하여 장착/해제)', 'Official Discord Badges · Nitro · Server Boost (Click to toggle)')}</label>
-            <span style="font-size:11px;color:#fbbf24;">${t('클릭 시 즉시 반영', 'Instant toggle')}</span>
-          </div>
-          <div class="badges-selector-row" id="qmBadgesSelectorRow" style="max-height:155px;overflow-y:auto;padding:4px 2px;">
-            ${buildOfficialBadgesGridHtml('qm')}
-          </div>
-        </div>
-        <div class="aux-field" style="grid-column: span 2;">
-          <label>${t('커스텀 상태 메시지 (Custom Status · {} 변수 지원)', 'Custom Status Message (Supports {} variables)')}</label>
-          <input type="text" class="aux-input" id="qmCustomStatus" value="${escapeHtml(state.identity.customStatusText || '')}" placeholder="${t('상태 말풍선 텍스트 입력 (예: {spotify_track})', 'Enter custom status (e.g. {spotify_track})')}" />
-        </div>
-        <div class="aux-field" style="grid-column: span 2;">
-          <label>${t('내 소개 (Bio · {} 변수 지원)', 'About Me / Bio (Supports {} variables)')}</label>
-          <textarea class="aux-input" id="qmBio" rows="3" placeholder="${t('내 소개(Bio) 입력', 'Enter your Bio')}">${escapeHtml(state.identity.bio || '')}</textarea>
-        </div>
-      </div>
-    `,
-    onSave: async () => {
-      state.identity.displayName = ($('qmDisplayName')?.value || '').trim();
-      state.identity.status = qmStatusVal || 'online';
-      state.identity.pronouns = ($('qmPronouns')?.value || '').trim();
-      state.identity.serverTagText = qmServerTagVal || '';
-      state.identity.customStatusText = ($('qmCustomStatus')?.value || '').trim();
-      state.identity.bio = ($('qmBio')?.value || '').trim();
-
-      const catalog = getAllDiscordServerTagCatalog();
-      const selTagObj = catalog.find(
-        (x) => x && x.tag === state.identity.serverTagText
-      );
-      if (selTagObj) {
-        state.identity.serverTagGuildId = selTagObj.guildId || '';
-        state.identity.serverTagBadge = selTagObj.badge || '';
-        state.identity.serverTagBadgeUrl = selTagObj.badgeUrl || '';
-      } else if (!state.identity.serverTagText) {
-        state.identity.serverTagGuildId = '';
-        state.identity.serverTagBadge = '';
-        state.identity.serverTagBadgeUrl = '';
-      }
-
-      const kf = getActiveKeyframe();
-      if (kf && Array.isArray(kf.variants)) {
-        kf.variants.forEach((v) => {
-          if (v.type === 'status') v.status = state.identity.status;
-          if (v.type === 'pronouns') v.text = state.identity.pronouns;
-          if (v.type === 'server_tag') {
-            v.text = state.identity.serverTagText;
-            v.guildId = state.identity.serverTagGuildId;
-            v.badgeUrl = state.identity.serverTagBadgeUrl;
-          }
-          if (v.type === 'custom_status') v.text = state.identity.customStatusText;
-          if (v.type === 'bio') v.text = state.identity.bio;
-        });
-      }
-
-      persistStudioConfig();
-      syncIdentityInputsFromState();
-      renderAll();
-
-      await api.applyDiscordProfile({
-        userToken: state.discordAuth.userToken || '',
-        displayName: state.identity.displayName,
-        status: state.identity.status,
-        pronouns: state.identity.pronouns,
-        bio: state.identity.bio,
-        customStatusText: state.identity.customStatusText,
-        serverTagText: state.identity.serverTagText,
-        serverTagGuildId: state.identity.serverTagGuildId,
-        serverTagBadge: state.identity.serverTagBadge,
-        serverTagBadgeUrl: state.identity.serverTagBadgeUrl,
-        badges: state.identity.badges,
-      });
-      if (state.isRpcRunning) await sendCurrentKeyframeToDiscord(true);
-      showToast(t('프로필, 상태, 서버 태그, 배지, 대명사, 소개가 실시간 반영되었습니다!', 'Profile, status, server tag, badges, pronouns & bio updated!'));
-    },
-  });
-
-  const bindQmBadges = () => {
-    const qmRow = $('qmBadgesSelectorRow');
-    if (!qmRow) return;
-    qmRow.querySelectorAll('[data-toggle-official-badge]').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        await toggleOfficialBadgeById(btn.dataset.toggleOfficialBadge);
-        qmRow.innerHTML = buildOfficialBadgesGridHtml('qm');
-        bindQmBadges();
-      });
-    });
-  };
-  bindQmBadges();
-
-  $('btnQmSyncRealTags')?.addEventListener('click', async () => {
-    await triggerDiscordSyncNow();
-    qmServerTagVal = state.identity.serverTagText || '';
-    renderCustomDropdown($('qmDropServerTag'), getOwnedServerTagOptions(), qmServerTagVal, (val, pickedOpt) => {
-      qmServerTagVal = val;
-      state.identity.serverTagText = val;
-      state.identity.serverTagGuildId = pickedOpt?.guildId || '';
-      state.identity.serverTagBadge = pickedOpt?.badge || '';
-      state.identity.serverTagBadgeUrl = pickedOpt?.badgeUrl || '';
-      persistStudioConfig();
-      renderLiveDiscordPreview();
-    });
-  });
-
-  renderCustomDropdown($('qmDropStatus'), getStatusDropdownOptions(), qmStatusVal, (val) => {
-    qmStatusVal = val;
-    state.identity.status = val;
-    const kf = getActiveKeyframe();
-    const stVar = kf?.variants?.find((x) => x.type === 'status');
-    if (stVar) stVar.status = val;
-    persistStudioConfig();
-    renderLiveDiscordPreview();
-    scheduleAutoLiveSync();
-  });
-
-  renderCustomDropdown($('qmDropServerTag'), getOwnedServerTagOptions(), qmServerTagVal, (val, pickedOpt) => {
-    qmServerTagVal = val;
-    state.identity.serverTagText = val;
-    state.identity.serverTagGuildId = pickedOpt?.guildId || '';
-    state.identity.serverTagBadge = pickedOpt?.badge || '';
-    state.identity.serverTagBadgeUrl = pickedOpt?.badgeUrl || '';
-    const kf = getActiveKeyframe();
-    const tagVar = kf?.variants?.find((x) => x.type === 'server_tag');
-    if (tagVar) {
-      tagVar.text = val;
-      tagVar.guildId = pickedOpt?.guildId || '';
-      tagVar.badgeUrl = pickedOpt?.badgeUrl || '';
-    }
-    persistStudioConfig();
-    renderLiveDiscordPreview();
-    scheduleAutoLiveSync();
-  });
 }
 
 // ============================================================================
@@ -6433,8 +6265,7 @@ function applyLanguageUI() {
   // Left Rail Tooltips
   const railTitles = {
     keyframes: isEn ? 'Keyframe Studio (Main)' : '키프레임 스튜디오 (메인)',
-    'discord-link': isEn ? 'Discord Real-Time Sync' : 'Discord 계정 실시간 연동 & 동기화',
-    identity: isEn ? 'Profile · Official Badges · Bio' : '프로필 · 상태 · 대명사 · 소개 · 공식 배지',
+    'discord-link': isEn ? 'Discord Local IPC Connection' : 'Discord 로컬 IPC 연결 상태',
     vault: isEn ? 'Media & GIF Vault' : '미디어 / GIF 에셋 보관함',
     telemetry: isEn ? 'Live System Macros ({cpu}, {ram})' : '실시간 시스템 변수 ({cpu}, {ram}, {time})',
     triggers: isEn ? 'Game / App Auto Triggers (.exe)' : '게임/앱 프로세스 자동 감지 (.exe)',
@@ -6448,16 +6279,12 @@ function applyLanguageUI() {
   // Top Stage Buttons & Perspective
   if ($('btnAddNewProfile')) $('btnAddNewProfile').innerHTML = `<span>+</span> ${isEn ? 'Add new' : '새 프로필'}`;
   if ($('profileSearchInput')) $('profileSearchInput').placeholder = isEn ? 'Search profiles...' : '프로필 검색...';
-  if ($('btnSyncFromDiscordTop')) {
-    const sp = $('btnSyncFromDiscordTop').querySelector('span');
-    if (sp) sp.textContent = isEn ? 'Sync' : '동기화';
-  }
   if ($('btnAddKeyframeTop')) {
     const sp = $('btnAddKeyframeTop').querySelector('span');
     if (sp) sp.textContent = isEn ? '+ Keyframe' : '+ 키프레임';
   }
   if ($('btnOpenQuickIdentityModal')) {
-    $('btnOpenQuickIdentityModal').textContent = isEn ? 'Edit Profile / Bio' : '프로필/소개 편집';
+    $('btnOpenQuickIdentityModal').textContent = isEn ? 'Edit Rich Presence' : 'Rich Presence 편집';
   }
   if ($('btnClearDiscordRpc')) {
     $('btnClearDiscordRpc').textContent = isEn ? 'Stop RPC' : '활동 끄기';
@@ -6492,8 +6319,7 @@ function applyLanguageUI() {
 
   // View Headers
   const viewTitleMap = {
-    '#view-discord-link .aux-title': isEn ? 'Discord Real-Time Account Link & Profile Control' : 'Discord 실시간 계정 연동 & 프로필 제어',
-    '#view-identity .aux-title': isEn ? 'Discord Profile · Status · Official Badges · Bio' : 'Discord 프로필 · 상태 · 대명사 · 내 소개(Bio) · 공식 배지',
+    '#view-discord-link .aux-title': isEn ? 'Discord Local IPC Connection & Rich Presence Settings' : 'Discord 로컬 IPC 연동 & Rich Presence 송출 설정',
     '#view-vault .aux-title': isEn ? 'Media & GIF Asset Vault' : '미디어 & GIF 에셋 보관함 (Media Vault)',
     '#view-telemetry .aux-title': isEn ? 'Live System Telemetry & Dynamic Variables ({})' : '실시간 시스템 텔레메트리 & 동적 변수 ({})',
     '#view-triggers .aux-title': isEn ? 'Process Auto-Detection & Automation (.exe)' : '게임 / 프로그램 프로세스 자동 감지 (.exe) & 자동화',
