@@ -1,6 +1,20 @@
 {
-  "updatedAt": 1793517476751,
+  "updatedAt": 1793519598415,
   "licenses": [
+    {
+      "id": "lic-1793519598403-0-8i14",
+      "key": "REBORN-7AHE-MUPX-D2CP",
+      "isLifetime": true,
+      "durationMs": 0,
+      "status": "unused",
+      "maxUsers": 1,
+      "boundUsers": [],
+      "boundHwid": null,
+      "note": "",
+      "createdAt": 1793519598403,
+      "activatedAt": null,
+      "expiresAt": null
+    },
     {
       "id": "lic-1793517192571-0-9caf",
       "key": "REBORN-W2UN-7Q3R-M2AE",
@@ -57,6 +71,13 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1793519598404-cui",
+      "time": "16시 53분 18초",
+      "timestamp": 1793519598414,
+      "action": "라이센스 발급",
+      "detail": "1개 발급 (영구제 (무제한), 최대 1명)"
+    },
     {
       "id": "aud-1793517476733-452",
       "time": "16시 17분 56초",
