@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reborn RPC · Discord Profile & Rich Presence Studio</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- SONIQ Dev Dual-Canvas Interactive Aurora + Mouse Sparks + Grid + Noise Background -->
+  <div class="aurora-wrap" aria-hidden="true">
+    <canvas id="aurora-canvas" class="aurora-canvas"></canvas>
+    <canvas id="stars-canvas" class="aurora-canvas"></canvas>
+    <div class="aurora-grid"></div>
+    <div class="aurora-vignette"></div>
+    <div class="aurora-noise"></div>
+  </div>
+
+  <!-- Main 4-Zone Glassmorphic Studio Layout -->
+  <div class="app-shell">
+    <!-- 1. FAR-LEFT ICON NAVIGATION RAIL -->
+    <nav class="icon-rail">
+      <div class="rail-brand" id="btnRailBrand" title="Reborn RPC · Burning Flame Studio">
+        <span class="rail-brand-dot"></span>
+        <!-- Custom Multi-Layered Burning Flame Vector SVG Logo -->
+        <svg class="reborn-flame-logo" viewBox="0 0 32 32" fill="none">
+          <defs>
+            <linearGradient id="rebornFlameOuter" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#fff7ed" />
+              <stop offset="28%" stop-color="#facc15" />
+              <stop offset="65%" stop-color="#f97316" />
+              <stop offset="100%" stop-color="#dc2626" />
+            </linearGradient>
+            <linearGradient id="rebornFlameMid" x1="16" y1="7" x2="16" y2="28" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="45%" stop-color="#fde047" />
+              <stop offset="100%" stop-color="#ea580c" />
+            </linearGradient>
+            <linearGradient id="rebornFlameCore" x1="16" y1="13" x2="16" y2="27" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="70%" stop-color="#fef08a" />
+              <stop offset="100%" stop-color="#f59e0b" />
+            </linearGradient>
+          </defs>
+          <path
+            class="flame-outer-path"
+            d="M16.8 2.1C16.2 6.1 12.6 8.9 10.4 12.1C7.9 15.6 6.6 18.6 6.6 21.8C6.6 26.9 10.7 30.2 16.0 30.2C21.3 30.2 25.4 26.6 25.4 21.3C25.4 17.4 23.2 13.4 20.9 10.8C21.3 13.1 20.2 14.7 18.9 15.3C20.0 11.2 19.5 6.2 16.8 2.1Z"
+            fill="url(#rebornFlameOuter)"
+          />
+          <path
+            class="flame-mid-path"
+            d="M16.2 8.4C15.5 11.4 12.9 13.5 11.8 16.3C10.8 18.8 11.3 21.8 13.1 23.9C14.7 25.7 17.5 25.6 19.2 23.7C21.0 21.8 21.4 18.6 19.9 15.8C19.0 13.9 17.0 11.8 16.2 8.4Z"
+            fill="url(#rebornFlameMid)"
+          />
+          <path
+            class="flame-inner-path"
+            d="M16.0 14.2C15.5 16.2 13.9 17.6 13.4 19.5C12.9 21.1 13.5 23.0 14.7 24.0C15.6 24.8 17.1 24.7 17.9 23.8C18.8 22.7 19.0 20.9 18.2 19.2C17.6 18.0 16.5 16.5 16.0 14.2Z"
+            fill="url(#rebornFlameCore)"
+          />
+          <circle cx="11.2" cy="7.5" r="1.1" fill="#fde047" opacity="0.85" />
+          <circle cx="21.6" cy="6.8" r="0.9" fill="#fb923c" opacity="0.75" />
+        </svg>
+      </div>
+
+      <div class="rail-menu">
+        <button type="button" class="rail-btn active" data-view="keyframes" title="키프레임 & 커스텀 프로필 스튜디오">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <rect x="3" y="4" width="18" height="16" rx="2.5" />
+            <line x1="9" y1="4" x2="9" y2="20" />
+          </svg>
+        </button>
+
+        <button type="button" class="rail-btn" data-view="discord-link" title="Discord 계정 실시간 연동 (프로필 · 이름 · 대명사 · 소개 · 상태)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+        </button>
+
+        <button type="button" class="rail-btn" data-view="identity" title="프로필 외형 · 이름 · 대명사 · 소개 · 배지 커스터마이징">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" />
+            <path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" />
+          </svg>
+        </button>
+
+        <button type="button" class="rail-btn" data-view="telemetry" title="실시간 시스템 텔레메트리 & 동적 매크로 변수">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+            <path d="M22 12A10 10 0 0 0 12 2v10z" />
+          </svg>
+        </button>
+
+        <button type="button" class="rail-btn" data-view="triggers" title="프로세스 감지(.exe) & 자동화 설정">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+          </svg>
+        </button>
+
+        <button type="button" class="rail-btn" data-view="vault" title="커스텀 미디어 & 앱 에셋 보관함">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <rect x="3" y="3" width="18" height="18" rx="2.5" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+        </button>
+
+        <button type="button" class="rail-btn" data-view="console" title="Raw JSON 페이로드 & 실시간 IPC 콘솔">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <polyline points="16 18 22 12 16 6" />
+            <polyline points="8 6 2 12 8 18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="rail-bottom">
+        <button type="button" class="rail-btn" id="btnRailAdminPanel" title="관리자 패널 (라이센스 생성 · 기간 연장 · 제한 · 회원 관리)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="M9 12l2 2 4-4" />
+          </svg>
+        </button>
+        <button type="button" class="rail-btn" id="btnRailDiscordLink" title="Discord 연동 설정 열기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </button>
+        <div class="ipc-mini-dot" id="railIpcDot" title="Discord 실시간 연결 상태"></div>
+      </div>
+    </nav>
+
+    <!-- 2. LEFT COLUMN: PROFILES LIST + PREVIEW CONTROLS TRANSPORT BAR -->
+    <aside class="profiles-column">
+      <div class="profiles-top-header">
+        <!-- Reborn RPC Brand Header -->
+        <div class="reborn-sidebar-brand">
+          <div class="reborn-flame-badge">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path
+                d="M16.8 2.1C16.2 6.1 12.6 8.9 10.4 12.1C7.9 15.6 6.6 18.6 6.6 21.8C6.6 26.9 10.7 30.2 16.0 30.2C21.3 30.2 25.4 26.6 25.4 21.3C25.4 17.4 23.2 13.4 20.9 10.8C21.3 13.1 20.2 14.7 18.9 15.3C20.0 11.2 19.5 6.2 16.8 2.1Z"
+                fill="url(#rebornFlameOuter)"
+              />
+              <path
+                d="M16.2 8.4C15.5 11.4 12.9 13.5 11.8 16.3C10.8 18.8 11.3 21.8 13.1 23.9C14.7 25.7 17.5 25.6 19.2 23.7C21.0 21.8 21.4 18.6 19.9 15.8C19.0 13.9 17.0 11.8 16.2 8.4Z"
+                fill="url(#rebornFlameMid)"
+              />
+              <path
+                d="M16.0 14.2C15.5 16.2 13.9 17.6 13.4 19.5C12.9 21.1 13.5 23.0 14.7 24.0C15.6 24.8 17.1 24.7 17.9 23.8C18.8 22.7 19.0 20.9 18.2 19.2C17.6 18.0 16.5 16.5 16.0 14.2Z"
+                fill="url(#rebornFlameCore)"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1 class="reborn-brand-title">Reborn RPC</h1>
+            <p class="reborn-brand-sub">Discord Profile & RPC Engine</p>
+          </div>
+        </div>
+
+        <div class="profiles-title-row">
+          <svg class="profiles-user-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2.5c-3.33 0-10 1.67-10 5V22h20v-2.5c0-3.33-6.67-5-10-5z" />
+          </svg>
+          <div>
+            <h2 class="profiles-heading">Profiles</h2>
+            <p class="profiles-subheading">우클릭으로 설정 · 복제 · 삭제</p>
+          </div>
+        </div>
+
+        <div class="profiles-action-row">
+          <button type="button" class="btn-add-profile glass-shimmer" id="btnAddNewProfile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <span>Add new</span>
+          </button>
+          <button type="button" class="btn-profile-gear" id="btnProfileSettings" title="백업 · 복원 · 전체 초기화">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="profile-filter-wrap">
+          <input type="text" class="profile-filter-input" id="profileSearchInput" placeholder="프로필 검색..." />
+        </div>
+      </div>
+
+      <!-- Scrollable Profiles List -->
+      <div class="profiles-list-scroll" id="profilesListContainer"></div>
+
+      <!-- Bottom Transport Deck: Preview controls -->
+      <div class="preview-controls-deck">
+        <div class="preview-controls-header">
+          <span>Preview controls</span>
+          <div class="preview-header-controls">
+            <div class="reborn-custom-dropdown mini-upward" id="customDropPreviewSpeed" data-value="5"></div>
+            <span class="preview-loop-badge" id="previewLoopStateBadge">PAUSED</span>
+          </div>
+        </div>
+        <div class="transport-buttons-row">
+          <button type="button" class="transport-btn" id="btnPrevKeyframe" title="이전 키프레임">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11 18V6l-8.5 6 8.5 6zm.5-6 8.5 6V6l-8.5 6z" />
+            </svg>
+          </button>
+          <button type="button" class="transport-btn play-main" id="btnPlayPauseKeyframes" title="키프레임 시퀀스 재생 / 일시정지">
+            <svg id="iconTransportPlay" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg id="iconTransportPause" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </button>
+          <button type="button" class="transport-btn" id="btnNextKeyframe" title="다음 키프레임">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="m4 18 8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
+            </svg>
+          </button>
+        </div>
+        <div class="transport-progress-track">
+          <div class="transport-progress-fill" id="transportProgressFill"></div>
+        </div>
+        <label class="transport-sync-row reborn-check-label" title="RPC가 켜져 있을 때 편집 즉시 실제 Discord에도 반영합니다">
+          <input type="checkbox" id="chkSyncPreviewToDiscord" checked />
+          <span class="reborn-check-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span>실시간 Discord 자동 반영</span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- 3. CENTER WORKSPACE: TOP ACTION BAR + DOT-MATRIX KEYFRAME CANVAS + OVERLAYS -->
+    <main class="center-studio-stage">
+      <!-- Top Selected Profile Bar -->
+      <header class="stage-top-bar">
+        <div class="stage-top-left">
+          <button type="button" class="btn-stage-icon" id="btnResetOrClearStage" title="현재 키프레임 초기화">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+
+          <div class="selected-profile-info">
+            <span class="selected-label">Selected Profile</span>
+            <div class="selected-name-row">
+              <input
+                type="text"
+                class="selected-profile-name-input"
+                id="inputSelectedProfileName"
+                value=""
+                placeholder="새 프로필 이름..."
+                maxlength="32"
+                title="클릭하여 프로필 이름 변경"
+              />
+              <span class="profile-status-pill saved" id="profileStatusBadge" title="프로필 상태">Ready</span>
+            </div>
+          </div>
+
+          <button type="button" class="ipc-engine-pill glass-shimmer" id="topIpcPill" title="클릭하여 Discord 계정 연동 및 동기화 설정 열기">
+            <span class="ipc-led" id="topIpcLed"></span>
+            <span id="topIpcText">Discord 연동 확인 중...</span>
+          </button>
+
+          <div class="license-user-top-pill" id="topLicenseUserPill" title="현재 로그인된 라이센스 계정 정보">
+            <span class="lic-dot"></span>
+            <span id="topLicenseUserText">라이센스 인증됨</span>
+            <button type="button" class="btn-top-logout" id="btnTopLogout" title="로그아웃">로그아웃</button>
+          </div>
+        </div>
+
+        <div class="stage-top-right">
+          <button type="button" class="btn-add-kf-top glass-shimmer" id="btnCheckAutoUpdateTop" title="클릭하여 자동 업데이트 확인 및 최신 버전 동기화">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-right:5px;vertical-align:-2px;color:#34d399;">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+            </svg>
+            <span id="topAutoUpdateText">v5.2 · 자동 업데이트 ON</span>
+          </button>
+
+          <button type="button" class="btn-add-kf-top glass-shimmer" id="btnOpenAdminTop" title="관리자 패널 (라이센스 · HWID · 회원 관리)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-right:5px;vertical-align:-2px;">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>관리자 패널</span>
+          </button>
+
+          <button type="button" class="btn-add-kf-top glass-shimmer" id="btnSyncFromDiscordTop" title="실제 Discord에서 내 프로필/이름/대명사/소개/서버태그 동기화">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-right:5px;vertical-align:-2px;">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+              <path d="M16 16h5v5" />
+            </svg>
+            <span>Discord 동기화</span>
+          </button>
+
+          <button type="button" class="btn-add-kf-top glass-shimmer" id="btnAddKeyframeTop" title="현재 프로필에 새 키프레임 추가">
+            <span>+ Add Keyframe</span>
+          </button>
+
+          <button type="button" class="btn-save-disk" id="btnSaveProfileDisk" title="프로필 저장 (Save)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+              <polyline points="17 21 17 13 7 13 7 21" />
+              <polyline points="7 3 7 8 15 8" />
+            </svg>
+          </button>
+
+          <button type="button" class="btn-make-it-live" id="btnMakeItLive" title="클릭하여 Discord RPC 시작(Send) 또는 중지(Turn Off)">
+            <svg class="live-play-icon" id="iconMakeLivePlay" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg class="live-play-icon hidden" id="iconMakeLiveStop" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="6" width="12" height="12" rx="2" />
+            </svg>
+            <div class="live-btn-labels">
+              <span class="live-btn-title" id="makeLiveTitle">Start RPC</span>
+              <span class="live-btn-sub" id="makeLiveSub">Send to Discord</span>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: DOT-MATRIX KEYFRAME & VARIANT CANVAS -->
+      <section class="dot-matrix-canvas studio-view" id="view-keyframes">
+        <div class="keyframes-canvas-scroll" id="keyframesCanvasScroll">
+          <div id="keyframesListWrapper" class="keyframes-stack"></div>
+
+          <div class="canvas-bottom-add-wrap" id="canvasBottomAddWrap">
+            <button type="button" class="btn-canvas-add-keyframe" id="btnAddKeyframeBottom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>Add Keyframe Sequence Step</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEDICATED RICH PRESENCE CUSTOMIZER WINDOW OVERLAY -->
+      <div class="rpc-customizer-overlay hidden" id="rpcCustomizerOverlay">
+        <div class="rpc-customizer-window spotlight-card">
+          <!-- Customizer Top Bar -->
+          <div class="rc-top-bar">
+            <button type="button" class="btn-rc-close" id="btnCloseRpcCustomizer" title="닫기">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <div class="rc-window-title"><strong>Rich Presence</strong> Customizer</div>
+            <div class="rc-top-spacer"></div>
+          </div>
+
+          <div class="rc-body-grid">
+            <!-- Left Column: Elements -->
+            <div class="rc-elements-column">
+              <div class="rc-col-header">Elements</div>
+              <div class="rc-elements-list" id="rcElementsList"></div>
+            </div>
+
+            <!-- Right Column: Active Element Inspector -->
+            <div class="rc-inspector-column">
+              <div class="rc-editing-bar">
+                <div class="rc-editing-left">
+                  <span>Preset Name:</span>
+                  <input
+                    type="text"
+                    class="rc-preset-name-input"
+                    id="rcPresetNameInput"
+                    value=""
+                    placeholder="프리셋 이름 입력 (선택)"
+                    maxlength="28"
+                    title="프리셋 이름 지정"
+                  />
+                </div>
+                <div class="rc-editing-actions">
+                  <button type="button" class="btn-rc-preset-act" id="btnRcNewPreset" title="현재 설정으로 새 RPC 프리셋 저장">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span>프리셋으로 저장</span>
+                  </button>
+                  <button type="button" class="btn-rc-preset-act danger" id="btnRcDeletePreset" title="현재 RPC 프리셋 삭제">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                    <span>프리셋 삭제</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="rc-inspector-content" id="rcInspectorContent"></div>
+
+              <!-- Bottom Bar: Activity Mode Popup | Platform Popup | Save -->
+              <div class="rc-bottom-bar">
+                <div class="rc-bottom-selects">
+                  <!-- Custom Activity Mode Trigger & Upward Popup Menu -->
+                  <div class="rc-bottom-select-box" id="rcActivityPopupWrap">
+                    <button type="button" class="rc-bottom-popup-trigger" id="btnRcActivityPopupTrigger">
+                      <span class="rc-bottom-icon playing-green" id="rcActivityTypeIcon"></span>
+                      <span class="rc-bottom-trigger-label" id="rcActivityTypeLabel">Playing</span>
+                      <svg class="rc-updown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="7 15 12 20 17 15" />
+                        <polyline points="7 9 12 4 17 9" />
+                      </svg>
+                    </button>
+                    <div class="rc-upward-popup-menu hidden" id="rcActivityPopupMenu"></div>
+                  </div>
+
+                  <!-- Custom Platform Trigger & Upward Popup Menu -->
+                  <div class="rc-bottom-select-box" id="rcPlatformPopupWrap">
+                    <button type="button" class="rc-bottom-popup-trigger" id="btnRcPlatformPopupTrigger">
+                      <span class="rc-bottom-icon" id="rcPlatformIcon"></span>
+                      <span class="rc-bottom-trigger-label" id="rcPlatformLabel">Desktop</span>
+                      <svg class="rc-updown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="7 15 12 20 17 15" />
+                        <polyline points="7 9 12 4 17 9" />
+                      </svg>
+                    </button>
+                    <div class="rc-upward-popup-menu hidden" id="rcPlatformPopupMenu"></div>
+                  </div>
+                </div>
+
+                <button type="button" class="btn-rc-save glass-shimmer" id="btnRcSavePreset">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                    <polyline points="17 21 17 13 7 13 7 21" />
+                    <polyline points="7 3 7 8 15 8" />
+                  </svg>
+                  <span>Save & Apply</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: DISCORD ACCOUNT REAL-TIME LINK & FULL PROFILE SYNC -->
+      <section class="dot-matrix-canvas studio-view hidden" id="view-discord-link">
+        <div class="auxiliary-panel-scroll">
+          <div class="aux-card spotlight-card">
+            <div class="aux-header-split">
+              <div>
+                <h3 class="aux-title">Discord 실시간 연동 센터 (IPC + 프로필 API 동기화)</h3>
+                <p class="aux-desc">실행 중인 Discord 데스크톱 앱과 연동하여 실제 프로필, 이름, 대명사, 소개, 상태, 커스텀 상태, Rich Presence를 양방향으로 제어합니다.</p>
+              </div>
+              <button type="button" class="btn-gold-sm glass-shimmer" id="btnSyncDiscordNowView">
+                지금 Discord와 동기화
+              </button>
+            </div>
+
+            <div class="discord-link-status-banner spotlight-card" id="discordLinkStatusBanner">
+              <div class="dl-status-left">
+                <div class="dl-avatar-circle" id="dlBannerAvatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" />
+                    <path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="dl-account-name" id="dlAccountName">Discord 데스크톱 연결 대기 중</div>
+                  <div class="dl-account-sub" id="dlAccountSub">로컬 IPC 파이프(pipe-0)를 통해 자동 감지됩니다</div>
+                </div>
+              </div>
+              <div class="dl-badges-right">
+                <span class="dl-pill" id="dlIpcBadge">IPC 대기</span>
+                <span class="dl-pill" id="dlRestBadge">프로필 API 미설정</span>
+              </div>
+            </div>
+
+            <div class="aux-subtitle">1단계 · 로컬 Discord 데스크톱 IPC 연동 (Rich Presence + 기본 계정 정보)</div>
+            <p class="aux-desc">PC에 켜져 있는 Discord 앱과 즉시 연결되어 내 닉네임, 태그, 아바타를 가져오고 Rich Presence 활동을 실시간 송출합니다.</p>
+            <div class="vault-fetch-bar">
+              <input type="text" class="aux-input" id="dlClientIdInput" value="383226320970055681" placeholder="Discord Application Client ID" style="flex:1;" />
+              <button type="button" class="btn-gold-sm" id="btnDlConnectIpc">로컬 Discord IPC 재연결</button>
+            </div>
+
+            <div class="aux-subtitle" style="margin-top: 12px;">2단계 · Discord 프로필 제어 토큰 연동 (상태 · 대명사 · 소개 · 표시 이름 실제 변경용)</div>
+            <p class="aux-desc">
+              Discord의 <strong>상태(Online/Idle/DND/Invisible)</strong>, <strong>커스텀 상태</strong>, <strong>대명사(Pronouns)</strong>, <strong>내 소개(Bio)</strong>, <strong>표시 이름(Display Name)</strong>까지 Discord 서버에 직접 반영하려면 본인 계정의 Authorization 토큰을 입력하세요. (로컬에만 안전하게 저장되며, 미입력 시에도 Rich Presence를 통해 모든 항목이 실시간 송출됩니다.)
+            </p>
+            <div class="vault-fetch-bar">
+              <input type="password" class="aux-input" id="dlUserTokenInput" placeholder="Discord User Authorization Token 입력 (선택 사항)" style="flex:1;" />
+              <button type="button" class="btn-preview-sub" id="btnToggleTokenVis" style="max-width:90px;">표시/숨김</button>
+              <button type="button" class="btn-gold-sm glass-shimmer" id="btnSaveAndSyncToken">연동 저장 & 내 프로필 불러오기</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: PROFILE IDENTITY, PRONOUNS, BIO, STATUS & BADGES CUSTOMIZER -->
+      <section class="dot-matrix-canvas studio-view hidden" id="view-identity">
+        <div class="auxiliary-panel-scroll">
+          <div class="aux-card spotlight-card">
+            <div class="aux-header-split">
+              <div>
+                <h3 class="aux-title">내 Discord 프로필 · 이름 · 대명사 · 소개 · 상태 · 서버 태그 편집</h3>
+                <p class="aux-desc">연동된 Discord 프로필의 모든 요소를 커스텀 드롭다운과 입력창으로 수정하고 실제 Discord에 실시간 반영합니다.</p>
+              </div>
+              <button type="button" class="btn-gold-sm glass-shimmer" id="btnApplyIdentityToDiscord">
+                Discord 프로필에 즉시 적용
+              </button>
+            </div>
+
+            <div class="aux-grid-2">
+              <div class="aux-field">
+                <label>표시 이름 (Display Name)</label>
+                <input type="text" class="aux-input" id="idDisplayName" placeholder="표시될 닉네임 입력" />
+              </div>
+              <div class="aux-field">
+                <label>사용자명 (Username)</label>
+                <input type="text" class="aux-input" id="idUsername" placeholder="사용자 태그" />
+              </div>
+              <div class="aux-field">
+                <label>대명사 (Pronouns)</label>
+                <input type="text" class="aux-input" id="idPronouns" placeholder="예: he/him, PRO / DEV, 자유 입력" />
+              </div>
+              <div class="aux-field">
+                <label>온라인 상태 (Status · 실시간 드롭다운)</label>
+                <div class="reborn-custom-dropdown" id="customDropIdStatus"></div>
+              </div>
+              <div class="aux-field">
+                <label>커스텀 상태 메시지 (Custom Status)</label>
+                <input type="text" class="aux-input" id="idCustomStatusText" placeholder="프로필 말풍선 상태 메시지 입력" />
+              </div>
+              <div class="aux-field">
+                <label>실제 보유 서버 태그 선택 (Server Tag · Discord 연동)</label>
+                <div class="reborn-custom-dropdown" id="customDropIdServerTag"></div>
+              </div>
+              <div class="aux-field" style="grid-column: span 2;">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+                  <label style="margin:0;">내 Discord 실제 적용/보유 서버 태그 (Clan Badge & Guild ID 실시간 연동)</label>
+                  <button type="button" class="btn-gold-sm glass-shimmer" id="btnSyncOwnedTagsFromDiscord">Discord에서 내 실제 서버 태그 동기화</button>
+                </div>
+                <div class="badges-selector-row" id="ownedServerTagsList" style="margin-top:8px;"></div>
+              </div>
+              <div class="aux-field" style="grid-column: span 2;">
+                <label>내 소개 (Bio · 동적 변수 {cpu}, {ram}, {time} 사용 가능)</label>
+                <textarea class="aux-input" id="idBioTextarea" rows="3" placeholder="내 소개(Bio)를 자유롭게 입력하세요..."></textarea>
+              </div>
+              <div class="aux-field" style="grid-column: span 2;">
+                <label>아바타 이미지/GIF URL (Discord 연동 아바타 자동 적용)</label>
+                <input type="text" class="aux-input" id="idAvatarUrl" placeholder="Discord 연동 아바타 URL" />
+              </div>
+              <div class="aux-field">
+                <label>배너 배경 이미지/GIF URL</label>
+                <input type="text" class="aux-input" id="idBannerUrl" placeholder="https://..." />
+              </div>
+              <div class="aux-field">
+                <label>배너 배경 컬러</label>
+                <input type="color" class="aux-input color-input" id="idBannerColor" value="#0e0e12" />
+              </div>
+            </div>
+
+            <div class="aux-subtitle">내 Discord 계정 실제 보유 배지 (Discord 서버에서 자동 동기화됨)</div>
+            <div class="badges-selector-row" id="badgesSelectorRow"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: LIVE TELEMETRY & CUSTOM USER MACROS -->
+      <section class="dot-matrix-canvas studio-view hidden" id="view-telemetry">
+        <div class="auxiliary-panel-scroll">
+          <div class="aux-card spotlight-card">
+            <h3 class="aux-title">실시간 시스템 텔레메트리 & 동적 매크로 엔진</h3>
+            <p class="aux-desc">소개(Bio), 대명사(Pronouns), 커스텀 상태, Rich Presence 어디에나 아래 변수를 넣으면 실시간 시스템 수치로 자동 변환됩니다.</p>
+
+            <div class="telemetry-cards-grid" id="telemetryCardsGrid">
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{cpu}">
+                <span class="tel-code">{cpu} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardCpu">0%</strong>
+                <div class="tel-bar"><div class="tel-bar-fill" id="barCpu" style="width:0%"></div></div>
+                <span class="tel-cap">실시간 CPU 점유율</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{ram}">
+                <span class="tel-code">{ram} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardRam">0%</strong>
+                <div class="tel-bar"><div class="tel-bar-fill" id="barRam" style="width:0%"></div></div>
+                <span class="tel-cap">메모리 점유율 (%)</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{ram_gb}">
+                <span class="tel-code">{ram_gb} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardRamGb">-</strong>
+                <span class="tel-cap">사용 중 메모리 용량</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{time}">
+                <span class="tel-code">{time} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardTime">-</strong>
+                <span class="tel-cap">로컬 현재 시각</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{uptime}">
+                <span class="tel-code">{uptime} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardUptime">-</strong>
+                <span class="tel-cap">스튜디오 가동 시간</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{os}">
+                <span class="tel-code">{os} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardOs">Windows</strong>
+                <span class="tel-cap">운영체제 플랫폼</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{my_name}">
+                <span class="tel-code">{my_name} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardMyName">-</strong>
+                <span class="tel-cap">내 표시 이름 (Display Name)</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{username}">
+                <span class="tel-code">{username} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardUsername">-</strong>
+                <span class="tel-cap">내 사용자명 (@Username)</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{spotify_track}">
+                <span class="tel-code">{spotify_track} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardSpotify" style="font-size:15px;">재생 대기</strong>
+                <span class="tel-cap">실시간 Spotify 곡 + 가수</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{spotify_song}">
+                <span class="tel-code">{spotify_song} · 클릭 복사</span>
+                <strong class="tel-big" id="liveCardSpotifySong" style="font-size:15px;">-</strong>
+                <span class="tel-cap">Spotify 노래 제목</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{spotify_link}">
+                <span class="tel-code">{spotify_link} · 클릭 복사</span>
+                <strong class="tel-big" style="font-size:14px;">Spotify URL</strong>
+                <span class="tel-cap">Spotify 곡 검색 링크 (버튼용)</span>
+              </div>
+              <div class="tel-stat-card spotlight-card" data-copy-macro="{discord_link}">
+                <span class="tel-code">{discord_link} · 클릭 복사</span>
+                <strong class="tel-big" style="font-size:14px;">Profile URL</strong>
+                <span class="tel-cap">내 Discord 프로필 직통 링크</span>
+              </div>
+            </div>
+
+            <div class="aux-subtitle" style="margin-top:10px;">나만의 커스텀 매크로 변수 정의</div>
+            <div class="vault-fetch-bar">
+              <input type="text" class="aux-input" id="customVarKeyInput" placeholder="변수 이름 (예: rank)" style="max-width:160px;" />
+              <input type="text" class="aux-input" id="customVarValInput" placeholder="표시할 값 입력" style="flex:1;" />
+              <button type="button" class="btn-gold-sm" id="btnAddCustomVar">+ 변수 추가</button>
+            </div>
+            <div class="badges-selector-row" id="customVarsList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: PROCESS WATCHER & AUTOMATION TRIGGERS -->
+      <section class="dot-matrix-canvas studio-view hidden" id="view-triggers">
+        <div class="auxiliary-panel-scroll">
+          <div class="aux-card spotlight-card">
+            <h3 class="aux-title">스마트 자동화 & 실행 프로세스(.exe) 트리거</h3>
+            <p class="aux-desc">특정 게임이나 프로그램(.exe)이 실행되면 자동으로 해당 프로필로 전환하고 키프레임을 송출합니다.</p>
+
+            <div class="automation-switches-list">
+              <label class="aux-switch-item reborn-check-label">
+                <div>
+                  <strong>실시간 동적 매크로 동기화</strong>
+                  <p>{cpu}, {ram}, {time} 등의 변수를 Discord로 주기적 자동 갱신합니다.</p>
+                </div>
+                <input type="checkbox" id="chkAutoMacro" checked />
+                <span class="reborn-check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </label>
+
+              <label class="aux-switch-item reborn-check-label">
+                <div>
+                  <strong>멀티 키프레임 라이브 루프 송출</strong>
+                  <p>프로필에 여러 키프레임이 있을 때 지정된 시간(초)마다 Discord 상태를 순차 전환합니다.</p>
+                </div>
+                <input type="checkbox" id="chkKeyframeLoop" checked />
+                <span class="reborn-check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </label>
+
+              <label class="aux-switch-item reborn-check-label">
+                <div>
+                  <strong>실행 프로세스(.exe) 감지 자동 프로필 전환</strong>
+                  <p>백그라운드에서 실행 중인 앱을 감지해 매핑된 프로필로 자동 전환합니다.</p>
+                </div>
+                <input type="checkbox" id="chkProcessWatcher" />
+                <span class="reborn-check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </label>
+
+              <label class="aux-switch-item reborn-check-label">
+                <div>
+                  <strong>Discord 재시작 시 자동 IPC 재연결</strong>
+                  <p>디스코드가 재부팅되더라도 연결을 자동으로 복구합니다.</p>
+                </div>
+                <input type="checkbox" id="chkAutoReconnect" checked />
+                <span class="reborn-check-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </label>
+            </div>
+
+            <div class="aux-header-split" style="margin-top: 10px;">
+              <div class="aux-subtitle">프로필별 자동 실행 트리거 프로세스(.exe) 매핑</div>
+              <button type="button" class="btn-gold-sm" id="btnScanProcesses">실행 중인 프로세스 스캔</button>
+            </div>
+            <div id="profilesTriggerTable" class="automation-switches-list"></div>
+
+            <div class="aux-subtitle hidden" id="scannedProcessesHeader">현재 실행 중인 윈도우 프로세스 (클릭 시 현재 프로필에 지정)</div>
+            <div class="badges-selector-row" id="scannedProcessesList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 6: MEDIA & DISCORD APP ASSETS VAULT -->
+      <section class="dot-matrix-canvas studio-view hidden" id="view-vault">
+        <div class="auxiliary-panel-scroll">
+          <div class="aux-card spotlight-card">
+            <div class="aux-header-split">
+              <div>
+                <h3 class="aux-title">커스텀 이미지 & GIF 미디어 보관함</h3>
+                <p class="aux-desc">직접 원하는 이미지나 움짤(GIF) URL을 등록하고 클릭 한 번으로 Rich Presence에 적용하세요.</p>
+              </div>
+              <div class="vault-slot-toggle">
+                <button type="button" class="vault-slot-btn active" data-slot="large">Large 이미지에 적용</button>
+                <button type="button" class="vault-slot-btn" data-slot="small">Small 배지에 적용</button>
+              </div>
+            </div>
+
+            <div class="vault-fetch-bar">
+              <input type="text" class="aux-input" id="customGalleryNameInput" placeholder="에셋 이름" style="max-width:190px;" />
+              <input type="text" class="aux-input" id="customGalleryUrlInput" placeholder="이미지 또는 GIF URL (https://...)" style="flex:1;" />
+              <button type="button" class="btn-gold-sm" id="btnAddCustomGallery">+ 보관함에 추가</button>
+            </div>
+
+            <div class="vault-fetch-bar">
+              <input type="text" class="aux-input" id="vaultClientIdInput" placeholder="Discord Application Client ID 입력" style="flex:1;" value="383226320970055681" />
+              <button type="button" class="btn-gold-sm" id="btnVaultFetchAssets">Discord 앱 에셋 조회</button>
+            </div>
+
+            <div class="aux-subtitle">내 커스텀 미디어 보관함 (우클릭으로 삭제 가능)</div>
+            <div class="vault-media-grid" id="vaultCuratedGrid"></div>
+
+            <div class="aux-subtitle">Discord Developer Portal 등록 에셋</div>
+            <div class="vault-media-grid" id="vaultAppAssetsGrid">
+              <div class="vault-empty">위 입력창에 Client ID를 넣고 조회를 누르면 앱 전용 에셋이 표시됩니다.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 7: DEVELOPER PAYLOAD & IPC CONSOLE -->
+      <section class="dot-matrix-canvas studio-view hidden" id="view-console">
+        <div class="auxiliary-panel-scroll">
+          <div class="aux-card spotlight-card">
+            <div class="aux-header-split">
+              <div>
+                <h3 class="aux-title">Raw Discord IPC JSON 페이로드 & 실시간 로그</h3>
+                <p class="aux-desc">현재 선택된 키프레임이 Discord로 전송하는 실제 패킷 구조입니다.</p>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button type="button" class="btn-preview-sub" id="btnReconnectIpcNow">IPC 재연결</button>
+                <button type="button" class="btn-preview-sub" id="btnClearConsoleLogs">로그 지우기</button>
+                <button type="button" class="btn-gold-sm" id="btnCopyRawJson">JSON 복사</button>
+              </div>
+            </div>
+            <pre class="raw-json-viewer" id="rawJsonViewer"></pre>
+            <div class="aux-subtitle">실시간 IPC & API 이벤트 로그</div>
+            <div class="ipc-log-viewer" id="ipcLogViewer"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 4. RIGHT COLUMN: REAL-TIME DISCORD PROFILE & KEYFRAME PREVIEW (CLICK OR RIGHT-CLICK TO EDIT) -->
+    <aside class="right-preview-column">
+      <div class="preview-top-bar">
+        <div class="preview-persp-switch">
+          <button type="button" class="persp-chip active" data-persp="other">타인 시점</button>
+          <button type="button" class="persp-chip" data-persp="self">본인 시점</button>
+        </div>
+        <div class="keyframe-counter-pill" id="keyframeCounterPill">Keyframe 1 of 1</div>
+      </div>
+
+      <!-- Authentic Discord Dark Glass Profile Preview Card -->
+      <div class="dc-live-profile spotlight-card" id="dcLiveProfileCard" title="각 영역을 클릭하거나 우클릭하면 즉시 커스텀 설정 창이 열립니다">
+        <div class="dc-profile-banner" id="dcProfileBanner" data-quick-edit="identity"></div>
+
+        <!-- Avatar + Status Indicator + Custom Status Bubble -->
+        <div class="dc-avatar-section">
+          <div class="dc-avatar-frame" id="dcAvatarFrame" data-quick-edit="status" title="클릭하여 상태(Online/Idle/DND/Invisible) 및 아바타 변경">
+            <div class="dc-default-orange-avatar" id="dcDefaultAvatar">
+              <svg viewBox="0 0 127.14 96.36" fill="#ffffff">
+                <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+              </svg>
+            </div>
+            <img id="dcCustomAvatarImg" class="dc-custom-avatar-img hidden" src="" alt="Avatar" />
+
+            <!-- Status Indicator Badge -->
+            <div class="dc-status-indicator online" id="dcStatusIndicator">
+              <span class="status-inner-glyph"></span>
+            </div>
+          </div>
+
+          <!-- Custom Status Thought Bubble -->
+          <div class="dc-custom-status-bubble hidden" id="dcCustomStatusBubble" data-quick-edit="custom_status" title="클릭하여 커스텀 상태 편집">
+            <span class="cs-svg-icon" id="dcCsIcon"></span>
+            <span class="cs-text" id="dcCsText"></span>
+          </div>
+        </div>
+
+        <!-- Identity Info -->
+        <div class="dc-identity-section">
+          <div class="dc-identity-dim-target" id="dcIdentityDimTarget">
+            <h2 class="dc-display-name dc-editable-hover" id="dcDisplayName" data-quick-edit="identity" title="클릭하여 표시 이름 편집">Discord 연동 대기</h2>
+
+            <div class="dc-sub-identity-row">
+              <span class="dc-username dc-editable-hover" id="dcUsername" data-quick-edit="identity">@username</span>
+
+              <!-- Server Tag Pill (Custom SVG Emblem + Tag Text) -->
+              <span class="dc-server-tag-pill hidden" id="dcServerTagPill" data-quick-edit="server_tag" title="클릭하여 서버 태그 편집">
+                <span class="tag-svg-icon" id="dcTagIcon"></span>
+                <span class="tag-label" id="dcTagText"></span>
+              </span>
+
+              <!-- Discord Custom Vector Badges Container -->
+              <div class="dc-badges-box hidden" id="dcBadgesBox" data-quick-edit="identity"></div>
+            </div>
+
+            <div class="dc-pronouns-line dc-editable-hover" id="dcPronounsLine" data-quick-edit="pronouns" title="클릭하여 대명사(Pronouns) 편집">대명사 클릭하여 추가</div>
+
+            <!-- Bio Box -->
+            <div class="dc-section-block dc-editable-hover" id="dcBioBlock" data-quick-edit="bio" title="클릭하여 내 소개(Bio) 편집">
+              <div class="dc-section-label">내 소개</div>
+              <div class="dc-bio-content" id="dcBioContent">클릭하여 내 소개(Bio)를 입력하거나 Discord에서 불러오세요.</div>
+            </div>
+          </div>
+
+          <!-- Rich Presence Activity Card -->
+          <div class="dc-activity-surface hidden" id="dcActivitySurface" data-quick-edit="rich_presence" title="클릭하여 Rich Presence 커스터마이저 열기">
+            <div class="dc-act-header-row">
+              <span class="dc-act-header" id="dcActHeader">Playing</span>
+              <span class="dc-act-platform-icon" id="dcActPlatformIcon"></span>
+            </div>
+
+            <div class="dc-act-body">
+              <div class="dc-act-media hidden" id="dcActMediaWrap">
+                <img id="dcActLargeImg" src="" alt="Large Art" />
+                <div class="dc-hover-tip" id="dcActLargeTip"></div>
+
+                <div class="dc-act-small-badge hidden" id="dcActSmallWrap">
+                  <img id="dcActSmallImg" src="" alt="Small Art" />
+                  <div class="dc-hover-tip small" id="dcActSmallTip"></div>
+                </div>
+              </div>
+
+              <div class="dc-act-lines">
+                <div class="dc-act-app-name" id="dcActAppName"></div>
+                <div class="dc-act-details" id="dcActDetails"></div>
+                <div class="dc-act-state" id="dcActState"></div>
+
+                <!-- Progress Bar Timeline Row (Like Screenshot 2: 17525:00:00 ── 17525:00:00) -->
+                <div class="dc-act-progress-row hidden" id="dcActProgressRow">
+                  <span class="dc-prog-time" id="dcProgStartText">00:00</span>
+                  <div class="dc-prog-track">
+                    <div class="dc-prog-fill" id="dcProgFill" style="width: 65%;"></div>
+                  </div>
+                  <span class="dc-prog-time" id="dcProgEndText">04:00</span>
+                </div>
+
+                <!-- Timer + Party Inline Row -->
+                <div class="dc-act-meta-row" id="dcActMetaRow">
+                  <span class="dc-act-timer" id="dcActTimerWrap">
+                    <svg class="dc-controller-svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.5 7H6.5C3.46 7 1 9.46 1 12.5S3.46 18 6.5 18c1.61 0 3.09-.7 4.1-1.82h2.8c1.01 1.12 2.49 1.82 4.1 1.82 3.04 0 5.5-2.46 5.5-5.5S20.54 7 17.5 7zM8 13.5H6.5V15h-1v-1.5H4v-1h1.5V11h1v1.5H8v1zm7.25.75c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2.5-2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+                    </svg>
+                    <span id="dcActTimerText">0:01</span>
+                  </span>
+
+                  <span class="dc-act-party hidden" id="dcActPartyWrap">
+                    <svg class="dc-users-svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                    <span id="dcActPartyText"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dc-act-buttons" id="dcActButtons"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Bottom Bar inside Right Column -->
+      <div class="preview-bottom-actions">
+        <button type="button" class="btn-preview-sub" id="btnOpenQuickIdentityModal">프로필/소개/대명사 편집</button>
+        <button type="button" class="btn-preview-sub" id="btnClearDiscordRpc">활동 표시 끄기</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- CUSTOM GLASSMORPHIC RIGHT-CLICK CONTEXT MENU -->
+  <div class="reborn-context-menu hidden" id="rebornContextMenu"></div>
+
+  <!-- MODAL 1: Universal Item Settings / Edit Dialog (Triggered by Right-Click "설정" or Preview Click) -->
+  <div class="studio-modal-backdrop hidden" id="itemSettingsModal">
+    <div class="studio-modal-card spotlight-card" style="max-width: 520px;">
+      <div class="studio-modal-header">
+        <div>
+          <h3 id="itemSettingsModalTitle">상세 설정 및 커스텀 편집</h3>
+          <p id="itemSettingsModalDesc">항목의 세부 속성을 수정하고 Discord에 즉시 반영합니다.</p>
+        </div>
+        <button type="button" class="btn-modal-x" id="btnCloseItemSettingsModal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="item-settings-modal-body" id="itemSettingsModalBody"></div>
+      <div class="item-settings-modal-footer">
+        <button type="button" class="btn-modal-danger" id="btnItemSettingsDelete">삭제 (Delete)</button>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="btn-preview-sub" id="btnItemSettingsCancel" style="padding:0 16px;">취소</button>
+          <button type="button" class="btn-gold-sm glass-shimmer" id="btnItemSettingsSave">저장 및 Discord 반영</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Profile Backup / Restore / Clean Reset -->
+  <div class="studio-modal-backdrop hidden" id="profileSettingsModal">
+    <div class="studio-modal-card spotlight-card" style="max-width: 480px;">
+      <div class="studio-modal-header">
+        <div>
+          <h3>Reborn RPC 데이터 관리</h3>
+          <p>전체 커스텀 프로필과 RPC 프리셋을 백업, 복원 또는 완전 초기화합니다</p>
+        </div>
+        <button type="button" class="btn-modal-x" id="btnCloseProfileSettings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="settings-modal-actions">
+        <button type="button" class="btn-gold-sm glass-shimmer" id="btnModalExportJson" style="width:100%;height:40px;">
+          전체 프로필 & 프리셋 JSON 내보내기 (Backup)
+        </button>
+
+        <label class="btn-import-file-label">
+          <span>JSON 백업 파일에서 불러오기 (Restore)</span>
+          <input type="file" id="inputImportJsonFile" accept=".json" style="display:none;" />
+        </label>
+
+        <button type="button" class="btn-reset-defaults" id="btnModalResetDefaults">
+          모든 프로필 & 프리셋 완전 초기화 (빈 상태로 리셋)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       AUTH GATE OVERLAY (LICENSE REGISTRATION & LOGIN SCREEN)
+       ========================================================================= -->
+  <div class="auth-gate-overlay" id="authGateOverlay">
+    <div class="auth-gate-card spotlight-card">
+      <div class="auth-gate-top-bar">
+        <div class="auth-brand-row">
+          <div class="auth-flame-emblem">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path
+                d="M16.8 2.1C16.2 6.1 12.6 8.9 10.4 12.1C7.9 15.6 6.6 18.6 6.6 21.8C6.6 26.9 10.7 30.2 16.0 30.2C21.3 30.2 25.4 26.6 25.4 21.3C25.4 17.4 23.2 13.4 20.9 10.8C21.3 13.1 20.2 14.7 18.9 15.3C20.0 11.2 19.5 6.2 16.8 2.1Z"
+                fill="url(#rebornFlameOuter)"
+              />
+              <path
+                d="M16.2 8.4C15.5 11.4 12.9 13.5 11.8 16.3C10.8 18.8 11.3 21.8 13.1 23.9C14.7 25.7 17.5 25.6 19.2 23.7C21.0 21.8 21.4 18.6 19.9 15.8C19.0 13.9 17.0 11.8 16.2 8.4Z"
+                fill="url(#rebornFlameMid)"
+              />
+              <path
+                d="M16.0 14.2C15.5 16.2 13.9 17.6 13.4 19.5C12.9 21.1 13.5 23.0 14.7 24.0C15.6 24.8 17.1 24.7 17.9 23.8C18.8 22.7 19.0 20.9 18.2 19.2C17.6 18.0 16.5 16.5 16.0 14.2Z"
+                fill="url(#rebornFlameCore)"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1 class="auth-brand-title">Reborn RPC</h1>
+            <p class="auth-brand-sub">Licensed Discord Profile & Rich Presence Studio</p>
+          </div>
+        </div>
+        <button type="button" class="btn-auth-admin glass-shimmer" id="btnAuthOpenAdmin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          <span>관리자 패널</span>
+        </button>
+      </div>
+
+      <!-- Mode Switch Tabs: Login vs Register -->
+      <div class="auth-mode-tabs">
+        <button type="button" class="auth-tab-btn active" data-auth-tab="login">로그인 (Login)</button>
+        <button type="button" class="auth-tab-btn" data-auth-tab="register">라이센스 회원가입 (Register)</button>
+      </div>
+
+      <div class="auth-error-banner hidden" id="authErrorBanner"></div>
+
+      <!-- LOGIN FORM -->
+      <div class="auth-form-pane" id="authPaneLogin">
+        <div class="aux-field">
+          <label>아이디 (Username)</label>
+          <input type="text" class="aux-input" id="loginUsernameInput" placeholder="가입한 아이디 입력" autocomplete="off" />
+        </div>
+        <div class="aux-field">
+          <label>비밀번호 (Password)</label>
+          <input type="password" class="aux-input" id="loginPasswordInput" placeholder="비밀번호 입력" />
+        </div>
+        <div class="aux-field">
+          <label>라이센스 만료 시 새 라이센스 코드 등록 (선택 사항)</label>
+          <input type="text" class="aux-input" id="loginNewLicenseInput" placeholder="만료된 경우에만 새 라이센스 키 입력 (REBORN-XXXX-...)" />
+        </div>
+        <button type="button" class="btn-auth-submit glass-shimmer" id="btnSubmitLogin">
+          Reborn RPC 로그인 및 스튜디오 시작
+        </button>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div class="auth-form-pane hidden" id="authPaneRegister">
+        <div class="aux-field">
+          <label>라이센스 코드 (License Key · 필수)</label>
+          <input type="text" class="aux-input license-code-input" id="regLicenseKeyInput" placeholder="REBORN-XXXX-XXXX-XXXX" autocomplete="off" />
+        </div>
+        <div class="aux-grid-2">
+          <div class="aux-field">
+            <label>사용할 아이디 (Username)</label>
+            <input type="text" class="aux-input" id="regUsernameInput" placeholder="아이디 입력 (2자 이상)" autocomplete="off" />
+          </div>
+          <div class="aux-field">
+            <label>비밀번호 (Password)</label>
+            <input type="password" class="aux-input" id="regPasswordInput" placeholder="비밀번호 입력 (4자 이상)" />
+          </div>
+        </div>
+        <button type="button" class="btn-auth-submit glass-shimmer" id="btnSubmitRegister">
+          라이센스 인증 및 회원가입 완료
+        </button>
+      </div>
+
+      <div class="auth-footer-note">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+          <span>내 PC 고유 HWID: <code id="authCurrentHwidCode" style="color:#fbbf24;font-weight:700;">HWID 확인 중...</code></span>
+          <button type="button" class="btn-preview-sub" id="btnCopyMyHwid" style="height:24px;padding:0 10px;font-size:11px;">HWID 복사</button>
+        </div>
+        <span>라이센스는 최초 로그인한 PC의 <strong>HWID</strong>에 자동 귀속됩니다. 기기 변경 시 <strong>[관리자 패널]</strong>에서 HWID 초기화를 진행하세요.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       ADMIN PANEL MODAL (LICENSE & USER MANAGEMENT CENTER)
+       ========================================================================= -->
+  <div class="studio-modal-backdrop hidden" id="adminPanelModal" style="z-index: 9800;">
+    <div class="studio-modal-card admin-modal-card spotlight-card">
+      <div class="studio-modal-header">
+        <div class="admin-header-brand">
+          <div class="auth-flame-emblem small">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16.8 2.1C16.2 6.1 12.6 8.9 10.4 12.1C7.9 15.6 6.6 18.6 6.6 21.8C6.6 26.9 10.7 30.2 16.0 30.2C21.3 30.2 25.4 26.6 25.4 21.3C25.4 17.4 23.2 13.4 20.9 10.8C21.3 13.1 20.2 14.7 18.9 15.3C20.0 11.2 19.5 6.2 16.8 2.1Z" fill="url(#rebornFlameOuter)" />
+              <path d="M16.0 14.2C15.5 16.2 13.9 17.6 13.4 19.5C12.9 21.1 13.5 23.0 14.7 24.0C15.6 24.8 17.1 24.7 17.9 23.8C18.8 22.7 19.0 20.9 18.2 19.2C17.6 18.0 16.5 16.5 16.0 14.2Z" fill="url(#rebornFlameCore)" />
+            </svg>
+          </div>
+          <div>
+            <h3>Reborn RPC · 라이센스 & 회원 통합 관리자 패널</h3>
+            <p>라이센스 발급, 기간 지정, 시간 연장, 인원 제한, 정지, 초기화 및 가입 회원을 실시간 제어합니다.</p>
+          </div>
+        </div>
+        <button type="button" class="btn-modal-x" id="btnCloseAdminModal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- STEP 1: ADMIN PASSWORD LOCK GATE -->
+      <div class="admin-lock-pane" id="adminLockPane">
+        <div class="admin-lock-box spotlight-card">
+          <h4>관리자 보안 인증</h4>
+          <p>관리자 비밀번호를 입력하여 라이센스 제어 센터의 잠금을 해제하세요.</p>
+          <div class="vault-fetch-bar" style="margin-top:10px;">
+            <input type="password" class="aux-input" id="adminPasswordInput" placeholder="관리자 비밀번호 입력" style="flex:1;" />
+            <button type="button" class="btn-gold-sm glass-shimmer" id="btnUnlockAdminPanel">잠금 해제</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: UNLOCKED FULL ADMIN WORKSPACE -->
+      <div class="admin-workspace-pane hidden" id="adminWorkspacePane">
+        <!-- Stats Strip -->
+        <div class="admin-stats-grid" id="adminStatsGrid">
+          <div class="admin-stat-box">
+            <span class="as-label">전체 라이센스</span>
+            <strong class="as-val" id="admStatTotal">0</strong>
+          </div>
+          <div class="admin-stat-box active">
+            <span class="as-label">활성 (사용 중)</span>
+            <strong class="as-val" id="admStatActive">0</strong>
+          </div>
+          <div class="admin-stat-box unused">
+            <span class="as-label">미사용 (대기)</span>
+            <strong class="as-val" id="admStatUnused">0</strong>
+          </div>
+          <div class="admin-stat-box" style="border-color:rgba(250,204,21,0.3);">
+            <span class="as-label">영구제 (Lifetime)</span>
+            <strong class="as-val" id="admStatLifetime" style="color:#fde047;">0</strong>
+          </div>
+          <div class="admin-stat-box danger">
+            <span class="as-label">만료 / 정지됨</span>
+            <strong class="as-val" id="admStatExpired">0</strong>
+          </div>
+          <div class="admin-stat-box users">
+            <span class="as-label">가입된 회원 수</span>
+            <strong class="as-val" id="admStatUsers">0</strong>
+          </div>
+        </div>
+
+        <!-- Admin Generator Card -->
+        <div class="admin-section-card spotlight-card">
+          <div class="aux-header-split">
+            <div>
+              <h4 class="admin-sec-title">신규 라이센스 발급 및 원클릭 프리셋 · 상세 제한 설정</h4>
+              <p class="aux-desc">원클릭 즉시 발급 버튼을 누르거나 유효 기간(일/시간/영구제), 인원 제한, 커스텀 키 코드를 지정하여 라이센스를 생성하세요.</p>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+              <button type="button" class="btn-lic-act extend" data-quick-create-lic="1h" title="1시간권 1개 즉시 발급">+ 1시간권</button>
+              <button type="button" class="btn-lic-act extend" data-quick-create-lic="1d" title="1일권 1개 즉시 발급">+ 1일권</button>
+              <button type="button" class="btn-lic-act extend" data-quick-create-lic="7d" title="7일권 1개 즉시 발급">+ 7일권</button>
+              <button type="button" class="btn-lic-act extend" data-quick-create-lic="30d" title="30일권 1개 즉시 발급">+ 30일권</button>
+              <button type="button" class="btn-lic-act life" data-quick-create-lic="lifetime" title="영구제 1개 즉시 발급">+ 영구제 즉시 발급</button>
+              <button type="button" class="btn-gold-sm glass-shimmer" id="btnAdminCreateLicenses">
+                + 상세 설정으로 생성
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-gen-grid">
+            <div class="aux-field">
+              <label>라이센스 유효 기간 (Duration)</label>
+              <div class="reborn-custom-dropdown" id="customDropAdminDuration"></div>
+            </div>
+            <div class="aux-field" id="adminCustomDurationWrap">
+              <label>직접 기간 상세 설정 (일 / 시간)</label>
+              <div class="v-row-2">
+                <input type="number" class="aux-input" id="admGenDays" value="30" min="0" max="36500" placeholder="일(Days)" />
+                <input type="number" class="aux-input" id="admGenHours" value="0" min="0" max="999" placeholder="시간(Hours)" />
+              </div>
+            </div>
+            <div class="aux-field">
+              <label>최대 등록 인원 제한 (Max Users)</label>
+              <div class="reborn-custom-dropdown" id="customDropAdminMaxUsers"></div>
+            </div>
+            <div class="aux-field">
+              <label>동시 발급 개수 (1~50개)</label>
+              <input type="number" class="aux-input" id="admGenCount" value="1" min="1" max="50" />
+            </div>
+            <div class="aux-field">
+              <label>키 접두사 (Prefix) 또는 커스텀 키</label>
+              <div class="v-row-2">
+                <input type="text" class="aux-input" id="admGenPrefix" value="REBORN" maxlength="12" placeholder="접두사 (REBORN)" />
+                <input type="text" class="aux-input" id="admGenCustomKey" maxlength="36" placeholder="직접 지정 키 (선택)" />
+              </div>
+            </div>
+            <div class="aux-field">
+              <label>관리자 메모 / 사용자 태그</label>
+              <input type="text" class="aux-input" id="admGenNote" placeholder="예: VIP 유저, 30일권" />
+            </div>
+          </div>
+
+          <!-- Newly Created Keys Banner -->
+          <div class="admin-created-banner hidden" id="adminCreatedBanner">
+            <div class="admin-created-left">
+              <span>방금 생성된 라이센스:</span>
+              <code id="adminCreatedKeyPreview"></code>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button type="button" class="btn-preview-sub" id="btnCopyCreatedKeys">전체 복사</button>
+              <button type="button" class="btn-gold-sm" id="btnUseCreatedKeyForReg">회원가입 창에 자동 입력</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs: Licenses List vs Users List vs System & Audit -->
+        <div class="admin-list-toolbar">
+          <div class="admin-subtabs">
+            <button type="button" class="admin-subtab-btn active" data-adm-tab="licenses">라이센스 전체 관리</button>
+            <button type="button" class="admin-subtab-btn" data-adm-tab="users">가입 회원 & HWID 관리</button>
+            <button type="button" class="admin-subtab-btn" data-adm-tab="system">시스템 엔진 & 감사 로그</button>
+          </div>
+          <div class="admin-filter-controls">
+            <input type="text" class="aux-input" id="adminSearchInput" placeholder="라이센스 키 / 아이디 / HWID / 메모 검색..." style="width:210px;" />
+            <div class="reborn-custom-dropdown" id="customDropAdminFilter" style="width:155px;"></div>
+            <button type="button" class="btn-lic-act extend" id="btnAdminBulkAdd1d" title="모든 기간제 라이센스에 +1일 일괄 추가">전체 +1일</button>
+            <button type="button" class="btn-lic-act extend" id="btnAdminBulkAdd7d" title="모든 기간제 라이센스에 +7일 일괄 추가">전체 +7일</button>
+            <button type="button" class="btn-lic-act extend" id="btnAdminBulkAdd30d" title="모든 기간제 라이센스에 +30일 일괄 추가">전체 +30일</button>
+            <button type="button" class="btn-preview-sub" id="btnAdminCopyAllKeys" title="현재 라이센스 키 목록 전체 복사">전체 키 복사</button>
+            <button type="button" class="btn-preview-sub" id="btnAdminDeleteExpired" title="만료된 라이센스 일괄 정리">만료 키 정리</button>
+            <button type="button" class="btn-modal-danger" id="btnAdminDeleteAll" title="모든 라이센스 초기화">전체 삭제</button>
+          </div>
+        </div>
+
+        <!-- Licenses Table Scroll -->
+        <div class="admin-table-scroll" id="adminLicensesListWrap"></div>
+
+        <!-- Users Table Scroll -->
+        <div class="admin-table-scroll hidden" id="adminUsersListWrap"></div>
+
+        <!-- System & Audit Logs Scroll -->
+        <div class="admin-table-scroll hidden" id="adminSystemListWrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Stack -->
+  <div class="toast-stack" id="toastStack"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
