@@ -1,11 +1,12 @@
 {
-  "version": "5.2.1",
-  "notes": "Reborn RPC v5.2.1 실시간 클라우드 라이센스 & HWID 즉시 동기화 패치",
-  "publishedAt": 1793516415955,
+  "version": "5.2.2",
+  "notes": "Reborn RPC v5.2.2 시간 고정(Freeze Time) 모드 탑재",
+  "publishedAt": 1793519428194,
   "files": {
     "src/renderer/app.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/app.js",
     "src/renderer/index.html": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/index.html",
     "src/renderer/styles.css": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/styles.css",
+    "src/main/discord-ipc.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/main/discord-ipc.js",
     "src/main/engine-core.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/main/engine-core.js",
     "src/main/license-manager.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/main/license-manager.js",
     "src/main/server.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/main/server.js"
