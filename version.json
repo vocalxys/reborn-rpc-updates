@@ -1,7 +1,7 @@
 {
   "version": "5.2.0",
-  "notes": "Reborn RPC v5.2.0 공식 자동 업데이트 채널 개설",
-  "publishedAt": 1793501274340,
+  "notes": "Reborn RPC v5.2.0 공식 자동 업데이트 채널 연동 완료",
+  "publishedAt": 1793501368492,
   "files": {
     "src/renderer/app.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/app.js",
     "src/renderer/index.html": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/index.html",
