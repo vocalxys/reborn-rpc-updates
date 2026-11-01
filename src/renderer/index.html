@@ -276,11 +276,18 @@
         </div>
 
         <div class="stage-top-right">
+          <button type="button" class="btn-add-kf-top glass-shimmer" id="btnLangSwitchTop" title="한국어 / English 언어 전환 (Switch Language)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-right:5px;vertical-align:-2px;color:#38bdf8;">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <span id="topLangSwitchText">KR · 한국어</span>
+          </button>
+
           <button type="button" class="btn-add-kf-top glass-shimmer" id="btnCheckAutoUpdateTop" title="클릭하여 자동 업데이트 확인 및 최신 버전 동기화">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;margin-right:5px;vertical-align:-2px;color:#34d399;">
               <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
             </svg>
-            <span id="topAutoUpdateText">v5.2 · 자동 업데이트 ON</span>
+            <span id="topAutoUpdateText">v5.2.3 · 자동 업데이트 ON</span>
           </button>
 
           <button type="button" class="btn-add-kf-top glass-shimmer" id="btnOpenAdminTop" title="관리자 패널 (라이센스 · HWID · 회원 관리)">
@@ -534,13 +541,18 @@
                 <input type="text" class="aux-input" id="idCustomStatusText" placeholder="프로필 말풍선 상태 메시지 입력" />
               </div>
               <div class="aux-field">
-                <label>실제 보유 서버 태그 선택 (Server Tag · Discord 연동)</label>
+                <label>실제 Discord 서버 및 태그 선택 (Server Tag · 서버 목록 선택)</label>
                 <div class="reborn-custom-dropdown" id="customDropIdServerTag"></div>
               </div>
               <div class="aux-field" style="grid-column: span 2;">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-                  <label style="margin:0;">내 Discord 실제 적용/보유 서버 태그 (Clan Badge & Guild ID 실시간 연동)</label>
-                  <button type="button" class="btn-gold-sm glass-shimmer" id="btnSyncOwnedTagsFromDiscord">Discord에서 내 실제 서버 태그 동기화</button>
+                  <label style="margin:0;">실제 Discord 서버 목록 & 클랜 태그 (클릭하여 즉시 장착 · 초대링크/서버ID 추가 지원)</label>
+                  <button type="button" class="btn-gold-sm glass-shimmer" id="btnSyncOwnedTagsFromDiscord">Discord에서 내 실제 서버 & 태그 동기화</button>
+                </div>
+                <div class="vault-fetch-bar" style="margin-top:8px;">
+                  <input type="text" class="aux-input" id="idLookupGuildInput" placeholder="Discord 서버 초대링크 (https://discord.gg/...) 또는 서버 ID 입력 시 실제 서버/태그 자동 조회" style="flex:1;" />
+                  <input type="text" class="aux-input" id="idCustomTagTextInput" placeholder="태그 텍스트 직접 지정 (선택 · 예: 븐라인)" style="max-width:190px;" maxlength="12" />
+                  <button type="button" class="btn-gold-sm" id="btnLookupDiscordGuild">+ 실제 서버 불러오기</button>
                 </div>
                 <div class="badges-selector-row" id="ownedServerTagsList" style="margin-top:8px;"></div>
               </div>
@@ -549,20 +561,34 @@
                 <textarea class="aux-input" id="idBioTextarea" rows="3" placeholder="내 소개(Bio)를 자유롭게 입력하세요..."></textarea>
               </div>
               <div class="aux-field" style="grid-column: span 2;">
-                <label>아바타 이미지/GIF URL (Discord 연동 아바타 자동 적용)</label>
-                <input type="text" class="aux-input" id="idAvatarUrl" placeholder="Discord 연동 아바타 URL" />
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                  <label style="margin:0;">아바타 이미지/GIF URL (디스코드 이미지 링크 복사·붙여넣기 완벽 지원)</label>
+                  <button type="button" class="btn-adm-act gold" id="btnPasteAvatarUrl" style="height:22px;padding:0 10px;font-size:11px;">클립보드 디스코드 링크 붙여넣기</button>
+                </div>
+                <input type="text" class="aux-input" id="idAvatarUrl" placeholder="https://cdn.discordapp.com/... 또는 https://media.discordapp.net/... 링크 붙여넣기" />
               </div>
               <div class="aux-field">
-                <label>배너 배경 이미지/GIF URL</label>
-                <input type="text" class="aux-input" id="idBannerUrl" placeholder="https://..." />
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                  <label style="margin:0;">배너 배경 이미지/GIF URL (Nitro 배너)</label>
+                  <button type="button" class="btn-adm-act gold" id="btnPasteBannerUrl" style="height:22px;padding:0 10px;font-size:11px;">클립보드 링크 붙여넣기</button>
+                </div>
+                <input type="text" class="aux-input" id="idBannerUrl" placeholder="https://cdn.discordapp.com/... 이미지/GIF 링크" />
               </div>
               <div class="aux-field">
-                <label>배너 배경 컬러</label>
+                <label>배너 배경 컬러 (Nitro 테마 색상)</label>
                 <input type="color" class="aux-input color-input" id="idBannerColor" value="#0e0e12" />
               </div>
             </div>
 
-            <div class="aux-subtitle">내 Discord 계정 실제 보유 배지 (Discord 서버에서 자동 동기화됨)</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px;margin-bottom:8px;">
+              <div class="aux-subtitle" style="margin:0;">Discord 공식 실제 배지 · Nitro · 서버 부스트 (클릭하여 장착/해제 · HypeSquad 실제 서버 연동)</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button type="button" class="btn-adm-act gold" id="btnBadgesPresetNitroBoost">니트로 + 24개월 부스트 장착</button>
+                <button type="button" class="btn-adm-act" id="btnBadgesPresetAll">공식 배지 전체 장착</button>
+                <button type="button" class="btn-adm-act" id="btnBadgesPresetSyncReal">내 계정 실제 배지 동기화</button>
+                <button type="button" class="btn-adm-act danger" id="btnBadgesPresetClear">배지 전체 해제</button>
+              </div>
+            </div>
             <div class="badges-selector-row" id="badgesSelectorRow"></div>
           </div>
         </div>
@@ -994,12 +1020,17 @@
             <p class="auth-brand-sub">Licensed Discord Profile & Rich Presence Studio</p>
           </div>
         </div>
-        <button type="button" class="btn-auth-admin glass-shimmer" id="btnAuthOpenAdmin">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
-          <span>관리자 패널</span>
-        </button>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button type="button" class="btn-auth-admin glass-shimmer" id="btnAuthLangSwitch" title="한국어 / English">
+            <span id="authLangSwitchText">KR / EN</span>
+          </button>
+          <button type="button" class="btn-auth-admin glass-shimmer" id="btnAuthOpenAdmin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>관리자 패널</span>
+          </button>
+        </div>
       </div>
 
       <!-- Mode Switch Tabs: Login vs Register -->
