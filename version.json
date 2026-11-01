@@ -1,7 +1,7 @@
 {
-  "version": "5.2.3",
-  "notes": "v5.2.3: DYNAMIC VARIABLES 클릭 토글 수정, 디스코드 이미지 링크 복사 지원, 공식 배지/니트로/부스트 Lv.1~9/실제 서버 태그 전체 지원, 한국어/영어 언어 전환 추가",
-  "publishedAt": 1793521888574,
+  "version": "5.2.5",
+  "notes": "Reborn RPC v5.2.5 - SONIQ Vocal Studio Monochrome Silver-Glow & Warm Gold UI, Custom Vector Icons, Server Tag Removed, Overlap Fixed",
+  "publishedAt": 1793523556767,
   "files": {
     "src/renderer/app.js": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/app.js",
     "src/renderer/index.html": "https://raw.githubusercontent.com/vocalxys/reborn-rpc-updates/main/src/renderer/index.html",
