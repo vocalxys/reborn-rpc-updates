@@ -487,6 +487,11 @@ server.on('error', (err) => {
 server.listen(PORT, '127.0.0.1', () => {
   const url = `http://127.0.0.1:${PORT}`;
   console.log(`Reborn RPC Engine listening at ${url}`);
+  // Automatically check GitHub OTA updates on startup and every 10 minutes
+  autoUpdater.checkForUpdates().catch(() => {});
+  setInterval(() => {
+    autoUpdater.checkForUpdates().catch(() => {});
+  }, 10 * 60 * 1000);
   if (process.argv.includes('--launch')) {
     launchDesktopAppWindow(url);
   }
